@@ -32,8 +32,9 @@ public class Localizer {
 	}
 	
 	public void move(double step) {
-		step += step % 1;
 		int delta = (int) step;// The number of grid spaces moved
+		step += step % 1;
+		
 		// Save the current contents of grid to oldGrid
 		double[] oldGrid = new double[map.getLength()];
 		for(int i=0;i<grid.length;i++) {
