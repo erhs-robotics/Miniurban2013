@@ -46,7 +46,7 @@ public class Localizer {
 			if(i - delta >= 0) {
 				p += oldGrid[i - delta] * pMoveExact;// 
 			}
-			if(i - delta - 1 >= 0) {
+			if(i - delta - (delta / Math.abs(delta)) >= 0) {
 				p += oldGrid[i - delta - (delta / Math.abs(delta))] * pMoveOvershoot;
 			}
 			p += oldGrid[i] * pMoveFail;
