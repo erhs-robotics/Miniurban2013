@@ -11,11 +11,10 @@ public class LocalizerTest {
 		map = buildMap();
 	}
 	private LinearColorMap buildMap() {
-		LinearColorMap map = new LinearColorMap(10);
-		map.addSegment(0, 5, Color.White);
-		map.addSegment(5, 6, Color.Red);
-		map.addSegment(6, 8, Color.White);
-		map.addSegment(8, 10, Color.Blue);		
+		LinearColorMap map = new LinearColorMap(5);
+		map.addSegment(0, 1, Color.White);
+		map.addSegment(1, 3, Color.Red);		
+		map.addSegment(3, 5, Color.Blue);		
 		
 		return map;
 	}
