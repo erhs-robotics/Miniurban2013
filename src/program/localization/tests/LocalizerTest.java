@@ -22,6 +22,7 @@ public class LocalizerTest {
 	public void test0() {
 		Localizer localizer = new Localizer();
 		localizer.reset(map);
+		localizer.print();
 		
 		localizer.sense(Color.White);
 		localizer.print();
@@ -35,10 +36,50 @@ public class LocalizerTest {
 		
 	}
 	
+	public void test1() {
+		Localizer localizer = new Localizer();
+		localizer.reset(map);
+		
+		localizer.print();
+		localizer.sense(Color.White);
+		localizer.sense(Color.White);
+		localizer.sense(Color.White);
+		localizer.sense(Color.White);
+		localizer.print();
+		
+		localizer.move(1);
+		localizer.print();
+		
+	}
+	
+	public void test2() {
+		Localizer localizer = new Localizer();
+		localizer.reset(map);
+		
+		localizer.print();
+		localizer.sense(Color.White);
+		localizer.sense(Color.White);
+		localizer.sense(Color.White);
+		localizer.sense(Color.White);
+		localizer.print();
+		
+		localizer.move(1);
+		localizer.print();
+		
+		localizer.move(1);
+		localizer.print();
+		
+		localizer.sense(Color.Red);
+		localizer.print();
+		
+		
+		
+	}
+	
 	public static void main(String[] args) {
 		LocalizerTest localizerTest = new LocalizerTest();
-		localizerTest.test0();
-		//System.out.println("yomon");
+		localizerTest.test2();
+		
 
 	}
 
