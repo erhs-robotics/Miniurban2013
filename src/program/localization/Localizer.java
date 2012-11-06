@@ -4,7 +4,7 @@ package program.localization;
 public class Localizer {
 	private final double pSense = 0.8;// The probability that the color sensed is correct
 	private final double pMoveExact = 0.7;// The probability that the movement was correctly executed
-	private final double pMoveFail = 0.15;// The probability that the robot did not move
+	private final double pMoveUnderShoot = 0.15;// The probability that the robot moved less than predicted
 	private final double pMoveOvershoot = 0.15;// The probability that the robot moved more than predicted
 	private LinearColorMap map;// The map of all possible colors on the route
 	private double[] grid;// The map of probable locations
@@ -44,13 +44,17 @@ public class Localizer {
 		
 		for(int i=0;i<oldGrid.length;i++) {
 			double p = 0;
-			if(i - delta >= 0) {
+			int dir = (delta / Math.abs(delta));// 1 or -1 depending on robot's direction
+			if(i - delta >= 0 && i - delta <= oldGrid.length) {
 				p += oldGrid[i - delta] * pMoveExact;// 
 			}
-			if(i - delta - (delta / Math.abs(delta)) >= 0) {
-				p += oldGrid[i - delta - (delta / Math.abs(delta))] * pMoveOvershoot;
+			if(i - delta - dir >= 0 && i - delta - dir <= oldGrid.length) {
+				p += oldGrid[i - delta - dir] * pMoveOvershoot;
 			}
-			p += oldGrid[i] * pMoveFail;
+			if(i - delta + dir >= 0 && i - delta + dir <= oldGrid.length) {
+				p += oldGrid[i - delta + dir] * pMoveUnderShoot;
+			}
+			
 			grid[i] = p;
 		}
 		normalize();
