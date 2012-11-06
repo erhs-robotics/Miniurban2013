@@ -20,7 +20,7 @@ public class LinearColorMap {
 	}
 	
 	public boolean isColorAt(Color color, int x) {
-		if(x > length || x < length) return false;
+		if(x > length || x < 0) return false;
 		
 		Color c = getColorAt(x);
 		if(c == color) return true;	

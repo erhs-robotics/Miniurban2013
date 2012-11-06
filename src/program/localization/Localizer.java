@@ -24,7 +24,7 @@ public class Localizer {
 	}
 	
 	public void sense(Color color) {
-		for(int x=0;x<map.getLength();x++) {
+		for(int x=0;x<grid.length;x++) {
 			if(map.isColorAt(color, x))	grid[x] *= pSense;// pSense is the probability that the sensor is right
 			else grid[x] *= 1 - pSense; // 1-pSense is the probability that the sensor is wrong						
 		}
