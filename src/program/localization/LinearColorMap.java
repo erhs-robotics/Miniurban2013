@@ -8,11 +8,11 @@ public class LinearColorMap {
 	
 	public LinearColorMap(int length) {
 		this.length = length;
+		segments = new ArrayList<LineSegment>();
 	}
 	
 	public void addSegment(double x0, double x1, Color color) {
-		LineSegment segment = new LineSegment(x0, x1, color);
-		segments.add(segment);
+		segments.add(new LineSegment(x0, x1, color));
 	}
 	
 	public int getLength() {
