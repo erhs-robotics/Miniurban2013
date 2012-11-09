@@ -1,4 +1,4 @@
-package program.mapping.test;
+package program.mapping.tests;
 
 import program.mapping.Road;
 
