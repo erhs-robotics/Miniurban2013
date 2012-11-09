@@ -5,15 +5,17 @@ public class Road {
 	static final int RIGHT = 0, LEFT = 1, STRAIGHT = 0;
 
 	private Road rightChild = null, leftChild = null, straightChild = null;
+	private String name;
 
 	int length;
 	int pDirection;
 	boolean park = false; // Is it a parking space??
 	boolean circle = false;
 
-	public Road(int pDir) { // use this constructor if it is a parking area
+	public Road(int pDir, String name) { // use this constructor if it is a parking area
 		pDirection = pDir;
 		park = true; // We assume if it has no children, it is a parking space.
+		this.name = name;
 	}
 	
 	// use this one for a normal road
@@ -55,5 +57,13 @@ public class Road {
 	
 	public void setStraightChild(Road straightChild) {
 		this.straightChild = straightChild;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 }
