@@ -4,7 +4,7 @@ public class Road {
 
 	static final int RIGHT = 0, LEFT = 1, STRAIGHT = 0;
 
-	Road rightChild = null, leftChild = null, straightChild = null;
+	private Road rightChild = null, leftChild = null, straightChild = null;
 
 	int length;
 	int pDirection;
@@ -43,5 +43,17 @@ public class Road {
 
 	public Road getChildStraight() {
 		return straightChild;
+	}
+	
+	public void setLeftChild(Road leftChild) {
+		this.leftChild = leftChild;
+	}
+	
+	public void setRightChild(Road rightChild) {
+		this.rightChild = rightChild;
+	}
+	
+	public void setStraightChild(Road straightChild) {
+		this.straightChild = straightChild;
 	}
 }
