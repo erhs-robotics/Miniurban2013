@@ -6,9 +6,11 @@ public class Road {
 
 	private Road rightChild = null, leftChild = null, straightChild = null;
 	private String name;
+	private int g_value; //the number of steps it takes to get to this road
 
 	int length;
 	int pDirection;
+	
 	boolean park = false; // Is it a parking space??
 	boolean circle = false;
 
@@ -65,5 +67,13 @@ public class Road {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public int getG_value() {
+		return g_value;
+	}
+	
+	public void setG_value(int g_value) {
+		this.g_value = g_value;
 	}
 }
