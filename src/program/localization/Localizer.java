@@ -70,6 +70,18 @@ public class Localizer {
 		}
 	}
 	
+	// returns the number of the cell with the largest probability
+	public int getLocation() {
+		int max = 0;
+		for(int i=0;i<grid.length;i++) {
+			if(grid[i] > grid[max]) {
+				max = i;
+			}
+		}
+		
+		return max;
+	}
+	
 	public void print() {
 		System.out.print("[");
 		for(int i=0;i<grid.length;i++) {
