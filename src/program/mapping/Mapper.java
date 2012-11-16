@@ -9,18 +9,7 @@ public class Mapper {
 	int pathIndex = 0;
 
 	public Mapper() {
-		// Initialize Roads here!!
 		
-		//sample map, a square
-		Road top = new Road(0, "top");
-		Road bottom = new Road(0, "bottom");
-		Road left = new Road(0, "left");
-		Road right = new Road(0, "right");		
-		
-		top.setRightChild(right);
-		right.setRightChild(bottom);
-		bottom.setRightChild(left);
-		left.setRightChild(top);
 	}
 
 	public void findPath(Road current, Road goal) { // Runs the A* search, puts result in path
@@ -37,7 +26,15 @@ public class Mapper {
 	
 	// returns the node in open with the smallest gvalue + h(x) where h(x) is the heuristic
 	public Road getBestNode(ArrayList<Road> open) { 
-		return null;
+		Road best = open.get(0);
+		for(int i=0;i<open.size();i++) {
+			Road road = open.get(i);
+			if(road.getG_value() < best.getG_value()) {
+				best = road;
+			}
+		}
+		return best;
+		
 	}
 	
 	//expands open into the nodes surrounding current and checks if we've hit the goal
@@ -46,6 +43,7 @@ public class Mapper {
 		Road right    = current.getChildRight();
 		Road left     = current.getChildLeft();
 		Road straight = current.getChildStraight();
+		
 		
 		//if child exists and we have not expanded it yet
 		if(right != null && !closed.contains(right)) {			
