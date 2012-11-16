@@ -6,7 +6,7 @@ public class Road {
 
 	private Road rightChild = null, leftChild = null, straightChild = null;
 	private String name;
-	private int g_value; //the number of steps it takes to get to this road
+	private int g_value = 0; //the number of steps it takes to get to this road
 
 	int length;
 	int pDirection;
