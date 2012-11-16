@@ -65,7 +65,7 @@ public class Mapper {
 		}
 		
 		closed.add(current);//make sure we don't expand current again
-		
+		open.remove(current);
 		
 		
 		return false;//false because we did not find the goal yet
