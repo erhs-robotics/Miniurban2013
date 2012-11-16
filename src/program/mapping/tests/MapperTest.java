@@ -7,8 +7,9 @@ public class MapperTest {
 
 	/**
 	 * @param args
+	 * @throws Exception 
 	 */
-	public void test0() {
+	public void test0() throws Exception {
 		Road R0 = new Road(1, 0, "R0");
 		Road R1 = new Road(1, 0, "R1");
 		Road R2 = new Road(1, 0, "R2");
@@ -45,12 +46,14 @@ public class MapperTest {
 		
 		Mapper mapper = new Mapper();
 		
-		mapper.findPath(R0, R3);
+		mapper.findPath(R0, R6);
 		
-		System.out.println(R3.getG_value());
+		for(int i=0;i<mapper.getPath().size();i++) {
+			System.out.println(mapper.getPath().get(i));
+		}
 		
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		System.out.println("Test Started");
 		MapperTest mapperTest = new MapperTest();
 		

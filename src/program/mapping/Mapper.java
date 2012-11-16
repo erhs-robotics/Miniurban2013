@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class Mapper {
 
-	ArrayList<Road> path = new ArrayList<Road>();	
-	
+	//ArrayList<Road> path = new ArrayList<Road>();	
+	ArrayList<String> path = new ArrayList<String>();//String just for now because it is simpler
 	int pathIndex = 0;
 
 	public Mapper() {
 		
 	}
 
-	public void findPath(Road current, Road goal) { // Runs the A* search, puts result in path
+	public void findPath(Road current, Road goal) throws Exception { // Runs the A* search, puts result in path
 		ArrayList<Road> open = new ArrayList<Road>(); // The nodes that need to be expanded
 		ArrayList<Road> closed = new ArrayList<Road>(); // The nodes that have already been expanded
 		boolean goalhit = false;
@@ -21,7 +21,34 @@ public class Mapper {
 			goalhit = expand(current, open, closed, goal);// Expand from the current node to the surrounding nodes
 			if(!goalhit) current = getBestNode(open);// Picks the next current node that will most likely lead to the goal		
 		}
-
+		
+		genPath(goal);
+	}
+	//takes the expanded map and works backward from goal to the start and generates the directions
+	public void genPath(Road goal) throws Exception {
+		Road current = goal;
+		while(current.getG_value() != 0) {
+			Road right    = current.getRightParent();
+			Road left     = current.getLeftParent();
+			Road straight = current.getStraightParent();
+			
+			if(right != null && right.getG_value() == current.getG_value() - 1) {
+				//reverse directions
+				path.add(0, "Left");//add at beginning
+				current = right;
+			} else if(left != null && left.getG_value() == current.getG_value() - 1) {
+				//reverse directions
+				path.add(0, "Right");//add at beginning
+				current = left;
+			} else if(straight != null && straight.getG_value() == current.getG_value() - 1) {				
+				path.add(0, "straight");//add at beginning
+				current = straight;
+			} else {
+				throw new Exception("Next node not found!");
+			}
+			
+		}
+		
 	}
 	
 	// returns the node in open with the smallest gvalue + h(x) where h(x) is the heuristic
@@ -71,9 +98,13 @@ public class Mapper {
 		return false;//false because we did not find the goal yet
 	}
 
-	public Road getNextRoad() { // returns the next road, Road will include
+	public String getNextRoad() { // returns the next road, Road will include
 								// directions to the next.
 		// pathIndex++;
 		return path.get(pathIndex++); // MIGHT WORK
+	}
+	
+	public ArrayList<String> getPath() {
+		return path;
 	}
 }
