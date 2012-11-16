@@ -21,12 +21,9 @@ public class Road {
 	}
 	
 	// use this one for a normal road
-	public Road(int l, int dir, Road right, Road left, Road straight) { 
+	public Road(int l, int dir, String name) { 
 		length = l;
-		pDirection = dir;
-		rightChild = right;
-		leftChild = left;
-		straightChild = straight;
+		this.name = name;
 	}
 
 	public void setCircle(boolean c) { // Make it a circle
