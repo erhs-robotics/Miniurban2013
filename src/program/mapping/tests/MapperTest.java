@@ -47,7 +47,7 @@ public class MapperTest {
 		
 		mapper.findPath(R0, R3);
 		
-		System.out.println(R5.getG_value());
+		System.out.println(R3.getG_value());
 		
 	}
 	public static void main(String[] args) {
