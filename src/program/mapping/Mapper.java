@@ -16,7 +16,7 @@ public class Mapper {
 		ArrayList<Road> open = new ArrayList<Road>(); // The nodes that need to be expanded
 		ArrayList<Road> closed = new ArrayList<Road>(); // The nodes that have already been expanded
 		boolean goalhit = false;
-		
+		current.setG_value(0);
 		while(!goalhit) {
 			goalhit = expand(current, open, closed, goal);// Expand from the current node to the surrounding nodes
 			if(!goalhit) current = getBestNode(open);// Picks the next current node that will most likely lead to the goal		

@@ -5,8 +5,10 @@ public class Road {
 	static final int RIGHT = 0, LEFT = 1, STRAIGHT = 0;
 
 	private Road rightChild = null, leftChild = null, straightChild = null;
+	private Road rightParent = null, leftParent = null, straightParent = null;
 	private String name;
-	private int g_value = 0; //the number of steps it takes to get to this road
+	private int g_value = -1; //the number of steps it takes to get to this road
+	                          // -1 means not expanded
 
 	private int length;
 	int pDirection;
@@ -48,14 +50,41 @@ public class Road {
 	
 	public void setLeftChild(Road leftChild) {
 		this.leftChild = leftChild;
+		leftChild.setRightParent(this);
 	}
 	
 	public void setRightChild(Road rightChild) {
 		this.rightChild = rightChild;
+		rightChild.setLeftParent(this);
 	}
 	
 	public void setStraightChild(Road straightChild) {
 		this.straightChild = straightChild;
+		straightChild.setStraightParent(this);
+	}
+	
+	public void setLeftParent(Road leftParent) {
+		this.leftParent = leftParent;
+	}
+	
+	public void setRightParent(Road rightParent) {
+		this.rightParent = rightParent;
+	}
+	
+	public void setStraightParent(Road straightParent) {
+		this.straightParent = straightParent;
+	}
+	
+	public Road getLeftParent() {
+		return leftParent;
+	}
+	
+	public Road getRightParent() {
+		return rightParent;
+	}
+	
+	public Road getStraightParent() {
+		return straightParent;
 	}
 	
 	public String getName() {
