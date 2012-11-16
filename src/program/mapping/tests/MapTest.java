@@ -29,6 +29,7 @@ public class MapTest {
 		MapTest mapTest = new MapTest();		
 		mapTest.test0();	
 		System.out.println("Testing stopped");
+		
 	}
 
 }
