@@ -30,22 +30,23 @@ public class Mapper {
 		while(current.getG_value() != 0) {
 			Road right    = current.getRightParent();
 			Road left     = current.getLeftParent();
-			Road straight = current.getStraightParent();
+			Road straight = current.getStraightParent();			
 			
-			if(right != null && right.getG_value() == current.getG_value() - 1) {
-				//reverse directions
-				path.add(0, "Left");//add at beginning
-				current = right;
-			} else if(left != null && left.getG_value() == current.getG_value() - 1) {
-				//reverse directions
-				path.add(0, "Right");//add at beginning
-				current = left;
-			} else if(straight != null && straight.getG_value() == current.getG_value() - 1) {				
-				path.add(0, "straight");//add at beginning
-				current = straight;
-			} else {
-				throw new Exception("Next node not found!");
-			}
+			ArrayList<Road> parents = new ArrayList<Road>();
+			
+			if(right != null) parents.add(right);
+			if(left != null) parents.add(left);
+			if(straight != null) parents.add(straight);
+			
+			if(parents.size() < 1) throw new Exception("Node has no parents!");
+			
+			Road best = getBestNode(parents);
+			
+			if(best == right) path.add(0, "Left"); 
+			if(best == left) path.add(0, "Right"); 
+			if(best == straight) path.add(0, "Straight"); 
+			
+			current = best;		
 			
 		}
 		
