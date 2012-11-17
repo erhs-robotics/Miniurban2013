@@ -56,10 +56,10 @@ public class Mapper {
 			Road straight = current.getStraightParent();			
 			
 			ArrayList<Road> parents = new ArrayList<Road>();//put all parents in here to run through the getBestNode function
-			//only add parent to parents if it is not null
-			if(right != null) parents.add(right);
-			if(left != null) parents.add(left);
-			if(straight != null) parents.add(straight);
+			//only add parent to parents if it is not null. makes sure you don't accidently choose a -1 node
+			if(right != null && right.getG_value() != -1) parents.add(right);
+			if(left != null && left.getG_value() != -1) parents.add(left);
+			if(straight != null && straight.getG_value() != -1) parents.add(straight);
 			
 			if(parents.size() < 1) throw new Exception("Node has no parents!");//all parents are null
 			
@@ -80,9 +80,8 @@ public class Mapper {
 	public Road getBestNode(ArrayList<Road> open) { 
 		Road best = open.get(0);
 		for(int i=0;i<open.size();i++) {
-			Road road = open.get(i);
-			//a g-value of -1 means the road has not been expanded, so don't count it as less
-			if(road.getG_value() != -1 && road.getG_value() < best.getG_value()) {
+			Road road = open.get(i);			
+			if(road.getG_value() < best.getG_value()) {
 				best = road;
 			}
 		}

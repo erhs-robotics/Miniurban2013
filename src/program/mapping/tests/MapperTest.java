@@ -106,9 +106,9 @@ public class MapperTest {
 		
 		goals.add(new Goal("R3", 2, Direction.Left));
 		goals.add(new Goal("R10", 4, Direction.Right));
-		goals.add(new Goal("R0", 1, Direction.Left));
+		goals.add(new Goal("R6", 1, Direction.Left));
 		
-		ArrayList<String> path = mapper.findPath(R0, goals);
+		ArrayList<String> path = mapper.findPath(R6, goals);
 		
 		
 		for(int i=0;i<path.size();i++) {
