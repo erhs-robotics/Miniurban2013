@@ -59,8 +59,8 @@ public class MapperTest {
 		Road R1 = new Road(1, 0, "R1");
 		Road R2 = new Road(1, 0, "R2");
 		Road R3 = new Road(1, 0, "R3");
-		Road R4 = new Road(1, 0, "R4");
-		Road R5 = new Road(1, 0, "R5");
+		Road R4 = new Road(2, 0, "R4");
+		Road R5 = new Road(2, 0, "R5");
 		Road R6 = new Road(1, 0, "R6");
 		Road R7 = new Road(1, 0, "R7");
 		Road R8 = new Road(1, 0, "R8");
