@@ -10,10 +10,10 @@ public class MapTest {
 	//  -                     -
 	//  -----------------------
 	void test0() {
-		Road top = new Road(0, "top");
-		Road bottom = new Road(0, "bottom");
-		Road left = new Road(0, "left");
-		Road right = new Road(0, "right");		
+		Road top = new Road("top", 1);
+		Road bottom = new Road("bottom", 1);
+		Road left = new Road("left", 1);
+		Road right = new Road("right", 1);		
 		
 		top.setRightChild(right);
 		right.setRightChild(bottom);
