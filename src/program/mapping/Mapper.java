@@ -117,20 +117,20 @@ public class Mapper {
 		
 		//if child exists and we have not expanded it yet
 		if(current.hasRightChild() && !closed.contains(right)) {			
-			right.setG_value(current.getG_value() + right.getLength());//record the cost of getting here
+			right.setG_value(current.getG_value() + right.getCost());//record the cost of getting here
 			if(Goal.isGoal(goals, right)) return right; //check if we hit one of the goals, if so return it
 			
 			open.add(right);//add road to the open list so it can be expanded in the future
 		}
 		
 		if(current.hasLeftChild() && !closed.contains(left)) {			
-			left.setG_value(current.getG_value() + left.getLength());
+			left.setG_value(current.getG_value() + left.getCost());
 			if(Goal.isGoal(goals, left)) return left;
 			open.add(left);
 		}
 		
 		if(current.hasStraightChild() && !closed.contains(straight)) {			
-			straight.setG_value(current.getG_value() + straight.getLength());
+			straight.setG_value(current.getG_value() + straight.getCost());
 			if(Goal.isGoal(goals, straight)) return straight;
 			open.add(straight);
 		}
