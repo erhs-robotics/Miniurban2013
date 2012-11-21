@@ -106,11 +106,4 @@ public class Road {
 	public double getLength() {
 		return length;
 	}
-	
-	public void erase() {
-		g_value = -1;
-		if(rightChild != null && rightChild.getG_value() != -1) rightChild.erase();
-		if(leftChild != null && leftChild.getG_value() != -1) leftChild.erase();
-		if(straightChild != null && straightChild.getG_value() != -1) straightChild.erase();
-	}
 }
