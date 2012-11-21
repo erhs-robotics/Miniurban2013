@@ -6,6 +6,7 @@ import program.mapping.Direction;
 import program.mapping.Goal;
 import program.mapping.Mapper;
 import program.mapping.Road;
+import program.mapping.Step;
 
 public class MapperTest {
 
@@ -108,11 +109,11 @@ public class MapperTest {
 		goals.add(new Goal("R10", 4, Direction.Right));
 		goals.add(new Goal("R6", 1, Direction.Left));
 		
-		ArrayList<String> path = mapper.findPath(R6, goals);
+		ArrayList<Step> path = mapper.getPath(R6, goals);
 		
 		
 		for(int i=0;i<path.size();i++) {
-			System.out.println(path.get(i));
+			path.get(i).print();
 		}
 		
 	}

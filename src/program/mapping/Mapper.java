@@ -12,8 +12,14 @@ public class Mapper {
 	public Mapper() {
 		
 	}
+	
+	public ArrayList<Step> getPath(Road current, ArrayList<Goal> goals) throws Exception {
+		ArrayList<Step> path = findPath(current, goals);		
+		
+		return path;		
+	}
 
-	public ArrayList<String> findPath(Road current, ArrayList<Goal> goals) throws Exception { // Runs the A* search, puts result in path
+	private ArrayList<Step> findPath(Road current, ArrayList<Goal> goals) throws Exception { // Runs the A* search, puts result in path
 		ArrayList<Road> open = new ArrayList<Road>(); // The nodes that need to be expanded
 		ArrayList<Road> closed = new ArrayList<Road>(); // The nodes that have already been expanded
 		Road goal = null;
@@ -25,11 +31,11 @@ public class Mapper {
 		
 		//travels backward form goal to the start and records that path
 		//also removes the goals we just found from goals
-		ArrayList<String> path = genPath(goal, goals);		
+		ArrayList<Step> path = genPath(goal, goals);		
 		
 		//if goals is > 0 then we have more goals to find, so call findPath again with goal as starting point and with the new goals
 		if(goals.size() > 0) {			
-			ArrayList<String> nextPath = findPath(goal, goals);//Recursively call findPath to find the next goal
+			ArrayList<Step> nextPath = findPath(goal, goals);//Recursively call findPath to find the next goal
 			//store the next part of the path in path
 			for(int i=0;i<nextPath.size();i++) {
 				path.add(nextPath.get(i));
@@ -39,13 +45,13 @@ public class Mapper {
 		return path;
 	}
 	//takes the expanded map and works backward from goal to the start and generates the directions
-	public ArrayList<String> genPath(Road goal, ArrayList<Goal> goals) throws Exception {		
-		ArrayList<String> path = new ArrayList<String>();
+	public ArrayList<Step> genPath(Road goal, ArrayList<Goal> goals) throws Exception {		
+		ArrayList<Step> path = new ArrayList<Step>();
 		Goal goalInfo = Goal.getGoal(goals, goal);
 		//if this is not the last goal, give parking information
-		if(goals.size() > 1) path.add(0, "Park " + goalInfo.getDirection().toString() + " at " + goalInfo.getPark() );
+		if(goals.size() > 1) path.add(0, new Park(goal, goalInfo.getDirection(), goalInfo.getPark()) );
 		//else this is the starting point, not a parking space
-		else path.add(0, "Finish");
+		else path.add(0, new Step());
 		goals.remove(goalInfo);//we already found this goal, so remove it
 		Road current = goal;
 		while(current.getG_value() != 0) {
@@ -66,9 +72,9 @@ public class Mapper {
 			Road best = getBestNode(parents);//find the node with the least g_value that is not -1
 			
 			//record in path, reverses directions because this function travels backwards: from goal to start
-			if(best == right) path.add(0, "Left");
-			if(best == left) path.add(0, "Right"); 
-			if(best == straight) path.add(0, "Straight"); 
+			if(best == right) path.add(0, new Turn(right, Direction.Left));
+			if(best == left) path.add(0, new Turn(left, Direction.Right));
+			if(best == straight) path.add(0, new Turn(straight, Direction.Straight));
 			
 			current = best;// record best in current so we can continue traveling backwards toward the start
 			
