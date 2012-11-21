@@ -38,7 +38,7 @@ public class Mapper {
 		ArrayList<Road> closed = new ArrayList<Road>(); // The nodes that have already been expanded
 		Road goal = null;
 		current.setG_value(0);// make sure we start at 0
-		while(goal == null) {
+		while(goal == null) {// while we have not hit a goal
 			goal = expand(current, open, closed, goals);// Expand from the current node to the surrounding nodes
 			if(goal == null) current = getBestNode(open);// Picks the next current node that will most likely lead to the goal		
 		}		
@@ -67,7 +67,7 @@ public class Mapper {
 		
 		goals.remove(goalInfo);//we already found this goal, so remove it
 		Road current = goal;
-		while(current.getG_value() != 0) {
+		while(current.getG_value() != 0) {//while we have not found our starting point: a g_value of 0
 			//place all the parents of current in convenient variables
 			//get_parent returns null if no parent
 			Road right    = current.getRightParent();
@@ -76,9 +76,9 @@ public class Mapper {
 			
 			ArrayList<Road> parents = new ArrayList<Road>();//put all parents in here to run through the getBestNode function
 			//only add parent to parents if it is not null. makes sure you don't accidently choose a -1 node
-			if(right != null && right.getG_value() != -1) parents.add(right);
-			if(left != null && left.getG_value() != -1) parents.add(left);
-			if(straight != null && straight.getG_value() != -1) parents.add(straight);
+			if(current.hasExpandedRightParent()) parents.add(right);
+			if(current.hasExpandedLeftParent()) parents.add(left);
+			if(current.hasExpandedStraightParent()) parents.add(straight);
 			
 			if(parents.size() < 1) throw new Exception("Node has no parents!");//all parents are null
 			
@@ -116,20 +116,20 @@ public class Mapper {
 		
 		
 		//if child exists and we have not expanded it yet
-		if(right != null && !closed.contains(right)) {			
+		if(current.hasRightChild() && !closed.contains(right)) {			
 			right.setG_value(current.getG_value() + right.getLength());//record the cost of getting here
 			if(Goal.isGoal(goals, right)) return right; //check if we hit one of the goals, if so return it
 			
 			open.add(right);//add road to the open list so it can be expanded in the future
 		}
 		
-		if(left != null && !closed.contains(left)) {			
+		if(current.hasLeftChild() && !closed.contains(left)) {			
 			left.setG_value(current.getG_value() + left.getLength());
 			if(Goal.isGoal(goals, left)) return left;
 			open.add(left);
 		}
 		
-		if(straight != null && !closed.contains(straight)) {			
+		if(current.hasStraightChild() && !closed.contains(straight)) {			
 			straight.setG_value(current.getG_value() + straight.getLength());
 			if(Goal.isGoal(goals, straight)) return straight;
 			open.add(straight);

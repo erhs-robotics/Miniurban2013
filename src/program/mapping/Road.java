@@ -12,7 +12,6 @@ public class Road {
 	private double length;	
 	private double speed;
 	
-	boolean park = false; // Is it a parking space??
 	boolean circle = false;
 
 	// use this one for a normal road
@@ -22,32 +21,18 @@ public class Road {
 		this.speed = 1;// normal speed
 	}
 	
-	public Road(int length, String name, double speed) { 
+	public Road(String name, int length, double speed) { 
 		this.length = length;
 		this.name = name;
 		this.speed = speed;
 	}
-
-	public void setCircle(boolean c) { // Make it a circle
-		circle = c;
-	}
-
-	public boolean isCircle() { // Is it a circle???
-		return circle;
-	}
-
-	public Road getChildRight() {
-		return rightChild;
-	}
-
-	public Road getChildLeft() {
-		return leftChild;
-	}
-
-	public Road getChildStraight() {
-		return straightChild;
-	}
 	
+	public Road(String name, int length, double speed, boolean isCircle) { 
+		this.length = length;
+		this.name = name;
+		this.speed = speed;
+		this.circle = isCircle;
+	}
 	public void setLeftChild(Road leftChild) {
 		this.leftChild = leftChild;
 		leftChild.setRightParent(this);
@@ -75,6 +60,26 @@ public class Road {
 		this.straightParent = straightParent;
 	}
 	
+	public void setG_value(double g_value) {
+		this.g_value = g_value;
+	}
+
+	public boolean isCircle() { // Is it a circle???
+		return circle;
+	}
+
+	public Road getChildRight() {
+		return rightChild;
+	}
+
+	public Road getChildLeft() {
+		return leftChild;
+	}
+
+	public Road getChildStraight() {
+		return straightChild;
+	}	
+	
 	public Road getLeftParent() {
 		return leftParent;
 	}
@@ -97,13 +102,39 @@ public class Road {
 	
 	public double getG_value() {
 		return g_value;
-	}
-	
-	public void setG_value(double g_value) {
-		this.g_value = g_value;
-	}
+	}	
 	
 	public double getLength() {
 		return length;
 	}
+	
+	public double getCost() {// Returns the cost of traversing a Road
+		return length * speed;
+	}
+	
+	public boolean hasExpandedRightParent() {
+		return rightParent != null && rightParent.g_value != -1;
+	}
+	
+	public boolean hasExpandedLeftParent() {
+		return leftParent != null && leftParent.g_value != -1;
+	}
+	
+	public boolean hasExpandedStraightParent() {
+		return straightParent != null && straightParent.g_value != -1;
+	}
+	
+	public boolean hasRightChild() {
+		return rightChild != null;
+	}
+	
+	public boolean hasLeftChild() {
+		return leftChild != null;
+	}
+	
+	public boolean hasStraightChild() {
+		return straightChild != null;
+	}
+
+	
 }
