@@ -14,8 +14,20 @@ public class Mapper {
 	}
 	
 	public ArrayList<Step> getPath(Road current, ArrayList<Goal> goals) throws Exception {
-		ArrayList<Step> path = findPath(current, goals);		
+		Goal start = new Goal(current.getName(), 0, Direction.None);
+		ArrayList<Goal> _start = new ArrayList<Goal>();
+		_start.add(start);
 		
+		ArrayList<Step> path = findPath(current, goals);
+		Road last = path.get(path.size() - 1).getRoad();
+		ArrayList<Step> pathToStart = findPath(last, _start);
+		
+		for(int i=0;i<pathToStart.size();i++) {
+			path.add(pathToStart.get(i));
+		}
+		
+		path.remove(path.size() - 1);
+		path.add(new Step());
 		return path;		
 	}
 
@@ -48,10 +60,9 @@ public class Mapper {
 	public ArrayList<Step> genPath(Road goal, ArrayList<Goal> goals) throws Exception {		
 		ArrayList<Step> path = new ArrayList<Step>();
 		Goal goalInfo = Goal.getGoal(goals, goal);
-		//if this is not the last goal, give parking information
-		if(goals.size() > 1) path.add(0, new Park(goal, goalInfo.getDirection(), goalInfo.getPark()) );
-		//else this is the starting point, not a parking space
-		else path.add(0, new Step());
+		//give parking information
+		path.add(new Park(goal, goalInfo.getDirection(), goalInfo.getPark()));
+		
 		goals.remove(goalInfo);//we already found this goal, so remove it
 		Road current = goal;
 		while(current.getG_value() != 0) {

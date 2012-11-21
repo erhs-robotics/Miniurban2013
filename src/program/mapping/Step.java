@@ -13,7 +13,7 @@ public class Step {
 	}
 	
 	public void print() {
-	
+		System.out.println("Finish");	
 	}
 
 }
