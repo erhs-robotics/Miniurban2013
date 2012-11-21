@@ -4,30 +4,32 @@ import java.util.ArrayList;
 
 public class Mapper {
 
-	//ArrayList<Road> path = new ArrayList<Road>();	
-	//ArrayList<String> path = new ArrayList<String>();//String just for now because it is simpler
-	int pathIndex = 0;
-	
-
 	public Mapper() {
 		
 	}
 	
 	public ArrayList<Step> getPath(Road current, ArrayList<Goal> goals) throws Exception {
+		//Store were we started so we can return here at the end
 		Goal start = new Goal(current.getName(), 0, Direction.None);
+		//store start in a convenient list so we can pass it to findPath()
 		ArrayList<Goal> _start = new ArrayList<Goal>();
 		_start.add(start);
-		
+		//find the path to all the goals
 		ArrayList<Step> path = findPath(current, goals);
+		//find were we stopped
 		Road last = path.get(path.size() - 1).getRoad();
+		//find the path from where we stopped to where we started
 		ArrayList<Step> pathToStart = findPath(last, _start);
-		
+		//combine the two paths
 		for(int i=0;i<pathToStart.size();i++) {
 			path.add(pathToStart.get(i));
 		}
-		
+		//since were we started is not actually a parking space
+		//remove the last parking direction and just put in a blank Step
+		//object so we know that we finish here
 		path.remove(path.size() - 1);
 		path.add(new Step());
+		//return the complete path from the start to all the goals and back again
 		return path;		
 	}
 
