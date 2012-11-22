@@ -32,26 +32,35 @@ public class Localizer {
 	}
 	
 	public void move(double value) {
+		//Save the exact value of value
 		step += value;
-		int delta = (int) step;// The number of grid spaces moved
-		value %= 1;
+		//Truncate the decimal to get the number of grid spaces moved
+		int delta = (int) step;
+		//Save the decimal in step so we can add it to value in the next motion
+		step %= 1;
 		
 		// Save the current contents of grid to oldGrid
 		double[] oldGrid = new double[map.getLength()];
 		for(int i=0;i<grid.length;i++) {
 			oldGrid[i] = grid[i];
 		}
-		
+		//iterate over every grid
 		for(int i=0;i<oldGrid.length;i++) {
 			double p = 0;
 			int dir = (delta / Math.abs(delta));// 1 or -1 depending on robot's direction
 			if(i - delta >= 0 && i - delta <= oldGrid.length) {
-				p += oldGrid[i - delta] * pMoveExact;// 
+				//if we move exactly what we predicted, then we came from
+				//delta steps to the left. So the p(i) being correct
+				//is the grid delta steps back (i - delta) * the probability our movement prediction
+				//is correct
+				p += oldGrid[i - delta] * pMoveExact;
 			}
 			if(i - delta - dir >= 0 && i - delta - dir <= oldGrid.length) {
+				//if we underestimated the movement then we came from delta + a little more steps back				
 				p += oldGrid[i - delta - dir] * pMoveOvershoot;
 			}
 			if(i - delta + dir >= 0 && i - delta + dir <= oldGrid.length) {
+				//if we overestimated the movement then we came from a little less then delta steps back
 				p += oldGrid[i - delta + dir] * pMoveUnderShoot;
 			}
 			
@@ -59,12 +68,14 @@ public class Localizer {
 		}
 		normalize();
 	}
-	
+	//ensures that all the grid cells add up to one
 	private void normalize() {
 		double sum = 0;
+		//find the sum off all the grids
 		for(int i=0;i<grid.length;i++) {
 			sum += grid[i];
 		}
+		//divide every cell by the sum
 		for(int i=0;i<grid.length;i++) {
 			grid[i] /= sum;
 		}
