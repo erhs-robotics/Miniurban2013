@@ -108,8 +108,8 @@ public class Road {
 		return length;
 	}
 	
-	public double getCost() {// Returns the cost of traversing a Road
-		return length * speed;
+	public double getCost() {// Returns the cost of traversing a Road (how long it takes)
+		return length / speed;
 	}
 	
 	public boolean hasExpandedRightParent() {

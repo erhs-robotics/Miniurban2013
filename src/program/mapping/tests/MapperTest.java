@@ -59,11 +59,11 @@ public class MapperTest {
 	
 	public void test1() throws Exception {
 		Road R0 = new Road("R0", 1);
-		Road R1 = new Road("R1", 1);
-		Road R2 = new Road("R2", 1);
+		Road R1 = new Road("R1", 10);
+		Road R2 = new Road("R2", 5);
 		Road R3 = new Road("R3", 1);
-		Road R4 = new Road("R4", 2);
-		Road R5 = new Road("R5", 2);
+		Road R4 = new Road("R4", 2, 0.5);
+		Road R5 = new Road("R5", 2, 0.5);
 		Road R6 = new Road("R6", 1);
 		Road R7 = new Road("R7", 1);
 		Road R8 = new Road("R8", 1);
