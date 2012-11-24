@@ -2,8 +2,6 @@ package program.mapping;
 
 import java.util.ArrayList;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 public class Mapper {
 
 	public Mapper() {
