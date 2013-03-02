@@ -54,7 +54,9 @@ public class Robot {
 		if (leftPID) {
 			color = leftColorSensor.getColorID();
 			if (color == Color.WHITE) {
+				
 				colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLACK);
+				System.out.println(colorValue);
 				return this.leftPID.doPID(colorValue);
 			}
 			else if (color == Color.YELLOW) {
@@ -85,7 +87,7 @@ public class Robot {
 		float speed = .6f;
 		float value = doPID(true);
 		System.out.println(value);
-		tankDrive(speed - (speed * value), speed + (speed * value));
+		//tankDrive(speed - (speed * value), speed + (speed * value));
 	}
 	public void followRightLine() {
 		float speed = .6f;
