@@ -7,7 +7,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Robot robot = new Robot();
-		robot.setPIDConstants(1.0f, 0.0025f, 0.05f, 1, 0, 0);
+		robot.setPIDConstants(1.0f, 0.0f, 5.0f, 1.0f, 0.0f, 0.0f);
 		while (!Button.ENTER.isDown()) {
 			//System.out.println("Go");
 			//Mapper mapper = new Mapper();
@@ -15,7 +15,7 @@ public class Main {
 			//ArrayList<Goals>;
 			//ArrayList<Step> = mapper.getPath(currentRoad, 
 			//System.out.println(getColorString(robot.getMidColor()));
-			robot.followLeftLine();
+			robot.followLeftLine(false);
 			//String midColor = getColorString(robot.getMidColor());
 			//System.out.println(midColor);
 			/*

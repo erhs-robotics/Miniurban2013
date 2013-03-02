@@ -27,8 +27,11 @@ public class Robot {
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
-		leftPID = new PIDController(255, 50);
-		rightPID = new PIDController(255, 50);
+		leftPID = new PIDController(60, 5);
+		rightPID = new PIDController(55, 5);
+		//leftPID.setPIDParam(PIDController.PID_LIMITLOW, -55);
+		//leftPID.setPIDParam(PIDController.PID_LIMITHIGH, 55);
+		//rightPID.setPIDParam(PIDController.PID_LIMITHIGH, 55);
 	}
 	
 	public Color getMidColor() {
@@ -53,19 +56,24 @@ public class Robot {
 		int color;
 		if (leftPID) {
 			color = leftColorSensor.getColorID();
-			if (color == Color.WHITE) {
-				
+			/*if (color == Color.WHITE) {*/
 				colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLACK);
-				System.out.println(colorValue);
+				//if (colorValue > 75) colorValue = 75;
+				//System.out.println(colorValue);
 				return this.leftPID.doPID(colorValue);
-			}
+			//}
+			/*
 			else if (color == Color.YELLOW) {
 				colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW);
 				return this.leftPID.doPID(colorValue);
 			}
-			else {
-				return 0;
+			else if (color == Color.GREEN) {
+				return -5f;
 			}
+			else {
+				return .5f;
+			}
+			*/
 		}
 		else {
 			color = rightColorSensor.getColorID();
@@ -83,11 +91,18 @@ public class Robot {
 		}
 	}
 	
-	public void followLeftLine() {
-		float speed = .6f;
+	public void followLeftLine(boolean iscircle) {
+		float speed = 1f;
 		float value = doPID(true);
-		System.out.println(value);
-		//tankDrive(speed - (speed * value), speed + (speed * value));
+		if(iscircle) {
+			value /= 100f;
+		} else {
+			value /= 200f;
+		}
+		//System.out.println(value);
+		System.out.println((speed - (speed * value)) + ", " + (speed + (speed * value)));
+		
+		tankDrive(speed - (speed * value), speed + (speed * value));
 	}
 	public void followRightLine() {
 		float speed = .6f;
