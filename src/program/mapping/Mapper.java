@@ -432,6 +432,33 @@ public class Mapper {
         R60.setRightChild(R43);
         R60.setStraightChild(R59);
         
+        R61.setStraightChild(R62);
+        
+        R62.setLeftChild(R52);
+        R62.setStraightChild(R63);
+        
+        R63.setRightChild(R30);
+        
+        R64.setStraightChild(R65);
+        R64.setLeftChild(R67);
+        
+        R65.setLeftChild(R36);
+        R65.setStraightChild(R66);
+        
+        R66.setLeftChild(R4);
+        
+        R67.setRightChild(R69);
+        R67.setStraightChild(R68);
+        
+        R68.setStraightChild(R64);
+        
+        R69.setStraightChild(R70);
+        R69.setRightChild(R45);
+        
+        R70.setLeftChild(R26);
+        R70.setStraightChild(R27);
+        
+        R71.setLeftChild(R62);
         
 
         return start;
