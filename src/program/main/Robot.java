@@ -1,11 +1,11 @@
 package program.main;
 
-import lejos.nxt.ColorSensor;
-import lejos.nxt.ColorSensor.Color;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.util.PIDController;
 import program.main.MathUtils;
+import lejos.nxt.addon.ColorHTSensor;
+import lejos.robotics.Color;
 
 public class Robot {
 	
@@ -14,7 +14,7 @@ public class Robot {
 	private final double TRACKWIDTH = 4;
 	
 	private final NXTRegulatedMotor leftMotor, rightMotor;
-	private ColorSensor leftColorSensor, midColorSensor, rightColorSensor;
+	private ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
 	private DifferentialPilot pilot;
 	
 	private PIDController leftPID;
@@ -24,19 +24,15 @@ public class Robot {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
 		rightMotor = new NXTRegulatedMotor(RoboMap.RIGHT_MOTOR_PORT);
 		pilot = new DifferentialPilot(WHEELDIAMETER, TRACKWIDTH, leftMotor, rightMotor);
-		leftColorSensor = new ColorSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
-		midColorSensor = new ColorSensor(RoboMap.MID_COLOR_SENSOR_PORT);
-		rightColorSensor = new ColorSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
+		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
+		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
+		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
+		leftPID = new PIDController(255, 50);
+		rightPID = new PIDController(255, 50);
 	}
 	
-	public Color getLeftColor() {
-		return leftColorSensor.getColor();
-	}
 	public Color getMidColor() {
 		return midColorSensor.getColor();
-	}
-	public Color getRightColor() {
-		return rightColorSensor.getColor();
 	}
 
 	public void setPIDConstants(float left_kp, float left_ki, float left_kd,
@@ -52,16 +48,50 @@ public class Robot {
 		leftPID.setPIDParam(PIDController.PID_SETPOINT, left_setpoint);
 		rightPID.setPIDParam(PIDController.PID_SETPOINT, right_setpoint);
 	}
-	public int doLeftPID(Color left_value) {
-		return leftPID.doPID(left_value);
-	}
-	public int doRightPID(Color right_value) {
-		return rightPID.doPID(right_value);
+	public float doPID (boolean leftPID) {
+		int colorValue;
+		int color;
+		if (leftPID) {
+			color = leftColorSensor.getColorID();
+			if (color == Color.WHITE) {
+				colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLACK);
+				return this.leftPID.doPID(colorValue);
+			}
+			else if (color == Color.YELLOW) {
+				colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW);
+				return this.leftPID.doPID(colorValue);
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			color = rightColorSensor.getColorID();
+			if (color == Color.WHITE) {
+				colorValue = rightColorSensor.getRGBComponent(ColorHTSensor.BLACK);
+				return this.rightPID.doPID(colorValue);
+			}
+			else if (color == Color.YELLOW) {
+				colorValue = rightColorSensor.getRGBComponent(ColorHTSensor.YELLOW);
+				return this.rightPID.doPID(colorValue);
+			}
+			else {
+				return 0;
+			}
+		}
 	}
 	
 	public void followLeftLine() {
-		float speed = .8f;
-		tankDrive(doLeftPID(getLeftColor()) * speed, speed)
+		float speed = .6f;
+		float value = doPID(true);
+		System.out.println(value);
+		tankDrive(speed - (speed * value), speed + (speed * value));
+	}
+	public void followRightLine() {
+		float speed = .6f;
+		float value = doPID(false);
+		System.out.println(value);
+		tankDrive(speed + (speed * value), speed - (speed * value));
 	}
 	public void tankDrive(float left, float right) {
 		//clamp values between [-1, 1]
