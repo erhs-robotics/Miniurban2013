@@ -177,5 +177,134 @@ public class Mapper {
 		
 		assert open.size() > 0;
 		return null;//null because we did not find the goal yet
-	}	
+	}
+	
+	public static Road getMap() {
+		Road start = new Road("start", 1);
+		Road R0 = new Road("R0", 1);
+		Road R1 = new Road("R1", 1);
+		Road R2 = new Road("R2", 1);
+		Road R3 = new Road("R3", 1);
+		Road R4 = new Road("R4", 1);
+		Road R5 = new Road("R5", 1);
+		Road R6 = new Road("R6", 1);
+		Road R7 = new Road("R7", 1);
+		Road R8 = new Road("R8", 1);
+		Road R9 = new Road("R9", 1);
+		Road R10 = new Road("R10", 1);
+		Road R11 = new Road("R11", 1);
+		Road R12 = new Road("R12", 1);
+		Road R13 = new Road("R13", 1);
+		Road R14 = new Road("R14", 1);
+		Road R15 = new Road("R15", 1);
+		Road R16 = new Road("R16", 1);
+		Road R17 = new Road("R17", 1);
+		Road R18 = new Road("R18", 1);
+		Road R19 = new Road("R19", 1);
+		Road R20 = new Road("R20", 1);
+		Road R21 = new Road("R21", 1);
+		Road R22 = new Road("R22", 1);
+		Road R23 = new Road("R23", 1);
+		Road R24 = new Road("R24", 1);
+		Road R25 = new Road("R25", 1);
+		Road R26 = new Road("R26", 1);
+		Road R27 = new Road("R27", 1);
+		Road R28 = new Road("R28", 1);
+		Road R29 = new Road("R29", 1);
+		Road R30 = new Road("R30", 1);
+		Road R31 = new Road("R31", 1);
+		Road R32 = new Road("R32", 1);
+		Road R33 = new Road("R33", 1);
+		Road R34 = new Road("R34", 1);
+		Road R35 = new Road("R35", 1);
+		Road R36 = new Road("R36", 1);
+		Road R37 = new Road("R37", 1);
+		Road R38 = new Road("R38", 1);
+		Road R39 = new Road("R39", 1);
+		Road R40 = new Road("R40", 1);
+		Road R41 = new Road("R41", 1);
+		Road R42 = new Road("R42", 1);
+		Road R43 = new Road("R43", 1);
+		Road R44 = new Road("R44", 1);
+		Road R45 = new Road("R45", 1);
+		Road R46 = new Road("R46", 1);
+		Road R47 = new Road("R47", 1);
+		Road R48 = new Road("R48", 1);
+		Road R49 = new Road("R49", 1);
+		Road R50 = new Road("R50", 1);
+		Road R51 = new Road("R51", 1);
+		Road R52 = new Road("R52", 1);
+		Road R53 = new Road("R53", 1);
+		Road R54 = new Road("R54", 1);
+		Road R55 = new Road("R55", 1);
+		Road R56 = new Road("R56", 1);
+		Road R57 = new Road("R57", 1);
+		Road R58 = new Road("R58", 1);
+		Road R59 = new Road("R59", 1);
+		Road R60 = new Road("R60", 1);
+		Road R61 = new Road("R61", 1);
+		Road R62 = new Road("R62", 1);
+		Road R63 = new Road("R63", 1);
+		Road R64 = new Road("R64", 1);
+		Road R65 = new Road("R65", 1);
+		Road R66 = new Road("R66", 1);
+		Road R67 = new Road("R67", 1);
+		Road R68 = new Road("R68", 1);
+		Road R69 = new Road("R69", 1);
+		Road R70 = new Road("R70", 1);
+		Road R71 = new Road("R71", 1);
+		
+		start.setLeftChild(R23);
+		
+		R0.setLeftChild(R1);
+		
+		R1.setStraightChild(R3);
+		R1.setLeftChild(R2);
+		
+		R2.setStraightChild(R4);
+		
+		R3.setStraightChild(R5);
+		
+		R4.setLeftChild(R5);
+		
+		R5.setStraightChild(R6);
+		R5.setLeftChild(R7);
+		
+		R6.setStraightChild(R8);
+		R6.setRightChild(R9);
+		
+		R7.setStraightChild(R24);
+		R7.setRightChild(R38);
+		
+		R8.setStraightChild(R10);
+		R8.setLeftChild(R11);
+		
+		R9.setRightChild(R40);
+		
+		R10.setRightChild(R12);
+		R10.setLeftChild(R56);
+		
+		R11.setStraightChild(R71);
+		R11.setLeftChild(R43);
+		
+		R12.setLeftChild(R14);
+		
+		//no R13
+		
+		R14.setStraightChild(R15);
+		
+		R15.setLeftChild(R16);
+		
+		R16.setLeftChild(R39);
+		R16.setStraightChild(R17);
+		
+		R17.setLeftChild(R50);
+		R17.setStraightChild(R18);
+		
+		
+		
+		
+		return start;
+
+	}
 }
