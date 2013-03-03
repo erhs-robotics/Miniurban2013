@@ -2,10 +2,11 @@ package program.main;
 
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.robotics.navigation.DifferentialPilot;
-import lejos.util.PIDController;
 import program.main.MathUtils;
 import lejos.nxt.addon.ColorHTSensor;
 import lejos.robotics.Color;
+
+import program.control.PIDControllerX;
 
 public class Robot {
 	
@@ -17,8 +18,7 @@ public class Robot {
 	private ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
 	private DifferentialPilot pilot;
 	
-	private PIDController leftPID;
-	private PIDController rightPID;
+	public PIDControllerX pid;
 	
 	public Robot() {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
@@ -27,31 +27,14 @@ public class Robot {
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
-		leftPID = new PIDController(60, 5);
-		rightPID = new PIDController(55, 5);
-		//leftPID.setPIDParam(PIDController.PID_LIMITLOW, -55);
-		//leftPID.setPIDParam(PIDController.PID_LIMITHIGH, 55);
-		//rightPID.setPIDParam(PIDController.PID_LIMITHIGH, 55);
+		pid = new PIDControllerX(1.0, 0.0, 5.0, 60);
 	}
 	
-	public Color getMidColor() {
-		return midColorSensor.getColor();
-	}
+	public Color getLeftColor() { return leftColorSensor.getColor(); }
+	public Color getMidColor() { return midColorSensor.getColor(); }
+	public Color getRightColor() { return rightColorSensor.getColor(); }
 
-	public void setPIDConstants(float left_kp, float left_ki, float left_kd,
-								float right_kp, float right_ki, float right_kd) {
-		leftPID.setPIDParam(PIDController.PID_KP, left_kp);
-		leftPID.setPIDParam(PIDController.PID_KI, left_ki);
-		leftPID.setPIDParam(PIDController.PID_KD, left_kd);
-		rightPID.setPIDParam(PIDController.PID_KP, right_kp);
-		rightPID.setPIDParam(PIDController.PID_KI, right_ki);
-		rightPID.setPIDParam(PIDController.PID_KD, right_kd);	
-	}
-	public void setPIDSetpoints(float left_setpoint, float right_setpoint) {
-		leftPID.setPIDParam(PIDController.PID_SETPOINT, left_setpoint);
-		rightPID.setPIDParam(PIDController.PID_SETPOINT, right_setpoint);
-	}
-	public float doPID (boolean leftPID) {
+	public double runPID (boolean leftPID) {
 		int colorValue;
 		int color;
 		if (leftPID) {
@@ -60,7 +43,7 @@ public class Robot {
 				colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLACK);
 				//if (colorValue > 75) colorValue = 75;
 				//System.out.println(colorValue);
-				return this.leftPID.doPID(colorValue);
+				return this.pid.getOutput(colorValue);
 			//}
 			/*
 			else if (color == Color.YELLOW) {
@@ -79,11 +62,11 @@ public class Robot {
 			color = rightColorSensor.getColorID();
 			if (color == Color.WHITE) {
 				colorValue = rightColorSensor.getRGBComponent(ColorHTSensor.BLACK);
-				return this.rightPID.doPID(colorValue);
+				return this.pid.getOutput(colorValue);
 			}
 			else if (color == Color.YELLOW) {
 				colorValue = rightColorSensor.getRGBComponent(ColorHTSensor.YELLOW);
-				return this.rightPID.doPID(colorValue);
+				return this.pid.getOutput(colorValue);
 			}
 			else {
 				return 0;
@@ -92,8 +75,8 @@ public class Robot {
 	}
 	
 	public void followLeftLine(boolean iscircle) {
-		float speed = 1f;
-		float value = doPID(true);
+		double speed = 1;
+		double value = runPID(true);
 		if(iscircle) {
 			value /= 100f;
 		} else {
@@ -101,22 +84,26 @@ public class Robot {
 		}
 		//System.out.println(value);
 		System.out.println((speed - (speed * value)) + ", " + (speed + (speed * value)));
-		
 		tankDrive(speed - (speed * value), speed + (speed * value));
 	}
-	public void followRightLine() {
-		float speed = .6f;
-		float value = doPID(false);
+	
+	public void followRightLine(boolean isCircle) {
+		double speed = .6f;
+		double value = runPID(false);
 		System.out.println(value);
 		tankDrive(speed + (speed * value), speed - (speed * value));
 	}
-	public void tankDrive(float left, float right) {
+	
+	public void tankDrive(double left, double right) {
 		//clamp values between [-1, 1]
 		left = MathUtils.clamp(left, -1, 1);
 		right = MathUtils.clamp(right, -1, 1);
 		
-		leftMotor.setSpeed(MAXSPEED * left);
-		rightMotor.setSpeed(MAXSPEED * right);
+		float leftDrive = (float) left;
+		float rightDrive = (float) right;
+		
+		leftMotor.setSpeed(MAXSPEED * leftDrive);
+		rightMotor.setSpeed(MAXSPEED * rightDrive);
 		leftMotor.forward();
 		rightMotor.forward();
 	}
@@ -137,5 +124,6 @@ public class Robot {
 	public void stop() {
 		pilot.stop();
 	}
+
 
 }
