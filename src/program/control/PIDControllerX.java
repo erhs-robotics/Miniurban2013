@@ -40,8 +40,8 @@ public class PIDControllerX {
 		this.minOutput = minOutput;
 		this.maxOutput = maxOutput;
 	}
-	public void disableOutputCaps(boolean disable) {
-		if (disable) capOutput = true;
+	public void enableOutputCaps(boolean enable) {
+		if (enable) capOutput = true;
 		else capOutput = false;
 	}
 	
