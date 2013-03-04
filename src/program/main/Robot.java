@@ -10,7 +10,7 @@ import program.control.PIDControllerX;
 
 public class Robot {
 	
-	private final float MAXSPEED = 2 * 360; // 2 RPM
+	private final float MAXSPEED = 2 * 360; // 2 RPS
 	private final double WHEELDIAMETER = 4;
 	private final double TRACKWIDTH = 4;
 	
@@ -27,7 +27,7 @@ public class Robot {
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
-		pid = new PIDControllerX(1.0, 0.0, 5.0, 60);
+		pid = new PIDControllerX((1.0/60.0), 0.0, 5.0, 60.0);
 	}
 	
 	public Color getLeftColor() { return leftColorSensor.getColor(); }
@@ -106,6 +106,17 @@ public class Robot {
 		rightMotor.setSpeed(MAXSPEED * rightDrive);
 		leftMotor.forward();
 		rightMotor.forward();
+	}
+	public void tankDrive(double left, double right, boolean cubeInputs) {
+		if (cubeInputs) {
+			left = MathUtils.clamp(left, -1, 1);
+			right = MathUtils.clamp(right, -1, 1);
+			left = left * left * left;
+			right = right * right * right;
+			tankDrive(left, right);
+		} else {
+			tankDrive(left, right);
+		}
 	}
 	public void displacementDrive(float speed, float displacement) {
 		displacement = MathUtils.clamp(displacement, -1, 1);
