@@ -47,7 +47,9 @@ public class Mapper {
         open.add(current);//to comply with expand assertions
         while (goal == null) {// while we have not hit a goal
             goal = expand(current, open, closed, goals);// Expand from the current node to the surrounding nodes
+            
             if (goal == null) {
+            	
                 current = getBestNode(open);// Picks the next current node that will most likely lead to the goal		
             }
         }
@@ -159,37 +161,43 @@ public class Mapper {
 
 
         //if child exists and we have not expanded it yet
-        if (current.hasRightChild() && !closed.contains(right)) {
+        if (current.hasRightChild() && !closed.contains(right) && !open.contains(right)) {
+        	assert !closed.contains(right);
             right.setG_value(current.getG_value() + right.getCost());//record the cost of getting here
             if (Goal.isGoal(goals, right)) {
-                assert !closed.contains(right);
+                
                 return right; //check if we hit one of the goals, if so return it
             }
+            System.out.println(current.getName() + "->" + right.getName());
 
             open.add(right);//add road to the open list so it can be expanded in the future
         }
 
-        if (current.hasLeftChild() && !closed.contains(left)) {
+        if (current.hasLeftChild() && !closed.contains(left) && !open.contains(left)) {
+        	assert !closed.contains(left);
             left.setG_value(current.getG_value() + left.getCost());
             if (Goal.isGoal(goals, left)) {
-                assert !closed.contains(left);
+                
                 return left;
             }
+            System.out.println(current.getName() + "->" + left.getName());
             open.add(left);
         }
+        
 
-        if (current.hasStraightChild() && !closed.contains(straight)) {
+        if (current.hasStraightChild() && !closed.contains(straight)  && !open.contains(straight)) {
+        	assert !closed.contains(straight);
             straight.setG_value(current.getG_value() + straight.getCost());
             if (Goal.isGoal(goals, straight)) {
-                assert !closed.contains(straight);
+                
                 return straight;
             }
+            System.out.println(current.getName() + "->" + straight.getName());
             open.add(straight);
-        }
-
+        }     
+        
         closed.add(current);//make sure we don't expand current again
         open.remove(current);//remove from open because it has already been expanded
-
         assert open.size() > 0;
         return null;//null because we did not find the goal yet
     }
@@ -288,7 +296,7 @@ public class Mapper {
         
 
         R6.setStraightChild(R8);
-        R6.setRightChild(R9);
+        R6.setLeftChild(R9);
 
         R7.setStraightChild(R24);
         R7.setRightChild(R38);
@@ -298,7 +306,7 @@ public class Mapper {
 
         R9.setRightChild(R40);
 
-        R10.setRightChild(R12);
+        R10.setStraightChild(R12);
         R10.setLeftChild(R56);
 
         R11.setStraightChild(R71);

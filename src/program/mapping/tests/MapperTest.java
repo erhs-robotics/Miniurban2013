@@ -121,11 +121,9 @@ public class MapperTest {
 		Road map = Mapper.getMap();
 		ArrayList<Goal> goals = new ArrayList<Goal>();
 		
-		goals.add(new Goal("R1", 2, Direction.Left));
+		//goals.add(new Goal("R1", 2, Direction.Left));
 		goals.add(new Goal("R15", 4, Direction.Right));
-		goals.add(new Goal("R41", 2, Direction.Left));
-		goals.add(new Goal("R69", 4, Direction.Right));
-		goals.add(new Goal("R36", 4, Direction.Right));
+		
 		goals.add(new Goal("R55", 4, Direction.Right));
 		//goals.add(new Goal("start", 0, Direction.Left));
 		
