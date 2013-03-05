@@ -422,16 +422,14 @@ public class Mapper {
         R56.setRightChild(R44);
         R56.setStraightChild(R57);
         
-        R57.setLeftChild(R55);
         R57.setStraightChild(R58);
         
-        R58.setRightChild(R16);
+        R58.setLeftChild(R16);
         
         R59.setRightChild(R55);
         R59.setStraightChild(R39);
         
-        R60.setRightChild(R43);
-        R60.setStraightChild(R59);
+        R60.setRightChild(R10);        
         
         R61.setStraightChild(R62);
         
