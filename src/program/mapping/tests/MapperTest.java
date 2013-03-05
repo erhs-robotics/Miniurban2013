@@ -117,11 +117,27 @@ public class MapperTest {
 		
 	}
 	
+	public void test2() throws Exception {
+		Road map = Mapper.getMap();
+		ArrayList<Goal> goals = new ArrayList<Goal>();
+		
+		goals.add(new Goal("R3", 2, Direction.Left));
+		goals.add(new Goal("R10", 4, Direction.Right));
+		
+		Mapper mapper = new Mapper();
+		ArrayList<Step> path = mapper.getPath(map, goals);
+		
+		
+		for(int i=0;i<path.size();i++) {
+			path.get(i).print();
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 		System.out.println("Test Started");
 		MapperTest mapperTest = new MapperTest();
 		
-		mapperTest.test1();
+		mapperTest.test2();
 
 		System.out.println("Test Finished");
 	}
