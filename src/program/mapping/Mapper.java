@@ -21,15 +21,15 @@ public class Mapper {
         //find were we stopped
         Road last = path.get(path.size() - 1).getRoad();
         //find the path from where we stopped to where we started
-        ArrayList<Step> pathToStart = findPath(last, _start);
+       // ArrayList<Step> pathToStart = findPath(last, _start);
         //combine the two paths
-        for (int i = 0; i < pathToStart.size(); i++) {
-            path.add(pathToStart.get(i));
-        }
+        //for (int i = 0; i < pathToStart.size(); i++) {
+        //    path.add(pathToStart.get(i));
+        //}
         //since were we started is not actually a parking space
         //remove the last parking direction and just put in a blank Step
         //object so we know that we finish here
-        path.remove(path.size() - 1);
+        //path.remove(path.size() - 1);
         path.add(new Step());
         //return the complete path from the start to all the goals and back again
         return path;
@@ -85,6 +85,7 @@ public class Mapper {
 
         goals.remove(goalInfo);//we already found this goal, so remove it
         Road current = goal;
+        System.out.println(goal.getName());
         while (current.getG_value() != 0) {//while we have not found our starting point: a g_value of 0
             //place all the parents of current in convenient variables
             //get_parent returns null if no parent
@@ -110,11 +111,11 @@ public class Mapper {
 
             //record in path, reverses directions because this function travels backwards: from goal to start
             if (best == right) {
-                path.add(0, new Turn(right, Direction.Left));
+                path.add(0, new Turn(current, Direction.Left));
             } else if (best == left) {
-                path.add(0, new Turn(left, Direction.Right));
+                path.add(0, new Turn(current, Direction.Right));
             } else if (best == straight) {
-                path.add(0, new Turn(straight, Direction.Straight));
+                path.add(0, new Turn(current, Direction.Straight));
             } else {
                 assert false;//code should not reach this!
             }

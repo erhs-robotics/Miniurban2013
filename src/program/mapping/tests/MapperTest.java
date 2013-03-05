@@ -121,8 +121,8 @@ public class MapperTest {
 		Road map = Mapper.getMap();
 		ArrayList<Goal> goals = new ArrayList<Goal>();
 		
-		goals.add(new Goal("R3", 2, Direction.Left));
-		goals.add(new Goal("R10", 4, Direction.Right));
+		goals.add(new Goal("R1", 2, Direction.Left));
+		goals.add(new Goal("R15", 4, Direction.Right));
 		
 		Mapper mapper = new Mapper();
 		ArrayList<Step> path = mapper.getPath(map, goals);
