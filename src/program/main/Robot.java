@@ -43,28 +43,22 @@ public class Robot {
 	}
 
 	public double runPID (boolean leftPID) {
-		int colorID;
-		int colorValue;
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
-		colorID = colorSensor.getColorID();
+		int colorID = colorSensor.getColorID();
+		int colorValue = colorSensor.getRGBComponent(ColorHTSensor.BLACK);
 		if (colorID == Color.WHITE) {
-			colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLACK);
-			return this.pid.getOutput(colorValue);
+			return this.pid.getOutput(colorValue, RoboMap.PID_WHITE_SETPOINT);
 		}
 		else if (colorID == Color.YELLOW) {
-			colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW);
-			return this.pid.getOutput(colorValue);
+			return this.pid.getOutput(colorValue, RoboMap.PID_YELLOW_SETPOINT);
 		}
 		else if (colorID == Color.BLUE) {
-			colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLUE);
-			return this.pid.getOutput(colorValue);
+			return this.pid.getOutput(colorValue, RoboMap.PID_BLUE_SETPOINT);
 		}
 		else if (colorID == Color.GREEN) {
 			return -.2;
 		}
-		else {
-			return .1;
-		}
+		return .1;
 	}
 	
 	public void followLeftLine(boolean isCircle) {
