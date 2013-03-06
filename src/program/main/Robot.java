@@ -7,6 +7,7 @@ import lejos.nxt.addon.ColorHTSensor;
 import lejos.robotics.Color;
 import lejos.robotics.navigation.DifferentialPilot;
 import program.control.PIDControllerX;
+import program.mapping.Direction;
 import program.mapping.Step;
 
 public class Robot {
@@ -35,6 +36,11 @@ public class Robot {
 	public Color getLeftColor() { return leftColorSensor.getColor(); }
 	public Color getMidColor() { return midColorSensor.getColor(); }
 	public Color getRightColor() { return rightColorSensor.getColor(); }
+	
+	public boolean checkForStop() {
+		if ( getMidColor().getColor() == Color.RED)	return true;
+		else return false;		
+	}
 
 	public double runPID (boolean leftPID) {
 		int colorID;
@@ -69,9 +75,9 @@ public class Robot {
 		}
 		//System.out.println(value);
 		//System.out.println((speed - (speed * value)) + ", " + (speed + (speed * value)));
-		tankDrive(speed - (speed * value), speed + (speed * value));
+		//tankDrive(speed - (speed * value), speed + (speed * value));
+		tankDrive(speed - value, speed + value);
 	}
-	
 	public void followRightLine(boolean isCircle) {
 		double speed = .5;
 		double value = runPID(false);
@@ -80,16 +86,40 @@ public class Robot {
 		}
 		//System.out.println(value);mine	
 		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));
-		tankDrive(speed + (speed * value), speed - (speed * value));
+		//tankDrive(speed + (speed * value), speed - (speed * value));
+		tankDrive(speed + value, speed - value);
 	}
 	public void turnLeft() {
-		
+		pilot.travel(5);
+		followLeftLine(false);
 	}
 	public void turnRight() {
-		
+		pilot.travel(5);
+		followRightLine(false);
 	}
 	public void followSteps(ArrayList<Step> steps) {
-
+		Step currentStep, nextStep;
+		while (steps.size() > 1) {
+			currentStep = steps.get(0);
+			nextStep = steps.get(1);
+			if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Right) {
+				do followRightLine(false); while (!checkForStop()); 
+				turnRight();
+			}
+			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Left) {
+				do followLeftLine(false); while (!checkForStop());
+				turnLeft();
+			}
+			else if (currentStep.getRoad().isCircle() && nextStep.getDirection() == Direction.Left) {
+				do followRightLine(true); while (!checkForStop());
+				turnLeft();
+			}
+			else if (currentStep.getRoad().isCircle() && nextStep.getDirection() == Direction.Right) {
+				do followLeftLine(true); while (!checkForStop()); 
+				turnRight();
+			}
+			steps.remove(0);
+		}
 	}
 
 	public void tankDrive(double left, double right) {
