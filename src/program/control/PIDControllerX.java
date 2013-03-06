@@ -67,6 +67,10 @@ public class PIDControllerX {
 		
 		return correction;	
 	}
+	public double getOutput(double input, double setpoint) {
+		setSetpoint(setpoint);
+		return getOutput(input);
+	}
 	
 	public void reset() {
 		this.firstRun = true;
