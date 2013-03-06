@@ -8,6 +8,7 @@ import lejos.robotics.Color;
 import lejos.robotics.navigation.DifferentialPilot;
 import program.control.PIDControllerX;
 import program.mapping.Direction;
+import program.mapping.Park;
 import program.mapping.Step;
 
 public class Robot {
@@ -136,7 +137,15 @@ public class Robot {
 				waitOneSecond();
 				pilot.travel(6);
 			}
-			// ToDo: Add in parking
+			else if (currentStep.getDirection() == Direction.Straight && nextStep instanceof Park) {
+				Park nextPark = (Park) nextStep;
+				if (nextPark.getDirection() == Direction.Left) {
+
+				}
+				else if (nextPark.getDirection() == Direction.Right) {
+
+				}
+			}
 			steps.remove(0);
 		}
 	}
