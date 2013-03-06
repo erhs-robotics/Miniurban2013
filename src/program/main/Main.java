@@ -13,6 +13,7 @@ public class Main {
 			Road currentRoad;
 			ArrayList<Goal> goals;
 			ArrayList<Step> steps = mapper.getPath(currentRoad, goals);
+			robot.followSteps(steps);
 			*/
 			
 			robot.followLeftLine(false);
