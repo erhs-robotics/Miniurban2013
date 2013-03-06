@@ -1,9 +1,12 @@
 package program.mapping;
 
+import java.util.ArrayList;
+
 public class Road {
 
 	private Road rightChild = null, leftChild = null, straightChild = null;
-	private Road rightParent = null, leftParent = null, straightParent = null;
+	public Road straightParent = null;
+	public ArrayList<Road> rightParents = new ArrayList<Road>(), leftParents = new ArrayList<Road>();
 	private String name;
 	private double g_value = -1; //the number of steps it takes to get to this road
 	                               // -1 means not expanded
@@ -49,11 +52,11 @@ public class Road {
 	}
 	
 	public void setLeftParent(Road leftParent) {
-		this.leftParent = leftParent;
+		this.leftParents.add(leftParent);
 	}
 	
 	public void setRightParent(Road rightParent) {
-		this.rightParent = rightParent;
+		this.rightParents.add(rightParent);
 	}
 	
 	public void setStraightParent(Road straightParent) {
@@ -80,12 +83,12 @@ public class Road {
 		return straightChild;
 	}	
 	
-	public Road getLeftParent() {
-		return leftParent;
+	public ArrayList<Road> getLeftParents() {
+		return leftParents;
 	}
 	
-	public Road getRightParent() {
-		return rightParent;
+	public ArrayList<Road> getRightParents() {
+		return rightParents;
 	}
 	
 	public Road getStraightParent() {
@@ -112,12 +115,36 @@ public class Road {
 		return length / speed;
 	}
 	
-	public boolean hasExpandedRightParent() {
-		return rightParent != null && rightParent.g_value != -1;
+	public boolean hasExpandedRightParent() {		
+		for(Road r : rightParents) {
+			if(r.getG_value() != -1) return true;
+		}		
+		return false;
 	}
 	
 	public boolean hasExpandedLeftParent() {
-		return leftParent != null && leftParent.g_value != -1;
+		for(Road r : leftParents) {
+			if(r.getG_value() != -1) return true;
+		}		
+		return false;
+	}
+	
+	public ArrayList<Road> getExpandedRightParents() {
+		ArrayList<Road> parents = new ArrayList<Road>();
+		for(Road r : rightParents) {
+			if(r.getG_value() != -1) parents.add(r);
+		
+		}
+		return parents;
+	}
+	
+	public ArrayList<Road> getExpandedLeftParents() {
+		ArrayList<Road> parents = new ArrayList<Road>();
+		for(Road r : leftParents) {
+			if(r.getG_value() != -1) parents.add(r);
+		
+		}
+		return parents;
 	}
 	
 	public boolean hasExpandedStraightParent() {

@@ -28,7 +28,7 @@ public class MapTest {
 	}
 	
 	void test1() {
-		Road map = Mapper.getMap();
+		Road map = program.mapping.Map.getMap();
 		System.out.println(map.getChildLeft().getChildLeft().getChildLeft().getName());
 	}
 	
