@@ -1,12 +1,13 @@
 package program.main;
 
+import java.util.ArrayList;
+
 import lejos.nxt.NXTRegulatedMotor;
-import lejos.robotics.navigation.DifferentialPilot;
-import program.main.MathUtils;
 import lejos.nxt.addon.ColorHTSensor;
 import lejos.robotics.Color;
-
+import lejos.robotics.navigation.DifferentialPilot;
 import program.control.PIDControllerX;
+import program.mapping.Step;
 
 public class Robot {
 	
@@ -27,7 +28,8 @@ public class Robot {
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
-		pid = new PIDControllerX((1.0/60.0), 0.0, 5.0, 60.0);
+		pid = new PIDControllerX((1.0/120.0), 0.0, 5.0, 60.0);
+		pid.setOutputCaps(-.5, .5);
 	}
 	
 	public Color getLeftColor() { return leftColorSensor.getColor(); }
@@ -35,65 +37,61 @@ public class Robot {
 	public Color getRightColor() { return rightColorSensor.getColor(); }
 
 	public double runPID (boolean leftPID) {
+		int colorID;
 		int colorValue;
-		int color;
-		if (leftPID) {
-			color = leftColorSensor.getColorID();
-			/*if (color == Color.WHITE) {*/
-				colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLACK);
-				//if (colorValue > 75) colorValue = 75;
-				//System.out.println(colorValue);
-				return this.pid.getOutput(colorValue);
-			//}
-			/*
-			else if (color == Color.YELLOW) {
-				colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW);
-				return this.leftPID.doPID(colorValue);
-			}
-			else if (color == Color.GREEN) {
-				return -5f;
-			}
-			else {
-				return .5f;
-			}
-			*/
+		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
+		colorID = colorSensor.getColorID();
+		if (colorID == Color.WHITE) {
+			colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLACK);
+			return this.pid.getOutput(colorValue);
+		}
+		else if (colorID == Color.YELLOW) {
+			colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW);
+			return this.pid.getOutput(colorValue);
+		}
+		else if (colorID == Color.BLUE) {
+			colorValue = leftColorSensor.getRGBComponent(ColorHTSensor.BLUE);
+			return this.pid.getOutput(colorValue);
+		}
+		else if (colorID == Color.GREEN) {
+			return -.2;
 		}
 		else {
-			color = rightColorSensor.getColorID();
-			if (color == Color.WHITE) {
-				colorValue = rightColorSensor.getRGBComponent(ColorHTSensor.BLACK);
-				return this.pid.getOutput(colorValue);
-			}
-			else if (color == Color.YELLOW) {
-				colorValue = rightColorSensor.getRGBComponent(ColorHTSensor.YELLOW);
-				return this.pid.getOutput(colorValue);
-			}
-			else {
-				return 0;
-			}
+			return .1;
 		}
 	}
 	
-	public void followLeftLine(boolean iscircle) {
-		double speed = 1;
+	public void followLeftLine(boolean isCircle) {
+		double speed = .5;
 		double value = runPID(true);
-		if(iscircle) {
-			value /= 100f;
-		} else {
-			value /= 200f;
+		if(isCircle) {
+			value *= 2;
 		}
 		//System.out.println(value);
-		System.out.println((speed - (speed * value)) + ", " + (speed + (speed * value)));
+		//System.out.println((speed - (speed * value)) + ", " + (speed + (speed * value)));
 		tankDrive(speed - (speed * value), speed + (speed * value));
 	}
 	
 	public void followRightLine(boolean isCircle) {
-		double speed = .6f;
+		double speed = .5;
 		double value = runPID(false);
-		System.out.println(value);
+		if (isCircle) {
+			value *= 2;
+		}
+		//System.out.println(value);mine	
+		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));
 		tankDrive(speed + (speed * value), speed - (speed * value));
 	}
-	
+	public void turnLeft() {
+		
+	}
+	public void turnRight() {
+		
+	}
+	public void followSteps(ArrayList<Step> steps) {
+
+	}
+
 	public void tankDrive(double left, double right) {
 		//clamp values between [-1, 1]
 		left = MathUtils.clamp(left, -1, 1);
@@ -135,6 +133,5 @@ public class Robot {
 	public void stop() {
 		pilot.stop();
 	}
-
 
 }
