@@ -15,13 +15,14 @@ public class Robot {
 	private final float MAXSPEED = 2 * 360; // 2 RPS
 	private final double WHEELDIAMETER = 4;
 	private final double TRACKWIDTH = 4;
+	private final int TURN_TIME_MS = 400;
 	
 	private final NXTRegulatedMotor leftMotor, rightMotor;
 	private ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
 	private DifferentialPilot pilot;
 	
 	public PIDControllerX pid;
-	
+		
 	public Robot() {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
 		rightMotor = new NXTRegulatedMotor(RoboMap.RIGHT_MOTOR_PORT);
@@ -33,8 +34,8 @@ public class Robot {
 		pid.setOutputCaps(-.5, .5);
 	}
 	
-	public Color getLeftColor() { return leftColorSensor.getColor(); }
-	public Color getMidColor() { return midColorSensor.getColor(); }
+	public Color getLeftColor()  { return leftColorSensor.getColor(); }
+	public Color getMidColor()   { return midColorSensor.getColor(); }
 	public Color getRightColor() { return rightColorSensor.getColor(); }
 	
 	public boolean checkForStop() {
@@ -85,11 +86,25 @@ public class Robot {
 	}
 	public void turnLeft() {
 		pilot.travel(5);
-		followLeftLine(false);
+		/*
+		tankDrive(-1, 1);
+		try {
+			Thread.sleep(TURN_TIME_MS);
+		} catch (InterruptedException ex) { ex.printStackTrace(); }
+		*/
+		pilot.arc(0, 90);
+		stop();
 	}
 	public void turnRight() {
 		pilot.travel(5);
-		followRightLine(false);
+		/*
+		tankDrive(1, -1);
+		try {
+			Thread.sleep(TURN_TIME_MS);
+		} catch (InterruptedException ex) { ex.printStackTrace(); }
+		stop();
+		*/
+		pilot.arc(0, -90);
 	}
 	public void followSteps(ArrayList<Step> steps) {
 		Step currentStep, nextStep;
@@ -97,21 +112,31 @@ public class Robot {
 			currentStep = steps.get(0);
 			nextStep = steps.get(1);
 			if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Right) {
-				do followRightLine(false); while (!checkForStop()); 
+				do followRightLine(false); while (!checkForStop());
+				waitOneSecond();
 				turnRight();
 			}
 			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Left) {
 				do followLeftLine(false); while (!checkForStop());
+				waitOneSecond();
 				turnLeft();
 			}
 			else if (currentStep.getRoad().isCircle() && nextStep.getDirection() == Direction.Left) {
 				do followRightLine(true); while (!checkForStop());
+				waitOneSecond();
 				turnLeft();
 			}
 			else if (currentStep.getRoad().isCircle() && nextStep.getDirection() == Direction.Right) {
 				do followLeftLine(true); while (!checkForStop()); 
+				waitOneSecond();
 				turnRight();
 			}
+			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Straight) {
+				do followLeftLine(false); while(!checkForStop());
+				waitOneSecond();
+				pilot.travel(6);
+			}
+			// ToDo: Add in parking
 			steps.remove(0);
 		}
 	}
@@ -156,6 +181,13 @@ public class Robot {
 	}
 	public void stop() {
 		pilot.stop();
+	}
+	public void waitOneSecond() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException ex) { 
+			ex.printStackTrace(); 
+		}
 	}
 
 }
