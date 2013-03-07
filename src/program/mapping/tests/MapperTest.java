@@ -2,6 +2,8 @@ package program.mapping.tests;
 
 import java.util.ArrayList;
 
+import lejos.nxt.comm.RConsole;
+
 import program.mapping.Direction;
 import program.mapping.Goal;
 import program.mapping.Map;
@@ -140,10 +142,13 @@ public class MapperTest {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		RConsole.println("THIS IS R!!!!");
 		System.out.println("Test Started");
-		MapperTest mapperTest = new MapperTest();
+		Thread.sleep(2000);
 		
-		mapperTest.test2();
+		//MapperTest mapperTest = new MapperTest();
+		
+		//mapperTest.test2();
 
 		System.out.println("Test Finished");
 	}

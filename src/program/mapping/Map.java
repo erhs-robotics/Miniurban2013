@@ -343,21 +343,6 @@ public class Map {
         R71.setLeftChild(R62);
         
         
-        for(Road r: R44.rightParents) {
-        	System.out.print("Right: ");
-        	System.out.println(r.getName());
-        }
-        for(Road r: R44.leftParents) {
-        	System.out.print("Left: ");
-        	System.out.println(r.getName());
-        }
-        System.out.print("Straight:");
-        System.out.println(R44.straightParent.getName());
-        System.out.println("____________________________________");
-        
-
-        
-
         return start;
 
     }
