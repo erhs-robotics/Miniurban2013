@@ -93,21 +93,21 @@ public class Mapper {
 
         goals.remove(goalInfo);//we already found this goal, so remove it
         Road current = goal;
-        System.out.println(goal.getName());
+        //System.out.println(goal.getName());
         while (current.getG_value() != 0) {//while we have not found our starting point: a g_value of 0
             //place all the parents of current in convenient variables
             //get_parent returns null if no parent
         	ArrayList<Road> right = current.getExpandedRightParents();
         	ArrayList<Road> left = current.getExpandedLeftParents();
             Road straight = current.getStraightParent();
-            System.out.println("Right:");
-            for(Road r : right) {
-            	System.out.print("(" + r.getName() + ", " + String.valueOf(r.getG_value()) + "), ");
-            }
-            System.out.println("Left:");
-            for(Road r : left) {
-            	System.out.print("(" + r.getName() + ", " + String.valueOf(r.getG_value()) + "), ");
-            }
+            //System.out.println("Right:");
+            //for(Road r : right) {
+            //	System.out.print("(" + r.getName() + ", " + String.valueOf(r.getG_value()) + "), ");
+            //}
+            //System.out.println("Left:");
+            //for(Road r : left) {
+            	//System.out.print("(" + r.getName() + ", " + String.valueOf(r.getG_value()) + "), ");
+            //}
 
             ArrayList<Road> parents = new ArrayList<Road>();//put all parents in here to run through the getBestNode function
             //only add parent to parents if it is not null. makes sure you don't accidently choose a -1 node
@@ -122,17 +122,17 @@ public class Mapper {
             }
 
             assert parents.size() > 0;//all parents are null
-            System.out.print("Parents: ");
-            for(Road r : parents) {
-            	System.out.print("(" + r.getName() + ", " + String.valueOf(r.getG_value()) + "), ");
-            }
-            System.out.println();
+            //System.out.print("Parents: ");
+            //for(Road r : parents) {
+            //	System.out.print("(" + r.getName() + ", " + String.valueOf(r.getG_value()) + "), ");
+            //}
+            //System.out.println();
             
             
 
             Road best = getBestNode(parents);//find the node with the least g_value that is not -1
-            System.out.println("Best: (" + best.getName() + ", " + best.getG_value() + ")");
-            System.out.println("------------------------------------------------------------------------");
+            //System.out.println("Best: (" + best.getName() + ", " + best.getG_value() + ")");
+            //System.out.println("------------------------------------------------------------------------");
 
             //record in path, reverses directions because this function travels backwards: from goal to start
             if (right.contains(best)) {
@@ -187,7 +187,7 @@ public class Mapper {
         if (current.hasRightChild() && !closed.contains(right) && !open.contains(right)) {
         	assert !closed.contains(right);
         	right.setG_value(current.getG_value() + right.getCost());//record the cost of getting here
-        	System.out.println(current.getName() + "->" + right.getName()+ ", G: " + right.getG_value());
+        	//System.out.println(current.getName() + "->" + right.getName()+ ", G: " + right.getG_value());
             
             if (Goal.isGoal(goals, right)) {
                 
@@ -201,7 +201,7 @@ public class Mapper {
         if (current.hasLeftChild() && !closed.contains(left) && !open.contains(left)) {
         	assert !closed.contains(left);
             left.setG_value(current.getG_value() + left.getCost());
-            System.out.println(current.getName() + "->" + left.getName()+ ", G: " + left.getG_value());
+            //System.out.println(current.getName() + "->" + left.getName()+ ", G: " + left.getG_value());
             if (Goal.isGoal(goals, left)) {
                 
                 return left;
@@ -214,7 +214,7 @@ public class Mapper {
         if (current.hasStraightChild() && !closed.contains(straight)  && !open.contains(straight)) {
         	assert !closed.contains(straight);
             straight.setG_value(current.getG_value() + straight.getCost());
-            System.out.println(current.getName() + "->" + straight.getName() + ", G: " + straight.getG_value());
+            //System.out.println(current.getName() + "->" + straight.getName() + ", G: " + straight.getG_value());
             if (Goal.isGoal(goals, straight)) {
                 
                 return straight;
