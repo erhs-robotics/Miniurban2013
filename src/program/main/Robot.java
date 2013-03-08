@@ -159,17 +159,6 @@ public class Robot {
 		leftMotor.forward();
 		rightMotor.forward();
 	}
-	public void tankDrive(double left, double right, boolean cubeInputs) {
-		if (cubeInputs) {
-			left = MathUtils.clamp(left, -1, 1);
-			right = MathUtils.clamp(right, -1, 1);
-			left = left * left * left;
-			right = right * right * right;
-			tankDrive(left, right);
-		} else {
-			tankDrive(left, right);
-		}
-	}
 	public void stop() {
 		pilot.stop();
 	}
