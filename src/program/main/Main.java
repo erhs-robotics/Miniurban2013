@@ -9,40 +9,42 @@ import program.mapping.Mapper;
 import program.mapping.Road;
 import program.mapping.Step;
 import lejos.nxt.Button;
+import lejos.nxt.addon.ColorHTSensor;
 import lejos.robotics.Color;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Robot robot = new Robot();
+		
+		Road map = Map.getMap();
+		ArrayList<Goal> goals = new ArrayList<Goal>();
+		//goals.add(new Goal("R1", 2, Direction.Left));
+		//goals.add(new Goal("R15", 4, Direction.Right));
+		//goals.add(new Goal("R45", 4, Direction.Right));
+		//goals.add(new Goal("R55", 4, Direction.Right));
+		//goals.add(new Goal("R69", 4, Direction.Right));
+		//goals.add(new Goal("R36", 4, Direction.Right));
+		//goals.add(new Goal("start", 0, Direction.Left));
+		Mapper mapper = new Mapper();
+		ArrayList<Step> path = mapper.getPath(map, goals);		
+		/*for(int i=0;i<path.size();i++) {
+			path.get(i).print();
+		}*/
+		//robot.followSteps(path);
+		
 		while (!Button.ENTER.isDown()) {
-			/*
-			Mapper mapper = new Mapper();
-			Road currentRoad;
-			ArrayList<Goal> goals;
-			ArrayList<Step> steps = mapper.getPath(currentRoad, goals);
-			robot.followSteps(steps);
-			*/
-			
-			robot.followLeftLine(false);
-			Road map = Map.getMap();
-			ArrayList<Goal> goals = new ArrayList<Goal>();
-		
-			goals.add(new Goal("R1", 2, Direction.Left));
-			//goals.add(new Goal("R15", 4, Direction.Right));
-			//goals.add(new Goal("R45", 4, Direction.Right));
-			//goals.add(new Goal("R55", 4, Direction.Right));
-			//goals.add(new Goal("R69", 4, Direction.Right));
-			//goals.add(new Goal("R36", 4, Direction.Right));
-			//goals.add(new Goal("start", 0, Direction.Left));
-			
-			Mapper mapper = new Mapper();
-			ArrayList<Step> path;
-		
-			path = mapper.getPath(map, goals);
-			//for(int i=0;i<path.size();i++) {
-			//	path.get(i).print();
-			//}
+			while (!robot.checkForStop()) {
+				robot.followLeftLine(false);
+			}
+			robot.turnLeft();
+			while (!robot.checkForStop()) {
+				robot.followLeftLine(true);
+			}
+			robot.turnRight();
+			while (!robot.checkForStop()) {
+				robot.followLeftLine(true);
+			}
 		}
 	}
 

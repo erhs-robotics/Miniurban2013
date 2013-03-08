@@ -12,8 +12,8 @@ public class RoboMap {
 	public static MotorPort LEFT_MOTOR_PORT = MotorPort.B;
 	public static MotorPort RIGHT_MOTOR_PORT = MotorPort.A;
 	
-	public static final double PID_WHITE_SETPOINT  = 60; // Needs calibration
-	public static final double PID_YELLOW_SETPOINT = 60; // Needs calibration
-	public static final double PID_BLUE_SETPOINT   = 60; // Needs calibration
+	public static final double PID_WHITE_SETPOINT  = 60; // Needs calibration -- Works (test map)
+	public static final double PID_YELLOW_SETPOINT = 28; // Needs calibration -- Works (test map)
+	public static final double PID_BLUE_SETPOINT   = 6;  // Needs calibration -- Not working (test map)
 	
 }

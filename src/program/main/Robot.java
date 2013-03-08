@@ -19,8 +19,8 @@ public class Robot {
 	private final int TURN_TIME_MS = 400;
 	
 	private final NXTRegulatedMotor leftMotor, rightMotor;
-	private ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
-	private DifferentialPilot pilot;
+	public ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
+	public DifferentialPilot pilot;
 	
 	public PIDControllerX pid;
 		
@@ -40,8 +40,12 @@ public class Robot {
 	public Color getRightColor() { return rightColorSensor.getColor(); }
 	
 	public boolean checkForStop() {
-		if ( getMidColor().getColor() == Color.RED)	return true;
-		else return false;		
+		if (leftColorSensor.getColor().getColor() == ColorHTSensor.RED) {
+			return true;
+		}
+		else {
+			return false;		
+		}
 	}
 
 	public double runPID (boolean leftPID) {
@@ -60,14 +64,16 @@ public class Robot {
 		else if (colorID == Color.GREEN) {
 			return -.2;
 		}
-		return .1;
+		return .05;
 	}
 	
 	public void followLeftLine(boolean isCircle) {
 		double speed = .5;
 		double value = runPID(true);
 		if(isCircle) {
-			value *= 2;
+			value  *= 1.5;
+			tankDrive(.35 - value, .65 + value);
+			return;
 		}
 		//System.out.println(value);
 		//System.out.println((speed - (speed * value)) + ", " + (speed + (speed * value)));
@@ -86,26 +92,16 @@ public class Robot {
 		tankDrive(speed + value, speed - value);
 	}
 	public void turnLeft() {
-		pilot.travel(5);
-		/*
-		tankDrive(-1, 1);
-		try {
-			Thread.sleep(TURN_TIME_MS);
-		} catch (InterruptedException ex) { ex.printStackTrace(); }
-		*/
-		pilot.arc(0, 90);
 		stop();
+		waitOneSecond();
+		pilot.travel(25);
+		pilot.arc(0, 450);
 	}
 	public void turnRight() {
-		pilot.travel(5);
-		/*
-		tankDrive(1, -1);
-		try {
-			Thread.sleep(TURN_TIME_MS);
-		} catch (InterruptedException ex) { ex.printStackTrace(); }
 		stop();
-		*/
-		pilot.arc(0, -90);
+		waitOneSecond();
+		pilot.travel(25);
+		pilot.arc(0, -450);
 	}
 	public void followSteps(ArrayList<Step> steps) {
 		Step currentStep, nextStep;
