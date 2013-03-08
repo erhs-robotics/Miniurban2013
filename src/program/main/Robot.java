@@ -170,20 +170,6 @@ public class Robot {
 			tankDrive(left, right);
 		}
 	}
-	public void displacementDrive(float speed, float displacement) {
-		displacement = MathUtils.clamp(displacement, -1, 1);
-		
-		float leftSpeed = speed - displacement / 2;
-		float rightSpeed = speed - displacement / 2;
-		
-		leftSpeed = MathUtils.clamp(leftSpeed, -1, 1);
-		rightSpeed = MathUtils.clamp(rightSpeed, -1, 1);		
-		
-		leftMotor.setSpeed(MAXSPEED * leftSpeed);
-		rightMotor.setSpeed(MAXSPEED * rightSpeed);
-		leftMotor.forward();
-		rightMotor.forward();
-	}
 	public void stop() {
 		pilot.stop();
 	}
