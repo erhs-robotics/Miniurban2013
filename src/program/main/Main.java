@@ -9,7 +9,6 @@ import program.mapping.Mapper;
 import program.mapping.Road;
 import program.mapping.Step;
 import lejos.nxt.Button;
-import lejos.nxt.addon.ColorHTSensor;
 import lejos.robotics.Color;
 
 public class Main {
@@ -19,13 +18,14 @@ public class Main {
 		
 		Road map = Map.getMap();
 		ArrayList<Goal> goals = new ArrayList<Goal>();
-		//goals.add(new Goal("R1", 2, Direction.Left));
-		//goals.add(new Goal("R15", 4, Direction.Right));
-		//goals.add(new Goal("R45", 4, Direction.Right));
-		//goals.add(new Goal("R55", 4, Direction.Right));
-		//goals.add(new Goal("R69", 4, Direction.Right));
-		//goals.add(new Goal("R36", 4, Direction.Right));
-		//goals.add(new Goal("start", 0, Direction.Left));
+		
+		goals.add(new Goal("R1", 2, Direction.Left));
+		goals.add(new Goal("R15", 4, Direction.Right));
+		goals.add(new Goal("R45", 4, Direction.Right));
+		goals.add(new Goal("R55", 4, Direction.Right));
+		goals.add(new Goal("R69", 4, Direction.Right));
+		goals.add(new Goal("R36", 4, Direction.Right));
+		
 		Mapper mapper = new Mapper();
 		ArrayList<Step> path = mapper.getPath(map, goals);		
 		/*for(int i=0;i<path.size();i++) {

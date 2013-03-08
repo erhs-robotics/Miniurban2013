@@ -125,12 +125,11 @@ public class MapperTest {
 		ArrayList<Goal> goals = new ArrayList<Goal>();
 		
 		goals.add(new Goal("R1", 2, Direction.Left));
-		//goals.add(new Goal("R15", 4, Direction.Right));
-		//goals.add(new Goal("R45", 4, Direction.Right));
-		//goals.add(new Goal("R55", 4, Direction.Right));
-		//goals.add(new Goal("R69", 4, Direction.Right));
-		//goals.add(new Goal("R36", 4, Direction.Right));
-		//goals.add(new Goal("start", 0, Direction.Left));
+		goals.add(new Goal("R15", 4, Direction.Right));
+		goals.add(new Goal("R45", 4, Direction.Right));
+		goals.add(new Goal("R55", 4, Direction.Right));
+		goals.add(new Goal("R69", 4, Direction.Right));
+		goals.add(new Goal("R36", 4, Direction.Right));
 		
 		Mapper mapper = new Mapper();
 		ArrayList<Step> path = mapper.getPath(map, goals);
@@ -142,13 +141,14 @@ public class MapperTest {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		RConsole.openBluetooth(200000);
 		RConsole.println("THIS IS R!!!!");
 		System.out.println("Test Started");
 		Thread.sleep(2000);
 		
-		//MapperTest mapperTest = new MapperTest();
+		MapperTest mapperTest = new MapperTest();
 		
-		//mapperTest.test2();
+		mapperTest.test2();
 
 		System.out.println("Test Finished");
 	}

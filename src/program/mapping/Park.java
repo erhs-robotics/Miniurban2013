@@ -1,5 +1,7 @@
 package program.mapping;
 
+import lejos.nxt.comm.RConsole;
+
 public class Park extends Step {
 	private int parkingSpace;
 	
@@ -15,7 +17,7 @@ public class Park extends Step {
 	
 	@Override
 	public void print() {
-		System.out.println("Park " + direction.toString() + " on Road " + road.getName() + " in space " + parkingSpace);
+		 RConsole.println("Park " + direction.toString() + " on Road " + road.getName() + " in space " + parkingSpace);
 	}
 
 }

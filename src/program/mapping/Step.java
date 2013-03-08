@@ -1,5 +1,7 @@
 package program.mapping;
 
+import lejos.nxt.comm.RConsole;
+
 public class Step {
 	protected Road road;
 	protected Direction direction;
@@ -13,7 +15,7 @@ public class Step {
 	}
 	
 	public void print() {
-		System.out.println("Finish");	
+		 RConsole.println("Finish");	
 	}
 
 }

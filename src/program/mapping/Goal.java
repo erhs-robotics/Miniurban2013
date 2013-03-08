@@ -33,7 +33,7 @@ public class Goal {
 	}
 	
 	public boolean isGoal(Road road) {
-		if(road.getName() == goal) return true;
+		if(road.getName().equals(goal)) return true;
 		return false;
 	}
 	
