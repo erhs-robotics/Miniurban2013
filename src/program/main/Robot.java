@@ -31,7 +31,7 @@ public class Robot {
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
-		pid = new PIDControllerX((1.0/120.0), 0.0, 5.0, 60.0);
+		pid = new PIDControllerX((1.0/200.0), 0.0, 5.0, 60.0);
 		pid.setOutputCaps(-.5, .5);
 	}
 	
@@ -40,7 +40,7 @@ public class Robot {
 	public Color getRightColor() { return rightColorSensor.getColor(); }
 	
 	public boolean checkForStop() {
-		if (leftColorSensor.getColor().getColor() == ColorHTSensor.RED) {
+		if (midColorSensor.getColor().getColor() == ColorHTSensor.RED) {
 			return true;
 		}
 		else {
@@ -84,7 +84,9 @@ public class Robot {
 		double speed = .5;
 		double value = runPID(false);
 		if (isCircle) {
-			value *= 2;
+			value *= 1.5;
+			tankDrive(.65 + value, .35-value);
+			return;
 		}
 		//System.out.println(value);mine	
 		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));

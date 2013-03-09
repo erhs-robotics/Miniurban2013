@@ -9,6 +9,7 @@ import program.mapping.Mapper;
 import program.mapping.Road;
 import program.mapping.Step;
 import lejos.nxt.Button;
+import lejos.nxt.addon.ColorHTSensor;
 import lejos.robotics.Color;
 
 public class Main {
@@ -33,19 +34,23 @@ public class Main {
 		}*/
 		//robot.followSteps(path);
 		
-		while (!Button.ENTER.isDown()) {
-			while (!robot.checkForStop()) {
-				robot.followLeftLine(false);
-			}
-			robot.turnLeft();
-			while (!robot.checkForStop()) {
-				robot.followLeftLine(true);
-			}
-			robot.turnRight();
-			while (!robot.checkForStop()) {
-				robot.followLeftLine(true);
-			}
+		while (!robot.checkForStop()) {
+			robot.followLeftLine(false);
 		}
+		robot.turnLeft();
+		while (!robot.checkForStop()) {
+			robot.followRightLine(true);
+		}
+		robot.turnRight();
+		while (!robot.checkForStop()) {
+			robot.followLeftLine(true);
+		}
+		/*
+		while (!Button.ENTER.isDown()) {
+			//System.out.println(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLACK));
+
+			//robot.followLeftLine(true);
+		}*/
 	}
 
 	public static String getColorString(Color color) {
