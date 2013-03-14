@@ -122,26 +122,17 @@ public class Robot {
 		while (steps.size() > 1) {
 			currentStep = steps.get(0);
 			nextStep = steps.get(1);
+			boolean circle = currentStep.getRoad().isCircle();
 			if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Right) {
-				do followRightLine(false); while (!checkForStop());
+				do followRightLine(circle); while (!checkForStop());
 				waitOneSecond();
 				turnRight();
 			}
 			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Left) {
-				do followLeftLine(false); while (!checkForStop());
+				do followLeftLine(circle); while (!checkForStop());
 				waitOneSecond();
 				turnLeft();
-			}
-			else if (currentStep.getRoad().isCircle() && nextStep.getDirection() == Direction.Left) {
-				do followRightLine(true); while (!checkForStop());
-				waitOneSecond();
-				turnLeft();
-			}
-			else if (currentStep.getRoad().isCircle() && nextStep.getDirection() == Direction.Right) {
-				do followLeftLine(true); while (!checkForStop()); 
-				waitOneSecond();
-				turnRight();
-			}
+			}			
 			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Straight) {
 				do followLeftLine(false); while(!checkForStop());
 				waitOneSecond();
