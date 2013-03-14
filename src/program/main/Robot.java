@@ -1,7 +1,7 @@
 package program.main;
 
 import java.util.ArrayList;
-
+import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.addon.ColorHTSensor;
 import lejos.robotics.Color;
@@ -47,6 +47,18 @@ public class Robot {
 			return false;		
 		}
 	}
+	
+	public double getLTacoCount() {
+		return leftMotor.getTachoCount();
+	}
+	
+	public double getRTacoCount() {
+		return rightMotor.getTachoCount();
+	}
+	
+	public double getAveTacoCount() {
+		return (getLTacoCount() + getRTacoCount()) / 2;
+	}	
 
 	public double runPID (boolean leftPID) {
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
