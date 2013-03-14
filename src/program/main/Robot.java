@@ -1,5 +1,6 @@
 package program.main;
 
+import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.util.PIDController;
@@ -37,6 +38,18 @@ public class Robot {
 	public Color getMidColor() {
 		return midColorSensor.getColor();
 	}
+	
+	public double getLTacoCount() {
+		return leftMotor.getTachoCount();
+	}
+	
+	public double getRTacoCount() {
+		return rightMotor.getTachoCount();
+	}
+	
+	public double getAveTacoCount() {
+		return (getLTacoCount() + getRTacoCount()) / 2;
+	}	
 
 	public void setPIDConstants(float left_kp, float left_ki, float left_kd,
 								float right_kp, float right_ki, float right_kd) {
