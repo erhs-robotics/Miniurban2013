@@ -77,6 +77,13 @@ public class Mapper {
         }
         assert path.size() > 0;
         assert goals.size() == 0;
+        
+        
+        // Manually add in the first step
+        Step step = new Step();
+        step.direction = Direction.Straight;        
+        path.add(0, step);
+        
         //if goals.size() = 0, we are done so return the full path
         return path;
     }
