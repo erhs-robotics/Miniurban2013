@@ -33,13 +33,12 @@ public class Main {
 			path.get(i).print();
 		}*/
 		//robot.followSteps(path);
-		
 		while (!robot.checkForStop()) {
 			robot.followLeftLine(false);
 		}
 		robot.turnLeft();
 		while (!robot.checkForStop()) {
-			robot.followRightLine(true);
+			robot.followRightLine(false);
 		}
 		robot.turnRight();
 		while (!robot.checkForStop()) {
@@ -48,9 +47,17 @@ public class Main {
 		/*
 		while (!Button.ENTER.isDown()) {
 			//System.out.println(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLACK));
-
 			//robot.followLeftLine(true);
-		}*/
+			//robot.tankDrive(1, 1);
+			//System.out.println(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLACK));
+			//robot.followLeftLine(false);
+			//System.out.println(robot.checkColor(robot.midColorSensor));
+			//robot.followLeftLine(false);
+			//robot.followLeftLine(false);
+			//System.out.println(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLACK));
+			robot.followLeftLine(false);
+		}
+		*/
 	}
 
 	public static String getColorString(Color color) {
