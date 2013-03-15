@@ -32,6 +32,8 @@ public class Localizer {
 	}
 	
 	public void move(double value) {
+		// Convert tachometer value to centimeters
+		value = tacoTocm(value);
 		//Save the exact value of value
 		step += value;
 		//Truncate the decimal to get the number of grid spaces moved
@@ -102,6 +104,10 @@ public class Localizer {
 			}
 		}
 		System.out.println("]");
+	}
+	
+	private double tacoTocm(double taco) {
+		return taco * 0.031875;
 	}
 	
 
