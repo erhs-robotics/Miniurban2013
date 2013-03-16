@@ -89,7 +89,7 @@ public class Map {
 		R10.setG_value(-1);
 		R11.setG_value(-1);
 		R12.setG_value(-1);
-		R13.setG_value(-1);
+		
 		R14.setG_value(-1);
 		R15.setG_value(-1);
 		R16.setG_value(-1);
