@@ -96,14 +96,14 @@ public class Robot {
 		
 		int colorValue = colorSensor.getRGBComponent(ColorHTSensor.BLACK);
 		if (colorID.equals("BLACK") && !iscirle) return 0.05;
-		if (colorID.equals("GREEN")) return -.4;
+		if (colorID.equals("GREEN")) return -.6;
 		if (colorID.equals("YELLOW")) { 
 			this.pid.setSetpoint(RoboMap.PID_YELLOW_SETPOINT); 
-			this.pid.setPIDConstants(0.0045, 0, 0.00003); 
+			this.pid.setPIDConstants(0.005, 0, 0.00003); 
 		}
 		if (colorID.equals("WHITE")) { 
 			this.pid.setSetpoint(RoboMap.PID_WHITE_SETPOINT);
-			this.pid.setPIDConstants(0.002, 0, 0.00003);
+			this.pid.setPIDConstants(0.0015, 0, 0.00003);
 		}
 		return this.pid.getOutput(colorValue);
 	}
@@ -135,17 +135,17 @@ public class Robot {
 		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));
 		tankDrive(speed + value, speed - value);
 	}
-	public void turnLeft() {
+	public void turnLeft(int angle) {
 		stop();
 		waitOneSecond();
-		pilot.travel(25);
-		pilot.arc(0, 430);
+		pilot.travel(20);		
+		pilot.arc(0, angle);
 	}
-	public void turnRight() {
+	public void turnRight(int angle) {
 		stop();
 		waitOneSecond();
-		pilot.travel(25);
-		pilot.arc(0, -430);
+		pilot.travel(20);		
+		pilot.arc(0, -angle);
 	}
 	public void followSteps(ArrayList<Step> steps) {
 		Step currentStep, nextStep;
@@ -156,12 +156,12 @@ public class Robot {
 			if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Right) {
 				do followRightLine(circle); while (!checkForStop());
 				waitOneSecond();
-				turnRight();
+				turnRight(430);
 			}
 			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Left) {
 				do followLeftLine(circle); while (!checkForStop());
 				waitOneSecond();
-				turnLeft();
+				turnLeft(430);
 			}			
 			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Straight) {
 				do followLeftLine(false); while(!checkForStop());

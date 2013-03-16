@@ -18,8 +18,19 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		Robot robot = new Robot();
 		RConsole.openBluetooth(0);
-		RConsole.println("THIS IS R!!!!");		
-
+		RConsole.println("THIS IS R!!!!");
+		while(!robot.checkForStop()) robot.followLeftLine(false);
+		robot.turnLeft(420);
+		while(!robot.checkForStop()) robot.followLeftLine(false);
+		robot.turnRight(350);
+		while(!robot.checkForStop()) robot.followLeftLine(true);
+		robot.turnRight(300);
+		while(!robot.checkForStop()) robot.followLeftLine(false);
+		robot.turnLeft(420);
+			
+		
+		
+/*
 		while(true) {
 			String yellow = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW));
 			String red = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.RED));
@@ -31,6 +42,9 @@ public class Main {
 		 
 			RConsole.println(out);
 		}
+		*/
+		
+		
 
 	}
 
