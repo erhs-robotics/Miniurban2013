@@ -31,8 +31,8 @@ public class Map {
 	static Road R27 = new Road("R27", 104);
 	static Road R28 = new Road("R28", 150);
 	static Road R29 = new Road("R29", 30);
-	static Road R30 = new Road("R30", 1);
-	static Road R31 = new Road("R31", 1);
+	static Road R30 = new Road("R30", 176);
+	static Road R31 = new Road("R31", 59);
 	static Road R32 = new Road("R32", 50);
 	static Road R33 = new Road("R33", 104);
 	static Road R34 = new Road("R34", 106);
@@ -65,11 +65,11 @@ public class Map {
 	static Road R61 = new Road("R61", 46);
 	static Road R62 = new Road("R62", 88);
 	static Road R63 = new Road("R63", 108);
-	static Road R64 = new Road("R64", 1);
+	static Road R64 = new Road("R64", 80);
 	static Road R65 = new Road("R65", 75);
 	static Road R66 = new Road("R66", 56);
-	static Road R67 = new Road("R67", 1);
-	static Road R68 = new Road("R68", 1);
+	static Road R67 = new Road("R67", 129);
+	static Road R68 = new Road("R68", 98);
 	static Road R69 = new Road("R69", 150);
 	static Road R70 = new Road("R70", 104);
 	static Road R71 = new Road("R71", 50);
