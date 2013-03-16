@@ -98,9 +98,9 @@ public class Mapper {
 
         ArrayList<Step> path = new ArrayList<Step>();
         Goal goalInfo = Goal.getGoal(goals, goal);
-        assert goalInfo != null;
+        assert goalInfo != null;        
         //give parking information
-        path.add(new Park(goal, goalInfo.getDirection(), goalInfo.getPark()));
+        path.add(new Park(goal, goalInfo.getDirection(), goalInfo.getPark(), goal.getParkMap()));
 
         goals.remove(goalInfo);//we already found this goal, so remove it
         Road current = goal;
