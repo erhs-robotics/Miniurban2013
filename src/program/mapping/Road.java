@@ -18,6 +18,7 @@ public class Road {
 	private double speed;
 	
 	boolean circle = false;
+	boolean slow = false;
 
 	// use this one for a normal road
 	public Road(String name, int length) { 
@@ -71,6 +72,9 @@ public class Road {
 
 	public boolean isCircle() { // Is it a circle???
 		return circle;
+	}
+	public boolean isSlow(){ //Is it slow???
+		return slow;
 	}
 
 	public Road getChildRight() {
