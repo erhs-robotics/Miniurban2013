@@ -10,47 +10,27 @@ import program.mapping.Road;
 import program.mapping.Step;
 import lejos.nxt.Button;
 import lejos.nxt.addon.ColorHTSensor;
+import lejos.nxt.comm.RConsole;
 import lejos.robotics.Color;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Robot robot = new Robot();
+		RConsole.openBluetooth(0);
+		RConsole.println("THIS IS R!!!!");
 		
-		Road map = Map.getMap();
-		ArrayList<Goal> goals = new ArrayList<Goal>();
-		
-		goals.add(new Goal("R1", 2, Direction.Left));
-		goals.add(new Goal("R15", 4, Direction.Right));
-		goals.add(new Goal("R45", 4, Direction.Right));
-		goals.add(new Goal("R55", 4, Direction.Right));
-		goals.add(new Goal("R69", 4, Direction.Right));
-		goals.add(new Goal("R36", 4, Direction.Right));
-		
-		Mapper mapper = new Mapper();
-		ArrayList<Step> path = mapper.getPath(map, goals);		
-		/*for(int i=0;i<path.size();i++) {
-			path.get(i).print();
-		}*/
-		//robot.followSteps(path);
-		
-		while (!robot.checkForStop()) {
-			robot.followLeftLine(false);
+		while(true) {
+			String yellow = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW));
+			String red = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.RED));
+			String black = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLACK));
+			String white = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.WHITE));
+			String blue = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLUE));
+			String green = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.GREEN));
+			String out = "R: " + red + ", G: " + green + ", B: " + blue + ", Y: " + yellow + ", W: " + white + ", Black: " + black;
+		 
+			RConsole.println(out);
 		}
-		robot.turnLeft();
-		while (!robot.checkForStop()) {
-			robot.followRightLine(true);
-		}
-		robot.turnRight();
-		while (!robot.checkForStop()) {
-			robot.followLeftLine(true);
-		}
-		/*
-		while (!Button.ENTER.isDown()) {
-			//System.out.println(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLACK));
-
-			//robot.followLeftLine(true);
-		}*/
 	}
 
 	public static String getColorString(Color color) {
