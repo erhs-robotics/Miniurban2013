@@ -48,11 +48,9 @@ public class Robot {
 	public double getLTacoCount() {
 		return leftMotor.getTachoCount();
 	}
-	
 	public double getRTacoCount() {
 		return rightMotor.getTachoCount();
 	}
-	
 	public double getAveTacoCount() {
 		return (getLTacoCount() + getRTacoCount()) / 2;
 	}	
@@ -84,7 +82,6 @@ public class Robot {
 		
 		return "ERROR";
 	}
-	
 
 	public double runPID (boolean leftPID) {
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
@@ -92,10 +89,7 @@ public class Robot {
 		String colorID = checkColor(colorSensor);
 		String otherID = checkColor(otherSensor);
 		
-		System.out.println(otherID);
-		
-		if (otherID == "WHITE" || otherID == "YELLOW" || otherID == "BLUE") {
-			//System.out.println("ADJUSTING");
+		if (otherID.equals("WHITE") || otherID.equals("YELLOW") || otherID.equals("BLUE")) {
 			return .3;
 		}
 		
@@ -123,7 +117,6 @@ public class Robot {
 		}
 		//System.out.println(value);
 		//System.out.println((speed - (speed * value)) + ", " + (speed + (speed * value)));
-		//tankDrive(speed - (speed * value), speed + (speed * value));
 		tankDrive(speed - value, speed + value);
 	}
 	public void followRightLine(boolean isCircle) {
@@ -137,20 +130,19 @@ public class Robot {
 		}
 		//System.out.println(value);mine	
 		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));
-		//tankDrive(speed + (speed * value), speed - (speed * value));
 		tankDrive(speed + value, speed - value);
 	}
 	public void turnLeft() {
 		stop();
 		waitOneSecond();
 		pilot.travel(25);
-		pilot.arc(0, 450);
+		pilot.arc(0, 430);
 	}
 	public void turnRight() {
 		stop();
 		waitOneSecond();
 		pilot.travel(25);
-		pilot.arc(0, -450);
+		pilot.arc(0, -430);
 	}
 	public void followSteps(ArrayList<Step> steps) {
 		Step currentStep, nextStep;
