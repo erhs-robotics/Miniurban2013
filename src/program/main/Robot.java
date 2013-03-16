@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.addon.ColorHTSensor;
+import lejos.nxt.comm.RConsole;
 import lejos.robotics.Color;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.util.Timer;
@@ -83,32 +84,34 @@ public class Robot {
 		return "ERROR";
 	}
 
-	public double runPID (boolean leftPID) {
+	public double runPID (boolean leftPID, boolean iscirle) {
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
 		ColorHTSensor otherSensor = leftPID ? this.rightColorSensor : this.leftColorSensor;
 		String colorID = checkColor(colorSensor);
 		String otherID = checkColor(otherSensor);
 		
 		if (otherID.equals("WHITE") || otherID.equals("YELLOW") || otherID.equals("BLUE")) {
-			return .3;
+			//return .3;
 		}
 		
 		int colorValue = colorSensor.getRGBComponent(ColorHTSensor.BLACK);
-		if (colorID.equals("BLACK")) return .05;
+		if (colorID.equals("BLACK") && !iscirle) return 0.05;
 		if (colorID.equals("GREEN")) return -.4;
 		if (colorID.equals("YELLOW")) { 
 			this.pid.setSetpoint(RoboMap.PID_YELLOW_SETPOINT); 
-			this.pid.setPIDConstants(1/(RoboMap.PID_YELLOW_SETPOINT * 1.3), 0, 0); }
+			this.pid.setPIDConstants(0.0045, 0, 0.00003); 
+		}
 		if (colorID.equals("WHITE")) { 
 			this.pid.setSetpoint(RoboMap.PID_WHITE_SETPOINT);
-			this.pid.setPIDConstants(1/(RoboMap.PID_WHITE_SETPOINT * 1.3), 0, 0);
+			this.pid.setPIDConstants(0.002, 0, 0.00003);
 		}
 		return this.pid.getOutput(colorValue);
 	}
 	
 	public void followLeftLine(boolean isCircle) {
 		double speed = .5;
-		double value = runPID(true);
+		double value = runPID(true, isCircle);
+		RConsole.println(String.valueOf(value));
 		if(isCircle) {
 			//value  /= 1.1;
 			value /= 1.2;
@@ -121,7 +124,7 @@ public class Robot {
 	}
 	public void followRightLine(boolean isCircle) {
 		double speed = .5;
-		double value = runPID(false);
+		double value = runPID(false, isCircle);
 		value /= 1.5;
 		if (isCircle) {
 			value /= 1.25;
