@@ -1,6 +1,8 @@
 package program.main;
 
 import java.util.ArrayList;
+
+import lejos.nxt.ColorSensor.Color;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.addon.ColorHTSensor;
 import lejos.nxt.comm.RConsole;
@@ -16,6 +18,8 @@ public class Robot {
 	public ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
 	public DifferentialPilot pilot;
 	private float speed;
+	private int component = ColorHTSensor.BLACK;
+	int sign = 1;
 	
 	public PIDControllerX pid;
 		
@@ -56,17 +60,17 @@ public class Robot {
 		if (black < 30 && white > 230 && yellow > 40 && yellow < 80 && blue > 5 && blue < 40 && green < 80 && green > 25
 				&& red > 220)
 			return "BLACK";
-		if (black > 80 && yellow > 10 && yellow < 120 && white > 180 && green > 180 && red > 180
+		if (black > 80 && yellow > 10 && yellow < 120 && white > 230 && green > 140 && red > 230
 				&& blue > 80 && blue < 220)
 			return "WHITE";
-		if (black > 80 && black < 160 && yellow > 30 && yellow < 100 && white > 150 && blue > 10 && blue < 80
+		if (black > 85 && black < 135 && yellow > 30 && yellow < 100 && white > 200 && blue > 10 && blue < 70
 				&& green > 160 && red > 200)
 			return "YELLOW";
 		if (black > 10 && black < 35 && white > 245 && yellow > 27 && yellow < 50 && blue < 30 && green > 40 && green < 65
 				&& red > 150)
 			return "GREEN";
-		if (black > 25 && black < 50 && white > 120 && white < 160 && yellow < 25 && blue > 40 && blue < 80 && green < 130 && green > 100
-				&& red < 110)
+		if (black > 25 && black < 50 && white > 120 && white < 160 && yellow < 50 && blue > 35 && blue < 80 && green < 130 && green > 70
+				&& red < 150 && red > 60)
 			return "BLUE";
 		if (black < 40 && white < 50 && yellow < 60 && blue < 20 && green > 50 && green < 100 && red > 225)
 			return "RED";
@@ -74,6 +78,7 @@ public class Robot {
 	}
 
 	public double runPID (boolean leftPID, boolean isCircle) {
+		
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
 		String colorID = checkColor(colorSensor);
 		
@@ -83,20 +88,32 @@ public class Robot {
 			//return .3;
 		}
 		
-		if (colorID.equals("BLACK") && !isCircle) return 0.05;
-		else if (colorID.equals("BLACK") && isCircle) return 0.15;
+		if (colorID.equals("BLACK") && !isCircle && component == ColorHTSensor.BLACK) 
+			return 0.05;
+        else if (colorID.equals("BLACK") && isCircle) return 0.15;
 		if (colorID.equals("GREEN")) return -.6;
-		if (colorID.equals("YELLOW")) { 
+		if (colorID.equals("YELLOW")) {
+			this.pid.reset();
+			sign = 1;
+			component = ColorHTSensor.BLACK;
 			this.pid.setSetpoint(RoboMap.PID_YELLOW_SETPOINT); 
 			this.pid.setPIDConstants(0.005, 0, 0.00003);
-		}
-		if(isCircle) this.pid.setPIDConstants(0.005, 0, 0.00003);
-		if (colorID.equals("WHITE")) { 
+		} else if (colorID.equals("WHITE")) {
+			this.pid.reset();
+			sign = 1;
+			component = ColorHTSensor.BLACK;
 			this.pid.setSetpoint(RoboMap.PID_WHITE_SETPOINT);
 			this.pid.setPIDConstants(0.0015, 0, 0.00003);
+		} else if(colorID.equals("BLUE")) {
+			sign = -1;
+			component = ColorHTSensor.RED;
+			this.pid.setSetpoint(RoboMap.PID_BLUE_SETPOINT);
+			this.pid.setPIDConstants(0.004, 0.000, 0.0000);			
 		}
-		int colorValue = colorSensor.getRGBComponent(ColorHTSensor.BLACK);
-		return this.pid.getOutput(colorValue);
+		
+		if(isCircle) this.pid.setPIDConstants(0.005, 0, 0.00003);
+		int colorValue = colorSensor.getRGBComponent(component);
+		return sign * this.pid.getOutput(colorValue);
 	}
 	
 	/* Autonomous Map Following with State Map and PID control ***************/

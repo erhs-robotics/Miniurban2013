@@ -62,7 +62,7 @@ public class MapperTest {
 		Mapper mapper = new Mapper();
 		ArrayList<Goal> goals = new ArrayList<Goal>();
 		goals.add(new Goal("R6", 2, Direction.Left));
-		ArrayList<Step> path = mapper.getPath(R7, goals);
+		ArrayList<Step> path = mapper.getPath(R0, goals);
 		
 		for(int i=0;i<path.size();i++) {
 			path.get(i).print();

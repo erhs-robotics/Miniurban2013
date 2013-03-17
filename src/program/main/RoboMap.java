@@ -14,7 +14,7 @@ public class RoboMap {
 	
 	public static final double PID_WHITE_SETPOINT  = 60; // Needs calibration -- Works (test map)
 	public static final double PID_YELLOW_SETPOINT = 65; // Needs calibration -- Works (test map)
-	public static final double PID_BLUE_SETPOINT   = 6;  // Needs calibration -- Not working (test map)
+	public static final double PID_BLUE_SETPOINT   = 100;  // Needs calibration -- Not working (test map)
 	
 	public static final int TURN_TRAVEL_DISTANCE = 17;
 	public static final int NORMAL_TURN_ANGLE = 90;
