@@ -26,6 +26,7 @@ public class Robot {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
 		rightMotor = new NXTRegulatedMotor(RoboMap.RIGHT_MOTOR_PORT);
 		pilot = new DifferentialPilot(WHEELDIAMETER, TRACKWIDTH, leftMotor, rightMotor);
+		pilot.setTravelSpeed(15);
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
@@ -64,7 +65,7 @@ public class Robot {
 		if (black > 80 && black < 160 && yellow > 30 && yellow < 100 && white > 150 && blue > 10 && blue < 80
 				&& green > 160 && red > 200)
 			return "YELLOW";
-		if (black > 10 && black < 60 && white > 230 && yellow > 10 && yellow < 70 && blue < 50 && green > 30 && green < 85
+		if (black > 10 && black < 35 && white > 245 && yellow > 27 && yellow < 50 && blue < 30 && green > 40 && green < 65
 				&& red > 150)
 			return "GREEN";
 		if (black > 25 && black < 50 && white > 120 && white < 160 && yellow < 25 && blue > 40 && blue < 80 && green < 130 && green > 100
@@ -86,11 +87,13 @@ public class Robot {
 		}
 		
 		if (colorID.equals("BLACK") && !isCircle) return 0.05;
+		else if (colorID.equals("BLACK") && isCircle) return 0.15;
 		if (colorID.equals("GREEN")) return -.6;
 		if (colorID.equals("YELLOW")) { 
 			this.pid.setSetpoint(RoboMap.PID_YELLOW_SETPOINT); 
-			this.pid.setPIDConstants(0.005, 0, 0.00003); 
+			this.pid.setPIDConstants(0.005, 0, 0.00003);
 		}
+		if(isCircle) this.pid.setPIDConstants(0.005, 0, 0.00003);
 		if (colorID.equals("WHITE")) { 
 			this.pid.setSetpoint(RoboMap.PID_WHITE_SETPOINT);
 			this.pid.setPIDConstants(0.0015, 0, 0.00003);
@@ -103,7 +106,7 @@ public class Robot {
 	public void followLeftLine(boolean isCircle) {
 		double speed = .5;
 		double value = runPID(true, isCircle);
-		RConsole.println(String.valueOf(value));
+		
 		if(isCircle) {
 			//value  /= 1.1;
 			value /= 1.2;
@@ -128,36 +131,72 @@ public class Robot {
 		tankDrive(speed + value, speed - value);
 	}
 	public void followSteps(ArrayList<Step> steps) {
-		Step currentStep, nextStep;
-		while (steps.size() > 1) {
-			currentStep = steps.get(0);
-			nextStep = steps.get(1);
+		RConsole.println("Following Steps...");
+		int i = 0;
+		RConsole.println("Going strait...");
+		while(!checkForStop()) followLeftLine(false);
+		stop();
+		i++;
+		Step currentStep, nextStep, lastStep;
+		while (steps.size() > i) {
+			lastStep = steps.get(i - 1);
+			currentStep = steps.get(i);
+			nextStep = steps.get(i + 1);
+			
 			boolean circle = currentStep.getRoad().isCircle();
-			if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Right) {
-				do followRightLine(circle); while (!checkForStop());
+			boolean lastWasCircle = lastStep.getRoad().isCircle();			
+			
+			if(currentStep.getDirection() == Direction.Right) {
+				RConsole.println("Turning Right...");
+							
+				double angle = 90;
+				
+				if(circle) angle = 80;// we have to turn onto a circle
+				else if(lastWasCircle) angle = 40;// we just came from a circle
+				RConsole.println("Angle: " + String.valueOf(angle));
+				turnRight((int)angle);				
+			} else if(currentStep.getDirection() == Direction.Left) {
+				RConsole.println("Turning Left...");
+								
+				double angle = 90;
+				
+				if(circle) angle = 80;// we have to turn onto a circle
+				else if(lastWasCircle) angle = 40;// we just came from a circle
+				RConsole.println("Angle: " + String.valueOf(angle));
+				turnLeft((int)angle);				
+			} else if(currentStep.getDirection() == Direction.Straight) {
+				RConsole.println("Going Strait...");
+				
 				waitOneSecond();
-				turnRight(430);
+				pilot.travel(16);
 			}
-			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Left) {
-				do followLeftLine(circle); while (!checkForStop());
-				waitOneSecond();
-				turnLeft(430);
-			}			
-			else if (currentStep.getDirection() == Direction.Straight && nextStep.getDirection() == Direction.Straight) {
-				do followLeftLine(false); while(!checkForStop());
-				waitOneSecond();
-				pilot.travel(6);
+			
+			if(nextStep instanceof Park){
+				RConsole.println("Parking...");
+				i++;
 			}
-			else if (currentStep.getDirection() == Direction.Straight && nextStep instanceof Park) {
-				Park nextPark = (Park) nextStep;
-				if (nextPark.getDirection() == Direction.Left) {
+			else if (circle) {
+				RConsole.println("Following Circle...");
+				while(!checkForStop()) followLeftLine(circle);
+			}
+			else if(currentStep.getDirection() == Direction.Left) {
+				RConsole.println("Following Left...");
+				while(!checkForStop()) followLeftLine(circle);
+			}
+			
+			else if(currentStep.getDirection() == Direction.Right) {
+				RConsole.println("Following Right...");
+				while(!checkForStop()) followRightLine(circle);
+			}
+			
+			else if(currentStep.getDirection() == Direction.Straight) {
+				RConsole.println("Going Left because of next Striaght...");
+				while(!checkForStop()) followLeftLine(circle);
+			}
+			
+			stop();
 
-				}
-				else if (nextPark.getDirection() == Direction.Right) {
-
-				}
-			}
-			steps.remove(0);
+			i++;
 		}
 	}
 	

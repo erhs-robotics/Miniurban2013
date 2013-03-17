@@ -20,13 +20,14 @@ public class Main {
 		RConsole.openBluetooth(0);
 		RConsole.println("THIS IS R!!!!");
 		while(!robot.checkForStop()) robot.followLeftLine(false);
-		robot.turnLeft(420);
+		robot.turnLeft(90);
 		while(!robot.checkForStop()) robot.followLeftLine(false);
-		robot.turnRight(350);
+		robot.turnRight(80);
 		while(!robot.checkForStop()) robot.followLeftLine(true);
-		robot.turnRight(300);
+		robot.turnRight(40);
 		while(!robot.checkForStop()) robot.followLeftLine(false);
-		robot.turnLeft(420);
+		robot.turnLeft(90);
+		
 			
 		
 		
@@ -39,10 +40,13 @@ public class Main {
 			String blue = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLUE));
 			String green = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.GREEN));
 			String out = "R: " + red + ", G: " + green + ", B: " + blue + ", Y: " + yellow + ", W: " + white + ", Black: " + black;
-		 
+		    String color = robot.checkColor(robot.leftColorSensor);
+		    out += ", Color: " + color;
 			RConsole.println(out);
 		}
 		*/
+		
+		
 		
 		
 
