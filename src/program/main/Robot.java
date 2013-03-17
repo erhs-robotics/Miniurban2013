@@ -13,8 +13,8 @@ import program.mapping.Step;
 public class Robot {
 	
 	private final float MAXSPEED = 2 * 360; // 2 RPS
-	private final double WHEELDIAMETER = 4;
-	private final double TRACKWIDTH = 4;
+	private final double WHEELDIAMETER = 3;
+	private final double TRACKWIDTH = 13;
 	
 	private final NXTRegulatedMotor leftMotor, rightMotor;
 	public ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
@@ -154,31 +154,30 @@ public class Robot {
 			
 			if(currentStep.getDirection() == Direction.Right) {
 				RConsole.println("Turning Right...");
-							
-				double angle = 90;
 				
-				if(circle) angle = 80;// we have to turn onto a circle
-				else if(lastWasCircle) angle = 40;// we just came from a circle
+				double angle = RoboMap.NORMAL_TURN_ANGLE;
+				
+				if(circle) angle = RoboMap.TURN_ON_CIRCLE_ANGLE;// we have to turn onto a circle
+				else if(lastWasCircle) angle = RoboMap.TURN_OFF_CIRCLE_ANGLE;// we just came from a circle
 				RConsole.println("Angle: " + String.valueOf(angle));
 				turnRight((int)angle);				
 			} else if(currentStep.getDirection() == Direction.Left) {
 				RConsole.println("Turning Left...");
 								
-				double angle = 90;
+				double angle = RoboMap.NORMAL_TURN_ANGLE;
 				
-				if(circle) angle = 80;// we have to turn onto a circle
-				else if(lastWasCircle) angle = 40;// we just came from a circle
+				if(circle) angle = RoboMap.TURN_ON_CIRCLE_ANGLE;// we have to turn onto a circle
+				else if(lastWasCircle) angle = RoboMap.TURN_OFF_CIRCLE_ANGLE;// we just came from a circle
 				RConsole.println("Angle: " + String.valueOf(angle));
 				turnLeft((int)angle);				
 			} else if(currentStep.getDirection() == Direction.Straight) {
 				RConsole.println("Going Strait...");
 				
 				waitOneSecond();
-				if(circle) {
-					//turnLeft(40);
-					pilot.travel(2);
+				if(circle) {					
+					pilot.travel(RoboMap.KEEP_ON_CIRCLE_DISTANCE);
 				} else {
-					pilot.travel(16);
+					pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);
 				}
 				
 			}
@@ -238,13 +237,13 @@ public class Robot {
 	public void turnLeft(int angle) {
 		stop();
 		waitOneSecond();
-		pilot.travel(20);		
+		pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);		
 		pilot.arc(0, angle);
 	}
 	public void turnRight(int angle) {
 		stop();
 		waitOneSecond();
-		pilot.travel(20);		
+		pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);		
 		pilot.arc(0, -angle);
 	}
 }
