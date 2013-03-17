@@ -1,13 +1,10 @@
 package program.main;
 
 import java.util.ArrayList;
-import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.addon.ColorHTSensor;
 import lejos.nxt.comm.RConsole;
-import lejos.robotics.Color;
 import lejos.robotics.navigation.DifferentialPilot;
-import lejos.util.Timer;
 import program.control.PIDControllerX;
 import program.mapping.Direction;
 import program.mapping.Park;
@@ -16,9 +13,8 @@ import program.mapping.Step;
 public class Robot {
 	
 	private final float MAXSPEED = 2 * 360; // 2 RPS
-	private final double WHEELDIAMETER = 3;
-	private final double TRACKWIDTH = 13;
-	private final int TURN_TIME_MS = 400;
+	private final double WHEELDIAMETER = 4;
+	private final double TRACKWIDTH = 4;
 	
 	private final NXTRegulatedMotor leftMotor, rightMotor;
 	public ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
@@ -37,10 +33,6 @@ public class Robot {
 		pid = new PIDControllerX((1.0/250.0), 0.0, 0.0, RoboMap.PID_WHITE_SETPOINT);
 		pid.setOutputCaps(-.5, .5);
 	}
-	
-	public Color getLeftColor()  { return leftColorSensor.getColor(); }
-	public Color getMidColor()   { return midColorSensor.getColor(); }
-	public Color getRightColor() { return rightColorSensor.getColor(); }
 	
 	public boolean checkForStop() {
 		if (checkColor(midColorSensor).equals("RED")) return true;
@@ -81,36 +73,36 @@ public class Robot {
 			return "BLUE";
 		if (black < 40 && white < 50 && yellow < 60 && blue < 20 && green > 50 && green < 100 && red > 225)
 			return "RED";
-		
 		return "ERROR";
 	}
 
-	public double runPID (boolean leftPID, boolean iscirle) {
+	public double runPID (boolean leftPID, boolean isCircle) {
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
-		ColorHTSensor otherSensor = leftPID ? this.rightColorSensor : this.leftColorSensor;
 		String colorID = checkColor(colorSensor);
-		String otherID = checkColor(otherSensor);
 		
+		// Check the color of the other sensor and adjust if it finds a following color
+		String otherID = checkColor(leftPID ? this.rightColorSensor : this.leftColorSensor);
 		if (otherID.equals("WHITE") || otherID.equals("YELLOW") || otherID.equals("BLUE")) {
 			//return .3;
 		}
 		
-		int colorValue = colorSensor.getRGBComponent(ColorHTSensor.BLACK);
-		if (colorID.equals("BLACK") && !iscirle) return 0.05;
-		else if (colorID.equals("BLACK") && iscirle) return 0.15;
+		if (colorID.equals("BLACK") && !isCircle) return 0.05;
+		else if (colorID.equals("BLACK") && isCircle) return 0.15;
 		if (colorID.equals("GREEN")) return -.6;
 		if (colorID.equals("YELLOW")) { 
 			this.pid.setSetpoint(RoboMap.PID_YELLOW_SETPOINT); 
 			this.pid.setPIDConstants(0.005, 0, 0.00003);
 		}
-		if(iscirle)this.pid.setPIDConstants(0.005, 0, 0.00003);
+		if(isCircle) this.pid.setPIDConstants(0.005, 0, 0.00003);
 		if (colorID.equals("WHITE")) { 
 			this.pid.setSetpoint(RoboMap.PID_WHITE_SETPOINT);
 			this.pid.setPIDConstants(0.0015, 0, 0.00003);
 		}
+		int colorValue = colorSensor.getRGBComponent(ColorHTSensor.BLACK);
 		return this.pid.getOutput(colorValue);
 	}
 	
+	/* Autonomous Map Following with State Map and PID control ***************/
 	public void followLeftLine(boolean isCircle) {
 		double speed = .5;
 		double value = runPID(true, isCircle);
@@ -138,19 +130,6 @@ public class Robot {
 		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));
 		tankDrive(speed + value, speed - value);
 	}
-	public void turnLeft(double angle) {
-		stop();
-		waitOneSecond();		
-		pilot.travel(16);		
-		pilot.arc(0, angle);
-	}
-	public void turnRight(double angle) {
-		stop();
-		waitOneSecond();
-		pilot.travel(16);		
-		pilot.arc(0, -angle);
-	}
-	
 	public void followSteps(ArrayList<Step> steps) {
 		RConsole.println("Following Steps...");
 		int i = 0;
@@ -181,7 +160,7 @@ public class Robot {
 				if(circle) angle = 80;// we have to turn onto a circle
 				else if(lastWasCircle) angle = 40;// we just came from a circle
 				RConsole.println("Angle: " + String.valueOf(angle));
-				turnRight(angle);				
+				turnRight((int)angle);				
 			} else if(currentStep.getDirection() == Direction.Left) {
 				RConsole.println("Turning Left...");
 								
@@ -190,7 +169,7 @@ public class Robot {
 				if(circle) angle = 80;// we have to turn onto a circle
 				else if(lastWasCircle) angle = 40;// we just came from a circle
 				RConsole.println("Angle: " + String.valueOf(angle));
-				turnLeft(angle);				
+				turnLeft((int)angle);				
 			} else if(currentStep.getDirection() == Direction.Straight) {
 				RConsole.println("Going Strait...");
 				
@@ -232,9 +211,9 @@ public class Robot {
 			i++;
 		}
 	}
-
+	
+	/* Basic Driving Code ****************************************************/
 	public void tankDrive(double left, double right) {
-		//clamp values between [-1, 1]
 		left = MathUtils.clamp(left, -1, 1);
 		right = MathUtils.clamp(right, -1, 1);
 		
@@ -256,5 +235,16 @@ public class Robot {
 			ex.printStackTrace(); 
 		}
 	}
-
+	public void turnLeft(int angle) {
+		stop();
+		waitOneSecond();
+		pilot.travel(20);		
+		pilot.arc(0, angle);
+	}
+	public void turnRight(int angle) {
+		stop();
+		waitOneSecond();
+		pilot.travel(20);		
+		pilot.arc(0, -angle);
+	}
 }
