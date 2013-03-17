@@ -22,4 +22,8 @@ public class RoboMap {
 	public static final int TURN_OFF_CIRCLE_ANGLE = 40;
 	public static final int KEEP_ON_CIRCLE_DISTANCE = 2;
 	
+	public static final float MAXSPEED = 2 * 360; // 2 RPS
+	public static final double WHEELDIAMETER = 3;
+	public static final double TRACKWIDTH = 13;
+	
 }

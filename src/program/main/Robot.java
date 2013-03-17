@@ -12,9 +12,7 @@ import program.mapping.Step;
 
 public class Robot {
 	
-	private final float MAXSPEED = 2 * 360; // 2 RPS
-	private final double WHEELDIAMETER = 3;
-	private final double TRACKWIDTH = 13;
+	
 	
 	private final NXTRegulatedMotor leftMotor, rightMotor;
 	public ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
@@ -25,7 +23,7 @@ public class Robot {
 	public Robot() {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
 		rightMotor = new NXTRegulatedMotor(RoboMap.RIGHT_MOTOR_PORT);
-		pilot = new DifferentialPilot(WHEELDIAMETER, TRACKWIDTH, leftMotor, rightMotor);
+		pilot = new DifferentialPilot(RoboMap.WHEELDIAMETER, RoboMap.TRACKWIDTH, leftMotor, rightMotor);
 		pilot.setTravelSpeed(15);
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
@@ -219,8 +217,8 @@ public class Robot {
 		float leftDrive = (float) left;
 		float rightDrive = (float) right;
 		
-		leftMotor.setSpeed(MAXSPEED * leftDrive);
-		rightMotor.setSpeed(MAXSPEED * rightDrive);
+		leftMotor.setSpeed(RoboMap.MAXSPEED * leftDrive);
+		rightMotor.setSpeed(RoboMap.MAXSPEED * rightDrive);
 		leftMotor.forward();
 		rightMotor.forward();
 	}
