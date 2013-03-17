@@ -155,7 +155,12 @@ public class Robot {
 		RConsole.println("Following Steps...");
 		int i = 0;
 		RConsole.println("Going strait...");
-		while(!checkForStop()) followLeftLine(false);
+		Direction dir = steps.get(i+1).getDirection();
+		if(dir == Direction.Right)
+			while(!checkForStop()) followRightLine(false);
+		else
+			while(!checkForStop()) followLeftLine(false);
+		
 		stop();
 		i++;
 		Step currentStep, nextStep, lastStep;
@@ -165,7 +170,8 @@ public class Robot {
 			nextStep = steps.get(i + 1);
 			
 			boolean circle = currentStep.getRoad().isCircle();
-			boolean lastWasCircle = lastStep.getRoad().isCircle();			
+			boolean lastWasCircle = lastStep.getRoad().isCircle();
+			
 			
 			if(currentStep.getDirection() == Direction.Right) {
 				RConsole.println("Turning Right...");
@@ -189,7 +195,13 @@ public class Robot {
 				RConsole.println("Going Strait...");
 				
 				waitOneSecond();
-				pilot.travel(16);
+				if(circle) {
+					//turnLeft(40);
+					pilot.travel(2);
+				} else {
+					pilot.travel(16);
+				}
+				
 			}
 			
 			if(nextStep instanceof Park){
@@ -211,7 +223,7 @@ public class Robot {
 			}
 			
 			else if(currentStep.getDirection() == Direction.Straight) {
-				RConsole.println("Going Left because of next Striaght...");
+				RConsole.println("Going Left because of next Straight...");
 				while(!checkForStop()) followLeftLine(circle);
 			}
 			
