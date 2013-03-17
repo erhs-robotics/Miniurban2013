@@ -12,11 +12,10 @@ import program.mapping.Step;
 
 public class Robot {
 	
-	
-	
 	private final NXTRegulatedMotor leftMotor, rightMotor;
 	public ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
 	public DifferentialPilot pilot;
+	private float speed;
 	
 	public PIDControllerX pid;
 		
@@ -24,7 +23,7 @@ public class Robot {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
 		rightMotor = new NXTRegulatedMotor(RoboMap.RIGHT_MOTOR_PORT);
 		pilot = new DifferentialPilot(RoboMap.WHEELDIAMETER, RoboMap.TRACKWIDTH, leftMotor, rightMotor);
-		pilot.setTravelSpeed(15);
+		setSpeed(RoboMap.MAXSPEED);
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
@@ -128,9 +127,14 @@ public class Robot {
 		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));
 		tankDrive(speed + value, speed - value);
 	}
+	void setSpeed(float speed) {
+		this.speed = speed;
+		this.pilot.setTravelSpeed(speed / 50f);
+	}
 	public void followSteps(ArrayList<Step> steps) {
 		RConsole.println("Following Steps...");
 		int i = 0;
+		RConsole.println("SPEED: " + String.valueOf(speed));
 		RConsole.println("Going strait...");
 		Direction dir = steps.get(i+1).getDirection();
 		if(dir == Direction.Right)
@@ -149,6 +153,9 @@ public class Robot {
 			boolean circle = currentStep.getRoad().isCircle();
 			boolean lastWasCircle = lastStep.getRoad().isCircle();
 			
+			if(currentStep.getRoad().isSlow()) setSpeed(RoboMap.SLOWSPEED);
+			else setSpeed(RoboMap.MAXSPEED);
+			RConsole.println("SPEED: " + String.valueOf(speed));
 			
 			if(currentStep.getDirection() == Direction.Right) {
 				RConsole.println("Turning Right...");
@@ -217,8 +224,8 @@ public class Robot {
 		float leftDrive = (float) left;
 		float rightDrive = (float) right;
 		
-		leftMotor.setSpeed(RoboMap.MAXSPEED * leftDrive);
-		rightMotor.setSpeed(RoboMap.MAXSPEED * rightDrive);
+		leftMotor.setSpeed(speed * leftDrive);
+		rightMotor.setSpeed(speed * rightDrive);
 		leftMotor.forward();
 		rightMotor.forward();
 	}

@@ -39,6 +39,11 @@ public class Road {
 		this.speed = speed;
 		this.circle = isCircle;
 	}
+	
+	public void setSlow(boolean slow) {
+		this.slow = slow;
+	}
+	
 	public void setLeftChild(Road leftChild) {
 		this.leftChild = leftChild;
 		leftChild.setRightParent(this);

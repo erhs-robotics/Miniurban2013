@@ -34,19 +34,24 @@ public class MapperTest {
 		
 		
 		R2.setRightChild(R4);
+		R2.setSlow(true);
 		
 		R3.setStraightChild(R4);
 		R3.setCircle(true);
+		R3.setSlow(true);
 		
 		R4.setRightChild(R5);
 		R4.setStraightChild(R3);
 		R4.setCircle(true);
+		R4.setSlow(true);
 		
 		R5.setLeftChild(R6);
+		R5.setSlow(true);
 		
 		//R6 has no children
 		
 		R7.setRightChild(R3);
+		R7.setSlow(true);
 		
 		
 		
