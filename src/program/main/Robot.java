@@ -12,9 +12,7 @@ import program.mapping.Step;
 
 public class Robot {
 	
-	private final float MAXSPEED = 2 * 360; // 2 RPS
-	private final double WHEELDIAMETER = 4;
-	private final double TRACKWIDTH = 4;
+	
 	
 	private final NXTRegulatedMotor leftMotor, rightMotor;
 	public ColorHTSensor leftColorSensor, midColorSensor, rightColorSensor;
@@ -25,7 +23,7 @@ public class Robot {
 	public Robot() {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
 		rightMotor = new NXTRegulatedMotor(RoboMap.RIGHT_MOTOR_PORT);
-		pilot = new DifferentialPilot(WHEELDIAMETER, TRACKWIDTH, leftMotor, rightMotor);
+		pilot = new DifferentialPilot(RoboMap.WHEELDIAMETER, RoboMap.TRACKWIDTH, leftMotor, rightMotor);
 		pilot.setTravelSpeed(15);
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
@@ -134,7 +132,12 @@ public class Robot {
 		RConsole.println("Following Steps...");
 		int i = 0;
 		RConsole.println("Going strait...");
-		while(!checkForStop()) followLeftLine(false);
+		Direction dir = steps.get(i+1).getDirection();
+		if(dir == Direction.Right)
+			while(!checkForStop()) followRightLine(false);
+		else
+			while(!checkForStop()) followLeftLine(false);
+		
 		stop();
 		i++;
 		Step currentStep, nextStep, lastStep;
@@ -144,31 +147,37 @@ public class Robot {
 			nextStep = steps.get(i + 1);
 			
 			boolean circle = currentStep.getRoad().isCircle();
-			boolean lastWasCircle = lastStep.getRoad().isCircle();			
+			boolean lastWasCircle = lastStep.getRoad().isCircle();
+			
 			
 			if(currentStep.getDirection() == Direction.Right) {
 				RConsole.println("Turning Right...");
-							
-				double angle = 90;
 				
-				if(circle) angle = 80;// we have to turn onto a circle
-				else if(lastWasCircle) angle = 40;// we just came from a circle
+				double angle = RoboMap.NORMAL_TURN_ANGLE;
+				
+				if(circle) angle = RoboMap.TURN_ON_CIRCLE_ANGLE;// we have to turn onto a circle
+				else if(lastWasCircle) angle = RoboMap.TURN_OFF_CIRCLE_ANGLE;// we just came from a circle
 				RConsole.println("Angle: " + String.valueOf(angle));
 				turnRight((int)angle);				
 			} else if(currentStep.getDirection() == Direction.Left) {
 				RConsole.println("Turning Left...");
 								
-				double angle = 90;
+				double angle = RoboMap.NORMAL_TURN_ANGLE;
 				
-				if(circle) angle = 80;// we have to turn onto a circle
-				else if(lastWasCircle) angle = 40;// we just came from a circle
+				if(circle) angle = RoboMap.TURN_ON_CIRCLE_ANGLE;// we have to turn onto a circle
+				else if(lastWasCircle) angle = RoboMap.TURN_OFF_CIRCLE_ANGLE;// we just came from a circle
 				RConsole.println("Angle: " + String.valueOf(angle));
 				turnLeft((int)angle);				
 			} else if(currentStep.getDirection() == Direction.Straight) {
 				RConsole.println("Going Strait...");
 				
 				waitOneSecond();
-				pilot.travel(16);
+				if(circle) {					
+					pilot.travel(RoboMap.KEEP_ON_CIRCLE_DISTANCE);
+				} else {
+					pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);
+				}
+				
 			}
 			
 			if(nextStep instanceof Park){
@@ -190,7 +199,7 @@ public class Robot {
 			}
 			
 			else if(currentStep.getDirection() == Direction.Straight) {
-				RConsole.println("Going Left because of next Striaght...");
+				RConsole.println("Going Left because of next Straight...");
 				while(!checkForStop()) followLeftLine(circle);
 			}
 			
@@ -208,8 +217,8 @@ public class Robot {
 		float leftDrive = (float) left;
 		float rightDrive = (float) right;
 		
-		leftMotor.setSpeed(MAXSPEED * leftDrive);
-		rightMotor.setSpeed(MAXSPEED * rightDrive);
+		leftMotor.setSpeed(RoboMap.MAXSPEED * leftDrive);
+		rightMotor.setSpeed(RoboMap.MAXSPEED * rightDrive);
 		leftMotor.forward();
 		rightMotor.forward();
 	}
@@ -226,13 +235,13 @@ public class Robot {
 	public void turnLeft(int angle) {
 		stop();
 		waitOneSecond();
-		pilot.travel(20);		
+		pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);		
 		pilot.arc(0, angle);
 	}
 	public void turnRight(int angle) {
 		stop();
 		waitOneSecond();
-		pilot.travel(20);		
+		pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);		
 		pilot.arc(0, -angle);
 	}
 }

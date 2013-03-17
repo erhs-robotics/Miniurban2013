@@ -25,11 +25,12 @@ public class MapperTest {
 		Road R3 = new Road("R3", 1);
 		Road R4 = new Road("R4", 1);
 		Road R5 = new Road("R5", 1);
-		Road R6 = new Road("R6", 1);		
+		Road R6 = new Road("R6", 1);
+		Road R7 = new Road("R6", 1);
 		
 		R0.setLeftChild(R2);
 		
-		R1.setLeftChild(R2);
+		R1.setRightChild(R2);
 		
 		
 		R2.setRightChild(R4);
@@ -45,6 +46,8 @@ public class MapperTest {
 		
 		//R6 has no children
 		
+		R7.setRightChild(R3);
+		
 		
 		
 		
@@ -54,7 +57,7 @@ public class MapperTest {
 		Mapper mapper = new Mapper();
 		ArrayList<Goal> goals = new ArrayList<Goal>();
 		goals.add(new Goal("R6", 2, Direction.Left));
-		ArrayList<Step> path = mapper.getPath(R0, goals);
+		ArrayList<Step> path = mapper.getPath(R7, goals);
 		
 		for(int i=0;i<path.size();i++) {
 			path.get(i).print();
@@ -63,7 +66,7 @@ public class MapperTest {
 		
 		robot.followSteps(path);
 		
-		while(!robot.checkForStop()) robot.followRightLine(false);
+		//while(!robot.checkForStop()) robot.followRightLine(false);
 		
 		
 		
@@ -86,7 +89,7 @@ public class MapperTest {
 		
 		R0.setLeftChild(R1);
 		
-		R1.setLeftChild(R2);
+		R1.setRightChild(R2);
 		
 		R2.setLeftChild(R3);
 		
@@ -120,7 +123,7 @@ public class MapperTest {
 		goals.add(new Goal("R3", 2, Direction.Left));
 		goals.add(new Goal("R10", 4, Direction.Right));		
 		
-		ArrayList<Step> path = mapper.getPath(R0, goals);
+		ArrayList<Step> path = mapper.getPath(R1, goals);
 		
 		
 		for(int i=0;i<path.size();i++) {
