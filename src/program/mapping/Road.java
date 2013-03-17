@@ -180,6 +180,10 @@ public class Road {
 	public void setParkMap(LinearColorMap parkMap) {
 		this.parkMap = parkMap;
 	}
+	
+	public void setCircle(boolean circle) {
+		this.circle = circle;
+	}
 
 	
 }
