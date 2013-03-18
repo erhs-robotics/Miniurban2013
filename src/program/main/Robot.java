@@ -35,11 +35,6 @@ public class Robot {
 		pid.setOutputCaps(-.5, .5);
 	}
 	
-	public boolean checkForStop() {
-		if (checkColor(midColorSensor).equals("RED")) return true;
-		return false;
-	}
-	
 	public double getLTacoCount() {
 		return leftMotor.getTachoCount();
 	}
@@ -50,6 +45,7 @@ public class Robot {
 		return (getLTacoCount() + getRTacoCount()) / 2;
 	}	
 
+	/* Color Detection Algorithm *********************************************/
 	public String checkColor(ColorHTSensor sensor) {
 		int black = sensor.getRGBComponent(ColorHTSensor.BLACK);
 		int white = sensor.getRGBComponent(ColorHTSensor.WHITE);
@@ -76,7 +72,12 @@ public class Robot {
 			return "RED";
 		return "ERROR";
 	}
+	public boolean checkForStop() {
+		if (checkColor(midColorSensor).equals("RED")) return true;
+		return false;
+	}
 
+	/* Autonomous Map Following with State Map and PID control ***************/
 	public double runPID (boolean leftPID, boolean isCircle) {
 		
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
@@ -115,8 +116,6 @@ public class Robot {
 		int colorValue = colorSensor.getRGBComponent(component);
 		return sign * this.pid.getOutput(colorValue);
 	}
-	
-	/* Autonomous Map Following with State Map and PID control ***************/
 	public void followLeftLine(boolean isCircle) {
 		double speed = .5;
 		double value = runPID(true, isCircle);
@@ -143,10 +142,6 @@ public class Robot {
 		//System.out.println(value);mine	
 		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));
 		tankDrive(speed + value, speed - value);
-	}
-	void setSpeed(float speed) {
-		this.speed = speed;
-		this.pilot.setTravelSpeed(speed / 50f);
 	}
 	public void followSteps(ArrayList<Step> steps) {
 		RConsole.println("Following Steps...");
@@ -267,5 +262,9 @@ public class Robot {
 		waitOneSecond();
 		pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);		
 		pilot.arc(0, -angle);
+	}
+	public void setSpeed(float speed) {
+		this.speed = speed;
+		this.pilot.setTravelSpeed(speed / 50f);
 	}
 }
