@@ -17,13 +17,13 @@ public class RoboMap {
 	public static final double PID_BLUE_SETPOINT   = 6;  // Needs calibration -- Not working (test map)
 	
 	public static final int TURN_TRAVEL_DISTANCE = 17;
-	public static final int NORMAL_TURN_ANGLE = 90;
+	public static final int NORMAL_TURN_ANGLE = 85;
 	public static final int TURN_ON_CIRCLE_ANGLE = 80;
-	public static final int TURN_OFF_CIRCLE_ANGLE = 40;
+	public static final int TURN_OFF_CIRCLE_ANGLE = 46;
 	public static final int KEEP_ON_CIRCLE_DISTANCE = 2;
 	
-	public static final float MAXSPEED = 2 * 360; // 2 RPS
-	public static final float SLOWSPEED = 1.5f * 360f;
+	public static final float MAXSPEED = 2.5f * 360f; // 2 RPS
+	public static final float SLOWSPEED = 2f * 360f;
 	public static final double WHEELDIAMETER = 3;
 	public static final double TRACKWIDTH = 13;
 	

@@ -74,8 +74,11 @@ public class Robot {
 	}
 
 	public double runPID (boolean leftPID, boolean isCircle) {
+		
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
+		
 		String colorID = checkColor(colorSensor);
+		RConsole.println("Color: " + colorID);
 		
 		// Check the color of the other sensor and adjust if it finds a following color
 		String otherID = checkColor(leftPID ? this.rightColorSensor : this.leftColorSensor);
@@ -146,6 +149,7 @@ public class Robot {
 		i++;
 		Step currentStep, nextStep, lastStep;
 		while (steps.size() > i) {
+			RConsole.println("Color:" + checkColor(leftColorSensor));
 			lastStep = steps.get(i - 1);
 			currentStep = steps.get(i);
 			nextStep = steps.get(i + 1);
@@ -155,7 +159,7 @@ public class Robot {
 			
 			if(currentStep.getRoad().isSlow()) setSpeed(RoboMap.SLOWSPEED);
 			else setSpeed(RoboMap.MAXSPEED);
-			RConsole.println("SPEED: " + String.valueOf(speed));
+			
 			
 			if(currentStep.getDirection() == Direction.Right) {
 				RConsole.println("Turning Right...");

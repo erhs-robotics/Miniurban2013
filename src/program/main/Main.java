@@ -17,16 +17,14 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Robot robot = new Robot();
+		
 		RConsole.openBluetooth(0);
 		RConsole.println("THIS IS R!!!!");
-		while(!robot.checkForStop()) robot.followLeftLine(false);
-		robot.turnLeft(90);
-		while(!robot.checkForStop()) robot.followLeftLine(false);
-		robot.turnRight(80);
-		while(!robot.checkForStop()) robot.followLeftLine(true);
-		robot.turnRight(40);
-		while(!robot.checkForStop()) robot.followLeftLine(false);
-		robot.turnLeft(90);
+		
+		while(true){
+			robot.followLeftLine(false);
+		}
+		
 		
 			
 		
