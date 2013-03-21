@@ -17,10 +17,23 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Robot robot = new Robot();
+		
 		RConsole.openBluetooth(0);
 		RConsole.println("THIS IS R!!!!");
+<<<<<<< HEAD
 				
 		while(true) robot.followLeftLine(false);
+=======
+		
+		while(true){
+			robot.followLeftLine(false);
+		}
+		
+		
+			
+		
+		
+>>>>>>> new_branch_name
 /*
 		while(true) {
 			String yellow = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW));
