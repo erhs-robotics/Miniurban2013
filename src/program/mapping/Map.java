@@ -89,7 +89,6 @@ public class Map {
 		R10.setG_value(-1);
 		R11.setG_value(-1);
 		R12.setG_value(-1);
-		R13.setG_value(-1);
 		R14.setG_value(-1);
 		R15.setG_value(-1);
 		R16.setG_value(-1);
@@ -151,12 +150,14 @@ public class Map {
 	}
 	
 	public static Road getMap() {
+		
         start.setLeftChild(R23);
 
         R0.setLeftChild(R1);
 
         R1.setStraightChild(R3);
         R1.setLeftChild(R2);
+        R1.setBuffer(true);
 
         R2.setStraightChild(R4);
 
@@ -193,6 +194,7 @@ public class Map {
         R14.setStraightChild(R15);
 
         R15.setLeftChild(R16);
+        R15.setBuffer(true);
 
         R16.setLeftChild(R39);
         R16.setStraightChild(R17);
@@ -215,7 +217,8 @@ public class Map {
         R22.setLeftChild(R70);
         R22.setStraightChild(R45);
         
-        R23.setLeftChild(R0);        
+        R23.setLeftChild(R0);
+        R23.setBuffer(true);
         
         R24.setLeftChild(R33);
         R24.setStraightChild(R25);
@@ -248,6 +251,7 @@ public class Map {
         
         R36.setRightChild(R47);
         R36.setStraightChild(R37);
+        R36.setBuffer(true);
         
         R37.setLeftChild(R24);
         R37.setStraightChild(R38);
@@ -263,6 +267,7 @@ public class Map {
         
         R41.setLeftChild(R71);
         R41.setStraightChild(R42);
+        R41.setBuffer(false);
         
         R42.setRightChild(R60);
         R42.setStraightChild(R43);
@@ -274,6 +279,7 @@ public class Map {
         
         R45.setRightChild(R34);
         R45.setStraightChild(R46);
+        R45.setBuffer(false);
         
         R46.setLeftChild(R37);
         R46.setStraightChild(R47);
@@ -290,6 +296,7 @@ public class Map {
         
         R51.setRightChild(R63);
         R51.setStraightChild(R52);
+        R51.setBuffer(false);
         
         R52.setLeftChild(R41);
         R52.setStraightChild(R53);
@@ -300,6 +307,7 @@ public class Map {
         R54.setStraightChild(R55);
         
         R55.setLeftChild(R58);
+        R55.setBuffer(false);
         
         R56.setRightChild(R44);
         R56.setStraightChild(R57);
@@ -310,6 +318,7 @@ public class Map {
         
         R59.setRightChild(R55);
         R59.setStraightChild(R39);
+        R59.setBuffer(false);
         
         R60.setRightChild(R10);        
         
@@ -335,6 +344,7 @@ public class Map {
         
         R69.setStraightChild(R70);
         R69.setRightChild(R45);
+        R69.setBuffer(true);
         
         R70.setLeftChild(R26);
         R70.setStraightChild(R27);
