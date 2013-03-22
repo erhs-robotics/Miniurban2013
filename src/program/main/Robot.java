@@ -309,18 +309,23 @@ public class Robot {
 		int sign = left ? 1 : -1;
 		ColorHTSensor colorSensor = left ? this.leftColorSensor : this.rightColorSensor;
 		if(isbuffer) {
-			while(!checkColor(colorSensor).equals("BLUE")){
-				left ? followLeftLine(colorSensor) : followRightLine(colorSensor);
+			while(!checkColor(colorSensor).equals("BLUE")) {
+				followLeftLine(false);
+				if(left) followLeftLine(false);
+				else followRightLine(false);
+			
 			}
-			int offset = getAveTacoCount();
+			double offset = getAveTacoCount();
 			double dist = 0;
-			while(len > dist) {			
-				left ? followLeftLine(colorSensor) : followRightLine(colorSensor);
+			while(len > dist) {
 				
-				dist = (getAveTacoCount - offset) * RoboMap.TACO_TO_CM;
+				if(left) followLeftLine(false);
+				else followRightLine(false);
+				
+				dist = (getAveTacoCount() - offset) * RoboMap.TACO_TO_CM;
 			}
 			pilot.travel(RoboMap.PARK_TRAVEL_DISTANCE);
-			pilot.turn(sign * RoboMap.NORMAL_TURN_ANGLE);
+			pilot.arc(0, sign * RoboMap.NORMAL_TURN_ANGLE);
 			
 		}
 		
