@@ -2,6 +2,7 @@ package program.main;
 
 import java.util.ArrayList;
 
+import program.calibration.Calibrator;
 import program.mapping.Direction;
 import program.mapping.Goal;
 import program.mapping.Map;
@@ -17,9 +18,23 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Robot robot = new Robot();
+		
 		RConsole.openBluetooth(0);
-		RConsole.println("THIS IS R!!!!");		
+		RConsole.println("THIS IS R!!!!");
+		String[] names = {"BLACK", "WHITE", "GREEN", "BLUE", "YELLOW"};
+		//for(int i=0;i<5;i++) {			
+			//Calibrator.calibrateColor(robot.leftColorSensor, names[i]);	
+		//}
+		while(true) robot.followLeftLine(false);
+		//while(true) RConsole.println(robot.checkColor(robot.leftColorSensor));
 
+		
+		
+			
+		
+		
+
+/*
 		while(true) {
 			String yellow = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW));
 			String red = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.RED));
@@ -28,11 +43,22 @@ public class Main {
 			String blue = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.BLUE));
 			String green = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.GREEN));
 			String out = "R: " + red + ", G: " + green + ", B: " + blue + ", Y: " + yellow + ", W: " + white + ", Black: " + black;
-		 
+		    String color = robot.checkColor(robot.leftColorSensor);
+		    out += ", Color: " + color;
 			RConsole.println(out);
 		}
+		*/
+		
+		
+		
+		
+		
+		
+		
 
 	}
+	
+	
 
 	public static String getColorString(Color color) {
 		int colorID = color.getColor();

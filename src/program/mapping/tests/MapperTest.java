@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import lejos.nxt.comm.RConsole;
 
+import program.main.Robot;
 import program.mapping.Direction;
 import program.mapping.Goal;
 import program.mapping.Map;
@@ -25,36 +26,52 @@ public class MapperTest {
 		Road R4 = new Road("R4", 1);
 		Road R5 = new Road("R5", 1);
 		Road R6 = new Road("R6", 1);
-		Road R7 = new Road("R7", 1);
-		Road R8 = new Road("R8", 1);
-		Road R9 = new Road("R9", 1);
+		Road R7 = new Road("R6", 1);
 		
-		R0.setRightChild(R9);
-		R0.setLeftChild(R1);
+		R0.setLeftChild(R2);
 		
 		R1.setRightChild(R2);
 		
-		R2.setStraightChild(R4);
-		R2.setRightChild(R3);
 		
-		R3.setLeftChild(R6);
+		R2.setRightChild(R4);
+		R2.setSlow(true);
+		
+		R3.setStraightChild(R4);
+		R3.setCircle(true);
+		R3.setSlow(true);
 		
 		R4.setRightChild(R5);
+		R4.setStraightChild(R3);
+		R4.setCircle(true);
+		R4.setSlow(true);
 		
-		//R5 has no children
+		R5.setLeftChild(R6);
+		R5.setSlow(true);
+		
 		//R6 has no children
 		
-		R7.setRightChild(R6);
+		R7.setRightChild(R3);
+		R7.setSlow(true);
 		
-		R8.setLeftChild(R7);
 		
-		R9.setLeftChild(R8);
+		
+		
 		
 		
 		
 		Mapper mapper = new Mapper();
+		ArrayList<Goal> goals = new ArrayList<Goal>();
+		goals.add(new Goal("R6", 2, Direction.Left));
+		ArrayList<Step> path = mapper.getPath(R0, goals);
 		
-		//mapper.findPath(R0, R6);
+		for(int i=0;i<path.size();i++) {
+			path.get(i).print();
+		}
+		Robot robot = new Robot();
+		
+		robot.followSteps(path);
+		
+		//while(!robot.checkForStop()) robot.followRightLine(false);
 		
 		
 		
@@ -77,7 +94,7 @@ public class MapperTest {
 		
 		R0.setLeftChild(R1);
 		
-		R1.setLeftChild(R2);
+		R1.setRightChild(R2);
 		
 		R2.setLeftChild(R3);
 		
@@ -111,7 +128,7 @@ public class MapperTest {
 		goals.add(new Goal("R3", 2, Direction.Left));
 		goals.add(new Goal("R10", 4, Direction.Right));		
 		
-		ArrayList<Step> path = mapper.getPath(R0, goals);
+		ArrayList<Step> path = mapper.getPath(R1, goals);
 		
 		
 		for(int i=0;i<path.size();i++) {
@@ -141,14 +158,13 @@ public class MapperTest {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		RConsole.openBluetooth(200000);
+		RConsole.openBluetooth(0);
 		RConsole.println("THIS IS R!!!!");
-		System.out.println("Test Started");
-		Thread.sleep(2000);
+		System.out.println("Test Started");		
 		
 		MapperTest mapperTest = new MapperTest();
 		
-		mapperTest.test2();
+		mapperTest.test0();
 
 		System.out.println("Test Finished");
 	}

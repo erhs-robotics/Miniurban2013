@@ -41,6 +41,7 @@ public class Road {
 		this.circle = isCircle;
 	}
 	
+
 	public void setBuffer(boolean isBuffer) {
 		this.isBuffer = isBuffer;
 	}
@@ -48,6 +49,10 @@ public class Road {
 	public boolean isBuffer() {
 		return isBuffer;
 	}
+	public void setSlow(boolean slow) {
+		this.slow = slow;
+	}
+	
 	public void setLeftChild(Road leftChild) {
 		this.leftChild = leftChild;
 		leftChild.setRightParent(this);
@@ -188,6 +193,10 @@ public class Road {
 	
 	public void setParkMap(LinearColorMap parkMap) {
 		this.parkMap = parkMap;
+	}
+	
+	public void setCircle(boolean circle) {
+		this.circle = circle;
 	}
 
 	
