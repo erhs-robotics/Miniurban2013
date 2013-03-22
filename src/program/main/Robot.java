@@ -304,4 +304,26 @@ public class Robot {
 		this.speed = speed;
 		this.pilot.setTravelSpeed(speed / 50f);
 	}
+	public void park(boolean left, int space, boolean isbuffer){
+		double len = RoboMap.PARK_LENGTH * space;
+		int sign = left ? 1 : -1;
+		ColorHTSensor colorSensor = left ? this.leftColorSensor : this.rightColorSensor;
+		if(isbuffer) {
+			while(!checkColor(colorSensor).equals("BLUE")){
+				left ? followLeftLine(colorSensor) : followRightLine(colorSensor);
+			}
+			int offset = getAveTacoCount();
+			double dist = 0;
+			while(len > dist) {			
+				left ? followLeftLine(colorSensor) : followRightLine(colorSensor);
+				
+				dist = (getAveTacoCount - offset) * RoboMap.TACO_TO_CM;
+			}
+			pilot.travel(RoboMap.PARK_TRAVEL_DISTANCE);
+			pilot.turn(sign * RoboMap.NORMAL_TURN_ANGLE);
+			
+		}
+		
+	
+	}
 }
