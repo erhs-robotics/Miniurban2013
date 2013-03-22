@@ -19,6 +19,7 @@ public class Road {
 	
 	boolean circle = false;
 	boolean slow = false;
+	boolean isBuffer = false;
 
 	// use this one for a normal road
 	public Road(String name, int length) { 
@@ -38,6 +39,14 @@ public class Road {
 		this.name = name;
 		this.speed = speed;
 		this.circle = isCircle;
+	}
+	
+	public void setBuffer(boolean isBuffer) {
+		this.isBuffer = isBuffer;
+	}
+	
+	public boolean isBuffer() {
+		return isBuffer;
 	}
 	public void setLeftChild(Road leftChild) {
 		this.leftChild = leftChild;
