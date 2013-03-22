@@ -27,7 +27,7 @@ public class Robot {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
 		rightMotor = new NXTRegulatedMotor(RoboMap.RIGHT_MOTOR_PORT);
 		pilot = new DifferentialPilot(RoboMap.WHEELDIAMETER, RoboMap.TRACKWIDTH, leftMotor, rightMotor);
-		setSpeed(RoboMap.MAXSPEED);
+		setSpeed(RoboMap.SLOWSPEED);
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
@@ -53,21 +53,51 @@ public class Robot {
 		int green = sensor.getRGBComponent(ColorHTSensor.GREEN);
 		int blue  = sensor.getRGBComponent(ColorHTSensor.BLUE);
 		int yellow = sensor.getRGBComponent(ColorHTSensor.YELLOW);
-		if (black < 30 && white > 230 && yellow > 40 && yellow < 80 && blue > 5 && blue < 40 && green < 80 && green > 25
-				&& red > 220)
+		if (MathUtils.isWithin(black, RoboMap.BLACK_MIN[0], RoboMap.BLACK_MAX[0]) 
+				&& MathUtils.isWithin(white, RoboMap.BLACK_MIN[1], RoboMap.BLACK_MAX[1])
+				&& MathUtils.isWithin(red, RoboMap.BLACK_MIN[2], RoboMap.BLACK_MAX[2])
+				&& MathUtils.isWithin(green, RoboMap.BLACK_MIN[3], RoboMap.BLACK_MAX[3])
+				&& MathUtils.isWithin(blue, RoboMap.BLACK_MIN[4], RoboMap.BLACK_MAX[4])
+				&& MathUtils.isWithin(yellow, RoboMap.BLACK_MIN[5], RoboMap.BLACK_MAX[5]))
 			return "BLACK";
-		if (black > 80 && yellow > 10 && yellow < 120 && white > 230 && green > 140 && red > 230
-				&& blue > 80 && blue < 220)
+		if (MathUtils.isWithin(black, RoboMap.WHITE_MIN[0], RoboMap.WHITE_MAX[0]) 
+				&& MathUtils.isWithin(white, RoboMap.WHITE_MIN[1], RoboMap.WHITE_MAX[1])
+				&& MathUtils.isWithin(red, RoboMap.WHITE_MIN[2], RoboMap.WHITE_MAX[2])
+				&& MathUtils.isWithin(green, RoboMap.WHITE_MIN[3], RoboMap.WHITE_MAX[3])
+				&& MathUtils.isWithin(blue, RoboMap.WHITE_MIN[4], RoboMap.WHITE_MAX[4])
+				&& MathUtils.isWithin(yellow, RoboMap.WHITE_MIN[5], RoboMap.WHITE_MAX[5]))
 			return "WHITE";
-		if (black > 85 && black < 135 && yellow > 30 && yellow < 100 && white > 200 && blue > 10 && blue < 70
-				&& green > 160 && red > 200)
-			return "YELLOW";
-		if (black > 10 && black < 35 && white > 245 && yellow > 27 && yellow < 50 && blue < 30 && green > 40 && green < 65
-				&& red > 150)
+		if (MathUtils.isWithin(black, RoboMap.YELLOW_MIN[0], RoboMap.YELLOW_MAX[0]) 
+				&& MathUtils.isWithin(white, RoboMap.YELLOW_MIN[1], RoboMap.YELLOW_MAX[1])
+				&& MathUtils.isWithin(red, RoboMap.YELLOW_MIN[2], RoboMap.YELLOW_MAX[2])
+				&& MathUtils.isWithin(green, RoboMap.YELLOW_MIN[3], RoboMap.YELLOW_MAX[3])
+				&& MathUtils.isWithin(blue, RoboMap.YELLOW_MIN[4], RoboMap.YELLOW_MAX[4])
+				&& MathUtils.isWithin(yellow, RoboMap.YELLOW_MIN[5], RoboMap.YELLOW_MAX[5]))
+			return "YELLOW";		
+		if (MathUtils.isWithin(black, RoboMap.GREEN_MIN[0], RoboMap.GREEN_MAX[0]) 
+				&& MathUtils.isWithin(white, RoboMap.GREEN_MIN[1], RoboMap.GREEN_MAX[1])
+				&& MathUtils.isWithin(red, RoboMap.GREEN_MIN[2], RoboMap.GREEN_MAX[2])
+				&& MathUtils.isWithin(green, RoboMap.GREEN_MIN[3], RoboMap.GREEN_MAX[3])
+				&& MathUtils.isWithin(blue, RoboMap.GREEN_MIN[4], RoboMap.GREEN_MAX[4])
+				&& MathUtils.isWithin(yellow, RoboMap.GREEN_MIN[5], RoboMap.GREEN_MAX[5]))
 			return "GREEN";
-		if (black > 25 && black < 50 && white > 120 && white < 160 && yellow < 50 && blue > 35 && blue < 80 && green < 130 && green > 70
-				&& red < 150 && red > 60)
+		if (MathUtils.isWithin(black, RoboMap.BLUE_MIN[0], RoboMap.BLUE_MAX[0]) 
+				&& MathUtils.isWithin(white, RoboMap.BLUE_MIN[1], RoboMap.BLUE_MAX[1])
+				&& MathUtils.isWithin(red, RoboMap.BLUE_MIN[2], RoboMap.BLUE_MAX[2])
+				&& MathUtils.isWithin(green, RoboMap.BLUE_MIN[3], RoboMap.BLUE_MAX[3])
+				&& MathUtils.isWithin(blue, RoboMap.BLUE_MIN[4], RoboMap.BLUE_MAX[4])
+				&& MathUtils.isWithin(yellow, RoboMap.BLUE_MIN[5], RoboMap.BLUE_MAX[5]))
 			return "BLUE";
+		if (MathUtils.isWithin(black, RoboMap.RED_MIN[0], RoboMap.RED_MAX[0]) 
+				&& MathUtils.isWithin(white, RoboMap.RED_MIN[1], RoboMap.RED_MAX[1])
+				&& MathUtils.isWithin(red, RoboMap.RED_MIN[2], RoboMap.RED_MAX[2])
+				&& MathUtils.isWithin(green, RoboMap.RED_MIN[3], RoboMap.RED_MAX[3])
+				&& MathUtils.isWithin(blue, RoboMap.RED_MIN[4], RoboMap.RED_MAX[4])
+				&& MathUtils.isWithin(yellow, RoboMap.RED_MIN[5], RoboMap.RED_MAX[5]))
+			return "RED";
+		
+		
+		
 		if (black < 40 && white < 50 && yellow < 60 && blue < 20 && green > 50 && green < 100 && red > 225)
 			return "RED";
 		return "ERROR";
@@ -100,21 +130,25 @@ public class Robot {
 			sign = 1;
 			component = ColorHTSensor.BLACK;
 			this.pid.setSetpoint(RoboMap.PID_YELLOW_SETPOINT); 
-			this.pid.setPIDConstants(0.005, 0, 0.00003);
+			this.pid.setPIDConstants(0.007, 0, 0.00003);
 		} else if (colorID.equals("WHITE")) {
 			this.pid.reset();
 			sign = 1;
 			component = ColorHTSensor.BLACK;
 			this.pid.setSetpoint(RoboMap.PID_WHITE_SETPOINT);
-			this.pid.setPIDConstants(0.0015, 0, 0.00003);
+			this.pid.setPIDConstants(0.0025, 0, 0.00003);
 		} else if(colorID.equals("BLUE")) {
 			sign = -1;
 			component = ColorHTSensor.RED;
 			this.pid.setSetpoint(RoboMap.PID_BLUE_SETPOINT);
 			this.pid.setPIDConstants(0.004, 0.000, 0.0000);			
 		}
+		else {
+			return 0;
+		}
 		
 		if(isCircle) this.pid.setPIDConstants(0.005, 0, 0.00003);
+		
 		int colorValue = colorSensor.getRGBComponent(component);
 		return sign * this.pid.getOutput(colorValue);
 	}

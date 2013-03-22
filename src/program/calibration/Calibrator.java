@@ -3,25 +3,26 @@ package program.calibration;
 import program.main.MathUtils;
 import lejos.nxt.Button;
 import lejos.nxt.addon.ColorHTSensor;
+import lejos.nxt.comm.RConsole;
 
 public class Calibrator {
 	
-	public static final int VARIANCE = 30;
+	public static final int VARIANCE = 20;
 	
-	public static void calibrateColor(ColorHTSensor sensor) {
+	public static void calibrateColor(ColorHTSensor sensor, String name) {
 		
-		int[] black  = new int[5];
-		int[] white  = new int[5];
-		int[] red    = new int[5];
-		int[] green  = new int[5];
-		int[] blue   = new int[5];
-		int[] yellow = new int[5];
+		int[] black  = new int[6];
+		int[] white  = new int[6];
+		int[] red    = new int[6];
+		int[] green  = new int[6];
+		int[] blue   = new int[6];
+		int[] yellow = new int[6];
 		
 		System.out.println("Please be ready to provide 5 color samples of the " 
 							+ "color to be calibrated");
 		System.out.println("When you are over the sample, press the right button");
 		
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			System.out.println("Sample " + i);
 			while(!Button.RIGHT.isDown()) { ; }
 			try { Thread.sleep(200); } 
@@ -33,23 +34,24 @@ public class Calibrator {
 			blue[i]   = sensor.getRGBComponent(ColorHTSensor.BLUE);
 			yellow[i] = sensor.getRGBComponent(ColorHTSensor.YELLOW);
 		}
-				
-		System.out.println("BLACK : " + min(black) + "/" + max(black));
-		System.out.println("WHITE : " + min(white) + "/" + max(white));
-		System.out.println("RED   : " + min(red)   + "/" + max(red));
-		System.out.println("GREEN : " + min(green) + "/" + max(green));
-		System.out.println("BLUE  : " + min(blue)  + "/" + max(blue));
-		System.out.println("YELLOW: " + min(yellow) + "/" + max(yellow));
+		RConsole.println("public static final int[] " + name + "_MIN = {" + min(black) + "," + min(white) + "," + 
+							min(red) + "," + min(green) + "," + 
+							min(blue) + "," + min(yellow) + "};");
+		
+		RConsole.println("public static final int[] " + name + "_MAX = {" + max(black) + "," + max(white) + "," + 
+				max(red) + "," + max(green) + "," + 
+				max(blue) + "," + max(yellow) + "};");		
+		
 		
 	}
 	
 	private static String min(int[] array) {
-		int out = MathUtils.arrayMin(array) - VARIANCE;
+		int out = (int)(MathUtils.arrayMin(array) - VARIANCE);
 		if (out < 0) out = 0;
 		return Integer.toString(out);
 	}
 	private static String max(int[] array) {
-		int out = MathUtils.arrayMax(array) - VARIANCE;
+		int out = (int)(MathUtils.arrayMax(array) + VARIANCE);
 		if (out > 255) out = 255;
 		return Integer.toString(out);
 	}
