@@ -1,9 +1,6 @@
 package program.mapping;
 
 import java.util.ArrayList;
-
-import javax.swing.plaf.ListUI;
-
 import lejos.nxt.comm.RConsole;
 
 public class Mapper {
@@ -15,10 +12,7 @@ public class Mapper {
     public ArrayList<Step> getPath(Road current, ArrayList<Goal> goals) throws Exception {
         if (goals.size() < 1) {
             throw new Exception("No goals given! Must have at least one goal!");
-        }
-        //Store were we started so we can return here at the end
-        //Goal start = new Goal(Map.R23, 0, Direction.None);
-        //store start in a convenient list so we can pass it to findPath()
+        }        
        
         //find the path to all the goals
         ArrayList<Step> path = findPath(current, goals);
@@ -36,13 +30,12 @@ public class Mapper {
         //remove the last parking direction and just put in a blank Step
         //object so we know that we finish here
         path.remove(path.size() - 1);
-        path.add(new Step());
-        //return the complete path from the start to all the goals and back again
+        path.add(new Step());        
         
-     // Manually add in the first step
+        // Manually add in the first step
         Step step = new Turn(current, Direction.Straight);        
         path.add(0, step);
-        return path;
+        return path;//return the complete path from the start to all the goals and back again
     }
 
     private ArrayList<Step> findPath(Road current, ArrayList<Goal> goals) throws Exception { // Runs the A* search, puts result in path
@@ -84,8 +77,8 @@ public class Mapper {
         //if goals.size() = 0, we are done so return the full path
         return path;
     }
+    
     //takes the expanded map and works backward from goal to the start and generates the directions
-
     private ArrayList<Step> genPath(Road goal, ArrayList<Goal> goals) throws Exception {
     	RConsole.println("GEN PATH...");
         assert goal != null;
