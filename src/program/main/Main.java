@@ -28,12 +28,6 @@ public class Main {
 		while(true) robot.followLeftLine(false);
 		//while(true) RConsole.println(robot.checkColor(robot.leftColorSensor));
 
-		
-		
-			
-		
-		
-
 /*
 		while(true) {
 			String yellow = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW));
@@ -49,33 +43,6 @@ public class Main {
 		}
 		*/
 		
-		
-		
-		
-		
-		
-		
-
-	}
-	
-	
-
-	public static String getColorString(Color color) {
-		int colorID = color.getColor();
-		if (colorID == Color.BLACK)
-			return "Black";
-		else if (colorID == Color.BLUE)
-			return "Blue";
-		else if (colorID == Color.GREEN)
-			return "Green";
-		else if (colorID == Color.WHITE)
-			return "White";
-		else if (colorID == Color.RED)
-			return "Red";
-		else if (colorID == Color.YELLOW)
-			return "Yellow";
-		else
-			return "Error";
 	}
 
 }
