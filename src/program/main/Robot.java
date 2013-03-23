@@ -242,7 +242,7 @@ public class Robot {
 				
 				Park park = (Park) nextStep;
 				boolean left = park.getDirection() == Direction.Left;
-				park(left, park.getParkingSpace(), park.getRoad().isBuffer());
+				park(left, park.getParkingSpace(), park.getRoad().isBuffer(), park.getRoad().getName());
 				i++;
 			} else if (circle) {
 				RConsole.println("Following Circle...");
@@ -316,7 +316,7 @@ public class Robot {
 		this.pilot.setTravelSpeed(speed / 50f);
 	}
 	
-	public void park(boolean left, int space, boolean isbuffer){
+	public void park(boolean left, int space, boolean isbuffer, String name){
 		RConsole.println(String.valueOf(left));
 		RConsole.println(String.valueOf(space));
 		RConsole.println(String.valueOf(isbuffer));
@@ -345,21 +345,12 @@ public class Robot {
 		pilot.travel(RoboMap.PARK_TRAVEL_DISTANCE);
 		pilot.arc(0, sign * RoboMap.NORMAL_TURN_ANGLE);
 		
-		tankDrive(0.5 - sign * 0.05, 0.5 + sign * 0.05);
+		tankDrive(0.5, 0.5);
 		while(true) {
-			if(checkColor(midColorSensor).equals("WHITE")) break;
-			if(left && checkColor(leftColorSensor).equals("WHITE")) {
-				break;				
-			} else if(checkColor(rightColorSensor).equals("WHITE")) {
-				break;
-			}			
+			if(checkColor(midColorSensor).equals("WHITE")) break;				
 			
-		}
+		}		
 		
-		while(!checkColor(midColorSensor).equals("WHITE")) {
-			if(left) followLeftLine(false);
-			else followRightLine(false);
-		}
 		stop();
 		waitS(RoboMap.PARK_WAIT_TIME);
 		pilot.travel(RoboMap.OUT_OF_PARK_DISTANCE);
@@ -367,8 +358,11 @@ public class Robot {
 		pilot.arc(0, -1 * sign * RoboMap.OUT_OF_PARK_TURN);
 		
 		while(!checkForStop()) {
-			if(left) followLeftLine(false);
-			else followRightLine(false);
+			if(name == "R59") followLeftLine(false);
+			else {
+				if(left) followLeftLine(false);
+				else followRightLine(false);
+			}
 		}
 	}
 }

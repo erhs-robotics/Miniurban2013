@@ -315,7 +315,7 @@ public class Map {
         
         R59.setLeftChild(R43);
         R59.setStraightChild(R60);
-        R59.setBuffer(false);
+        R59.setBuffer(true);
         
         R60.setRightChild(R10);        
         

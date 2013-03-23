@@ -17,7 +17,7 @@ public class RoboMap {
 	public static final double PID_BLUE_SETPOINT   = 85;
 	public static final double PID_RED_SETPOINT = 130;
 	
-	public static final double WHITE_P = 0.0015;
+	public static final double WHITE_P = 0.0017;//0.0015;
 	public static final double WHITE_I = 0;
 	public static final double WHITE_D = 0.000;
 	
@@ -33,15 +33,15 @@ public class RoboMap {
 	public static final double RED_I  = 0;
 	public static final double RED_D  = 0;
 	
-	public static final int TURN_TRAVEL_DISTANCE = 19;
+	public static final int TURN_TRAVEL_DISTANCE = 18;
 	public static final int OFF_OF_CIRCLE_DISTANCE = 18;
 	public static final int NORMAL_TURN_ANGLE = 80;
 	public static final int TURN_ON_CIRCLE_ANGLE = 80;
 	public static final int TURN_OFF_CIRCLE_ANGLE = 46;
 	public static final int KEEP_ON_CIRCLE_DISTANCE = 2;
-	public static final int PARK_TRAVEL_DISTANCE = 10;
-	public static final int OUT_OF_PARK_DISTANCE = -23;
-	public static final int OUT_OF_PARK_TURN = 80;
+	public static final int PARK_TRAVEL_DISTANCE = 15;
+	public static final int OUT_OF_PARK_DISTANCE = -21;
+	public static final int OUT_OF_PARK_TURN = 85;
 	
 	public static final float MAXSPEED = 2.4f * 360f;
 	public static final float SLOWSPEED = 2f * 360f;
@@ -70,6 +70,6 @@ public class RoboMap {
 	public static final int[] YELLOW_MAX = {234,240,255,255,92,90};
 
 	
-	public static final int[] PARK_COUNTS = {0, 0, 0, 0, 0};
+	public static final double[] PARK_COUNTS = {0, 686.5, 1378.0, 2114.5, 0};
 
 }

@@ -15,7 +15,7 @@ public class PIDCalibrator {
 		robot.foundLine = false;
 		while(!robot.checkForStop())robot.followLeftLine(false);
 		*/
-		while (true) robot.followLeftLine(false);
+		while (!robot.checkForStop()) robot.followLeftLine(false);
 	}	
 	
 }
