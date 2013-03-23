@@ -2,8 +2,6 @@ package program.mapping;
 
 import java.util.ArrayList;
 
-import program.localization.LinearColorMap;
-
 public class Road {
 
 	private Road rightChild = null, leftChild = null, straightChild = null;
@@ -11,12 +9,10 @@ public class Road {
 	public ArrayList<Road> rightParents = new ArrayList<Road>(), leftParents = new ArrayList<Road>();
 	private String name;
 	private double g_value = -1; //the number of steps it takes to get to this road
-	                               // -1 means not expanded
+	                             // -1 means not expanded	
 	
-	private LinearColorMap parkMap = null;
 	private double length;	
-	private double speed;
-	
+	private double speed;	
 	boolean circle = false;
 	boolean slow = false;
 	boolean isBuffer = false;
@@ -181,19 +177,7 @@ public class Road {
 	
 	public boolean hasStraightChild() {
 		return straightChild != null;
-	}
-	
-	public boolean canPark() {
-		return parkMap != null;
-	}
-	
-	public LinearColorMap getParkMap() {
-		return parkMap;
-	}
-	
-	public void setParkMap(LinearColorMap parkMap) {
-		this.parkMap = parkMap;
-	}
+	}	
 	
 	public void setCircle(boolean circle) {
 		this.circle = circle;

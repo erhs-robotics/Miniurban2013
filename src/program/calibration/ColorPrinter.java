@@ -7,8 +7,8 @@ import program.main.Robot;
 public class ColorPrinter {
 	
 	public static void main(String args[]) {
-		
-		Robot robot = new Robot();
+		RConsole.openUSB(0);
+		Robot robot = new Robot();		
 		
 		while(true) {
 			String yellow = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW));

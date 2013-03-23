@@ -4,9 +4,9 @@ public class Map {
 	static Road start = new Road("start", 1);	
 	static Road R0 = new Road("R0", 280);
 	static Road R1 = new Road("R1", 145);
-	static Road R2 = new Road("R2", 1);
+	static Road R2 = new Road("R2", 200);
 	static Road R3 = new Road("R3", 120);
-	static Road R4 = new Road("R4", 1);
+	static Road R4 = new Road("R4", 200);
 	static Road R5 = new Road("R5", 304);
 	static Road R6 = new Road("R6", 180);
 	static Road R7 = new Road("R7", 50);
@@ -165,9 +165,7 @@ public class Map {
         R4.setLeftChild(R5);
 
         R5.setStraightChild(R6);
-        R5.setLeftChild(R7);
-        
-        
+        R5.setLeftChild(R7);        
 
         R6.setStraightChild(R8);
         R6.setLeftChild(R9);
@@ -315,9 +313,9 @@ public class Map {
         
         R58.setLeftChild(R16);
         
-        R59.setRightChild(R55);
-        R59.setStraightChild(R39);
-        R59.setBuffer(false);
+        R59.setLeftChild(R43);
+        R59.setStraightChild(R60);
+        R59.setBuffer(true);
         
         R60.setRightChild(R10);        
         

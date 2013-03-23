@@ -1,14 +1,13 @@
 package program.calibration;
 
 import program.main.MathUtils;
-import program.main.Robot;
 import lejos.nxt.Button;
 import lejos.nxt.addon.ColorHTSensor;
 import lejos.nxt.comm.RConsole;
 
 public class Calibrator {
 	
-	public static final int VARIANCE = 40;
+	public static final int VARIANCE = 29;
 	
 	public static void calibrateColor(ColorHTSensor sensor, String name) {
 		
