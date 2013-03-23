@@ -1,17 +1,9 @@
 package program.mapping.tests;
 
-import java.util.Map;
-
-import program.mapping.Mapper;
 import program.mapping.Road;
 
 public class MapTest {
-	//  -----------------------
-	//  -                     -
-	//  -                     -
-	//  -                     -
-	//  -                     -
-	//  -----------------------
+	
 	void test0() {
 		Road top = new Road("top", 1);
 		Road bottom = new Road("bottom", 1);
@@ -23,8 +15,7 @@ public class MapTest {
 		bottom.setRightChild(left);
 		left.setRightChild(top);
 		
-		System.out.println(top.getChildRight().getChildRight().getName());
-		
+		System.out.println(top.getChildRight().getChildRight().getName());		
 	}
 	
 	void test1() {
@@ -39,5 +30,4 @@ public class MapTest {
 		System.out.println("Testing stopped");
 		
 	}
-
 }

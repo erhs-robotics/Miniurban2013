@@ -33,16 +33,16 @@ public class Robot {
 		pid.setOutputCaps(-.5, .5);
 	}
 	
-	public double getLTacoCount() {
+	public double getLTachoCount() {
 		return leftMotor.getTachoCount();
 	}
 	
-	public double getRTacoCount() {
+	public double getRTachoCount() {
 		return rightMotor.getTachoCount();
 	}
 	
-	public double getAveTacoCount() {
-		return (getLTacoCount() + getRTacoCount()) / 2;
+	public double getAveTachoCount() {
+		return (getLTachoCount() + getRTachoCount()) / 2;
 	}	
 
 	/* Color Detection Algorithm *********************************************/
@@ -332,7 +332,7 @@ public class Robot {
 			}		
 		}
 		
-		double offset = getAveTacoCount();
+		double offset = getAveTachoCount();
 		double dist = 0;
 		while(len > dist) {
 			RConsole.println("LEN: " + String.valueOf(len) + ", MOVED: " + String.valueOf(dist));
@@ -340,7 +340,7 @@ public class Robot {
 			if(left) followLeftLine(false);
 			else followRightLine(false);
 			
-			dist = getAveTacoCount() - offset;
+			dist = getAveTachoCount() - offset;
 		}
 		pilot.travel(RoboMap.PARK_TRAVEL_DISTANCE);
 		pilot.arc(0, sign * RoboMap.NORMAL_TURN_ANGLE);

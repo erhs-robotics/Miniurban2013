@@ -1,8 +1,6 @@
 package program.main;
 
 import java.util.ArrayList;
-
-import lejos.nxt.comm.RConsole;
 import program.mapping.Direction;
 import program.mapping.Goal;
 import program.mapping.Map;
@@ -12,8 +10,7 @@ import program.mapping.Step;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {
-		//RConsole.openBluetooth(0);
+	public static void main(String[] args) throws Exception {		
 		Robot robot = new Robot();		
 		Mapper mapper = new Mapper();
 		Road map = Map.getMap();
