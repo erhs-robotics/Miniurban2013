@@ -17,7 +17,7 @@ public class RoboMap {
 	public static final double PID_BLUE_SETPOINT   = 85;
 	public static final double PID_RED_SETPOINT = 130;
 	
-	public static final double WHITE_P = 0.0017;//0.0015;
+	public static final double WHITE_P = 0.0017;
 	public static final double WHITE_I = 0;
 	public static final double WHITE_D = 0.000;
 	
@@ -49,12 +49,10 @@ public class RoboMap {
 	public static final double TRACKWIDTH = 13;
 
 	public static final double PARK_LENGTH = 20;
-	public static final double TACO_TO_CM = 1/20.0;
+	public static final double TACHO_TO_CM = 1/20.0;
 	
 	public static final long STOP_WAIT_TIME = 1;
-	public static final long PARK_WAIT_TIME = 5;
-	
-	
+	public static final long PARK_WAIT_TIME = 5;	
 	
 	public static final int[] BLACK_MIN = {0,199,226,36,0,34};
 	public static final int[] BLACK_MAX = {58,255,255,102,58,92};
