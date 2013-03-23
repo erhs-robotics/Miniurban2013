@@ -129,12 +129,12 @@ public class MapperTest {
 		Road map = Map.getMap();
 		ArrayList<Goal> goals = new ArrayList<Goal>();
 		
-		goals.add(new Goal("R1", 2, Direction.Left));
-		goals.add(new Goal("R15", 4, Direction.Right));
-		goals.add(new Goal("R45", 4, Direction.Right));
-		goals.add(new Goal("R55", 4, Direction.Right));
-		goals.add(new Goal("R69", 4, Direction.Right));
-		goals.add(new Goal("R36", 4, Direction.Right));
+		goals.add(new Goal("R45", 1, Direction.Left));
+		goals.add(new Goal("R41", 3, Direction.Left));
+		goals.add(new Goal("R15", 2, Direction.Right));
+		goals.add(new Goal("R1", 4, Direction.Left));
+		goals.add(new Goal("R59", 2, Direction.Right));
+		goals.add(new Goal("R55", 1, Direction.Right));
 		
 		Mapper mapper = new Mapper();
 		ArrayList<Step> path = mapper.getPath(map, goals);
@@ -151,7 +151,7 @@ public class MapperTest {
 		
 		MapperTest mapperTest = new MapperTest();
 		
-		mapperTest.test0();
+		mapperTest.test2();
 
 		System.out.println("Test Finished");
 	}
