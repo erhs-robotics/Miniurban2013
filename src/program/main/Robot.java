@@ -18,7 +18,7 @@ public class Robot {
 	private float speed;
 	private int component = ColorHTSensor.BLACK;
 	private int sign = 1;
-	private boolean foundLine = false;
+	public boolean foundLine = false;
 	private PIDControllerX pid;
 		
 	public Robot() {
@@ -157,7 +157,7 @@ public class Robot {
 	public void followRightLine(boolean isCircle) {
 		double speed = .5;
 		double value = runPID(false, isCircle);
-		value /= 1.5;// Compensation for right motor
+		//value /= 1.5;// Compensation for right motor
 		if (isCircle) {
 			value /= 1.2;
 			tankDrive(.6 + value, .4-value);
