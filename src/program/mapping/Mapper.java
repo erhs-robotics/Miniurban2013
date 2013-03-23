@@ -91,7 +91,7 @@ public class Mapper {
         Goal goalInfo = Goal.getGoal(goals, goal);
         assert goalInfo != null;        
         //give parking information
-        path.add(new Park(goal, goalInfo.getDirection(), goalInfo.getPark(), goal.getParkMap()));
+        path.add(new Park(goal, goalInfo.getDirection(), goalInfo.getPark()));
 
         goals.remove(goalInfo);//we already found this goal, so remove it
         Road current = goal;
