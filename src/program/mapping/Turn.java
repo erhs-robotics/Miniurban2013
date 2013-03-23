@@ -14,6 +14,4 @@ public class Turn extends Step {
 		 RConsole.println("Turn " + direction.toString() + " on Road " + road.getName());
 	}
 	
-	
-
 }

@@ -150,7 +150,6 @@ public class Map {
 	}
 	
 	public static Road getMap() {
-		
         start.setLeftChild(R23);
 
         R0.setLeftChild(R1);
@@ -351,9 +350,7 @@ public class Map {
         
         R71.setLeftChild(R62);
         
-        
         return start;
-
     }
 
 }

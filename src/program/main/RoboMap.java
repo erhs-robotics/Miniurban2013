@@ -42,9 +42,5 @@ public class RoboMap {
 	public static final int[] YELLOW_MAX = {97,244,255,170,46,82};	
 	public static final int[] RED_MIN = {0,0,215,40,0,8};
 	public static final int[] RED_MAX = {54,73,255,121,40,88};
-	
-	
-	
 
-	
 }

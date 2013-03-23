@@ -9,6 +9,7 @@ import lejos.nxt.comm.RConsole;
 public class Mapper {
 
     public Mapper() {
+    	
     }
 
     public ArrayList<Step> getPath(Road current, ArrayList<Goal> goals) throws Exception {
@@ -81,9 +82,6 @@ public class Mapper {
         }
         assert path.size() > 0;
         assert goals.size() == 0;
-        
-        
-        
         
         //if goals.size() = 0, we are done so return the full path
         return path;
@@ -194,7 +192,6 @@ public class Mapper {
         Road left = current.getChildLeft();
         Road straight = current.getChildStraight();
 
-
         //if child exists and we have not expanded it yet
         if (current.hasRightChild() && !closed.contains(right) && !open.contains(right)) {
         	assert !closed.contains(right);
@@ -206,7 +203,6 @@ public class Mapper {
                 return right; //check if we hit one of the goals, if so return it
             }
             
-
             open.add(right);//add road to the open list so it can be expanded in the future
         }
 
@@ -215,23 +211,18 @@ public class Mapper {
             left.setG_value(current.getG_value() + left.getCost());
             RConsole.println(current.getName() + "->" + left.getName()+ ", G: " + left.getG_value());
             if (Goal.isGoal(goals, left)) {
-                
                 return left;
             }
-            
             open.add(left);
         }
-        
 
         if (current.hasStraightChild() && !closed.contains(straight)  && !open.contains(straight)) {
         	assert !closed.contains(straight);
             straight.setG_value(current.getG_value() + straight.getCost());
             RConsole.println(current.getName() + "->" + straight.getName() + ", G: " + straight.getG_value());
             if (Goal.isGoal(goals, straight)) {
-                
                 return straight;
             }
-            
             open.add(straight);
         }     
         
@@ -241,5 +232,4 @@ public class Mapper {
         return null;//null because we did not find the goal yet
     }
 
-    
 }

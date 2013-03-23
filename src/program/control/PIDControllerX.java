@@ -78,10 +78,16 @@ public class PIDControllerX {
 		this.totalError = 0;
 	}
 	
-	public double getKp() { return kp; }
+	public double getKp() { 
+		return kp; 
+	}
 	
-	public double getKi() { return ki; }
+	public double getKi() { 
+		return ki; 
+	}
 	
-	public double getKd() { return kd; }
+	public double getKd() { 
+		return kd; 
+	}
 
 }
