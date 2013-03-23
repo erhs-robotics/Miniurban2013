@@ -134,6 +134,12 @@ public class Robot {
 			component = ColorHTSensor.BLUE;
 			this.pid.setSetpoint(RoboMap.PID_BLUE_SETPOINT);
 			this.pid.setPIDConstants(RoboMap.BLUE_P, RoboMap.BLUE_I, RoboMap.BLUE_D);			
+		} else if (colorID.equals("RED")) {
+			foundLine = true;
+			sign = 1;
+			component = ColorHTSensor.GREEN;
+			this.pid.setSetpoint(RoboMap.PID_RED_SETPOINT);
+			this.pid.setPIDConstants(RoboMap.RED_P, RoboMap.RED_I, RoboMap.RED_D);
 		}
 		
 		// PID Control

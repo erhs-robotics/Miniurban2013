@@ -15,6 +15,7 @@ public class RoboMap {
 	public static final double PID_WHITE_SETPOINT  = 160;
 	public static final double PID_YELLOW_SETPOINT = 100;
 	public static final double PID_BLUE_SETPOINT   = 85;
+	public static final double PID_RED_SETPOINT = 130;
 	
 	public static final double WHITE_P = 0.0015;
 	public static final double WHITE_I = 0;
@@ -27,6 +28,10 @@ public class RoboMap {
 	public static final double BLUE_P = 0.0025;
 	public static final double BLUE_I = 0;
 	public static final double BLUE_D = 0;
+	
+	public static final double RED_P  = .005;
+	public static final double RED_I  = 0;
+	public static final double RED_D  = 0;
 	
 	public static final int TURN_TRAVEL_DISTANCE = 19;
 	public static final int OFF_OF_CIRCLE_DISTANCE = 18;

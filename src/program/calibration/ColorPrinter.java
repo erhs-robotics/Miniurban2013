@@ -7,7 +7,7 @@ import program.main.Robot;
 public class ColorPrinter {
 	
 	public static void main(String args[]) {
-		RConsole.openBluetooth(0);
+		RConsole.openUSB(0);
 		Robot robot = new Robot();		
 		
 		while(true) {
