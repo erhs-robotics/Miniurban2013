@@ -33,18 +33,18 @@ public class RoboMap {
 	public static final double PARK_LENGTH = 20;
 	public static final double TACO_TO_CM = 1/20.0;
 	
-	public static final int[] BLACK_MIN = {14,235,207,62,13,43};
-	public static final int[] BLACK_MAX = {61,255,253,115,57,83};
-	public static final int[] WHITE_MIN = {160,235,208,235,152,43};
-	public static final int[] WHITE_MAX = {255,255,255,255,255,83};
-	public static final int[] RED_MIN = {16,34,235,91,0,32};
-	public static final int[] RED_MAX = {88,136,255,255,69,77};
-	public static final int[] GREEN_MIN = {45,235,168,130,43,27};
-	public static final int[] GREEN_MAX = {116,255,226,248,114,67};
-	public static final int[] BLUE_MIN = {38,92,57,189,111,0};
-	public static final int[] BLUE_MAX = {112,179,153,255,191,51};
-	public static final int[] YELLOW_MIN = {193,235,218,235,43,41};
-	public static final int[] YELLOW_MAX = {255,255,255,255,137,81};
+	public static final int[] BLACK_MIN = {0,215,184,28,0,23};
+	public static final int[] BLACK_MAX = {77,255,255,127,75,103};
+	public static final int[] WHITE_MIN = {75,215,172,215,70,7};
+	public static final int[] WHITE_MAX = {255,255,255,255,255,103};
+	public static final int[] RED_MIN = {0,33,215,55,0,13};
+	public static final int[] RED_MAX = {109,138,255,255,92,97};
+	public static final int[] GREEN_MIN = {7,215,146,66,3,6};
+	public static final int[] GREEN_MAX = {117,255,255,216,110,103};
+	public static final int[] BLUE_MIN = {0,87,53,55,3,0};
+	public static final int[] BLUE_MAX = {138,255,239,255,214,87};
+	public static final int[] YELLOW_MIN = {168,215,189,215,10,20};
+	public static final int[] YELLOW_MAX = {255,255,255,255,137,101};
 
 	
 	

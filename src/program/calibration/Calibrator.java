@@ -8,7 +8,7 @@ import lejos.nxt.comm.RConsole;
 
 public class Calibrator {
 	
-	public static final int VARIANCE = 20;
+	public static final int VARIANCE = 40;
 	
 	public static void calibrateColor(ColorHTSensor sensor, String name) {
 		

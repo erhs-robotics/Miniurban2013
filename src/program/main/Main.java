@@ -27,7 +27,7 @@ public class Main {
 		//}
 		//while(true) robot.followLeftLine(false);
 		//while(true) RConsole.println(robot.checkColor(robot.leftColorSensor));
-		//robot.park(true, 2, false);
+		robot.park(true, 2, false);
 
 		//robot.pilot.forward();
 		//Thread.sleep(980);

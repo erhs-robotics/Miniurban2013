@@ -319,6 +319,9 @@ public class Robot {
 		this.pilot.setTravelSpeed(speed / 50f);
 	}
 	public void park(boolean left, int space, boolean isbuffer){
+		RConsole.println(String.valueOf(left));
+		RConsole.println(String.valueOf(space));
+		RConsole.println(String.valueOf(isbuffer));
 		double len = (space - 1) * 900;
 		int sign = left ? 1 : -1;
 		ColorHTSensor colorSensor = left ? this.leftColorSensor : this.rightColorSensor;
