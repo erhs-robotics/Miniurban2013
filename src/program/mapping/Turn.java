@@ -1,5 +1,7 @@
 package program.mapping;
 
+import lejos.nxt.comm.RConsole;
+
 public class Turn extends Step {
 	
 	public Turn(Road road, Direction direction) {
@@ -9,9 +11,7 @@ public class Turn extends Step {
 	
 	@Override
 	public void print() {
-		System.out.println("Turn " + direction.toString() + " on Road " + road.getName());
+		 RConsole.println("Turn " + direction.toString() + " on Road " + road.getName());
 	}
 	
-	
-
 }

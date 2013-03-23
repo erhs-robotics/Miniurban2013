@@ -1,18 +1,25 @@
 package program.mapping;
 
+import java.util.ArrayList;
+
+import program.localization.LinearColorMap;
+
 public class Road {
 
 	private Road rightChild = null, leftChild = null, straightChild = null;
-	private Road rightParent = null, leftParent = null, straightParent = null;
+	public Road straightParent = null;
+	public ArrayList<Road> rightParents = new ArrayList<Road>(), leftParents = new ArrayList<Road>();
 	private String name;
 	private double g_value = -1; //the number of steps it takes to get to this road
 	                               // -1 means not expanded
 	
-	
+	private LinearColorMap parkMap = null;
 	private double length;	
 	private double speed;
 	
 	boolean circle = false;
+	boolean slow = false;
+	boolean isBuffer = false;
 
 	// use this one for a normal road
 	public Road(String name, int length) { 
@@ -33,6 +40,19 @@ public class Road {
 		this.speed = speed;
 		this.circle = isCircle;
 	}
+	
+	public void setBuffer(boolean isBuffer) {
+		this.isBuffer = isBuffer;
+	}
+	
+	public boolean isBuffer() {
+		return isBuffer;
+	}
+	
+	public void setSlow(boolean slow) {
+		this.slow = slow;
+	}
+	
 	public void setLeftChild(Road leftChild) {
 		this.leftChild = leftChild;
 		leftChild.setRightParent(this);
@@ -49,11 +69,11 @@ public class Road {
 	}
 	
 	public void setLeftParent(Road leftParent) {
-		this.leftParent = leftParent;
+		this.leftParents.add(leftParent);
 	}
 	
 	public void setRightParent(Road rightParent) {
-		this.rightParent = rightParent;
+		this.rightParents.add(rightParent);
 	}
 	
 	public void setStraightParent(Road straightParent) {
@@ -66,6 +86,9 @@ public class Road {
 
 	public boolean isCircle() { // Is it a circle???
 		return circle;
+	}
+	public boolean isSlow(){ //Is it slow???
+		return slow;
 	}
 
 	public Road getChildRight() {
@@ -80,12 +103,12 @@ public class Road {
 		return straightChild;
 	}	
 	
-	public Road getLeftParent() {
-		return leftParent;
+	public ArrayList<Road> getLeftParents() {
+		return leftParents;
 	}
 	
-	public Road getRightParent() {
-		return rightParent;
+	public ArrayList<Road> getRightParents() {
+		return rightParents;
 	}
 	
 	public Road getStraightParent() {
@@ -112,12 +135,36 @@ public class Road {
 		return length / speed;
 	}
 	
-	public boolean hasExpandedRightParent() {
-		return rightParent != null && rightParent.g_value != -1;
+	public boolean hasExpandedRightParent() {		
+		for(Road r : rightParents) {
+			if(r.getG_value() != -1) return true;
+		}		
+		return false;
 	}
 	
 	public boolean hasExpandedLeftParent() {
-		return leftParent != null && leftParent.g_value != -1;
+		for(Road r : leftParents) {
+			if(r.getG_value() != -1) return true;
+		}		
+		return false;
+	}
+	
+	public ArrayList<Road> getExpandedRightParents() {
+		ArrayList<Road> parents = new ArrayList<Road>();
+		for(Road r : rightParents) {
+			if(r.getG_value() != -1) parents.add(r);
+		
+		}
+		return parents;
+	}
+	
+	public ArrayList<Road> getExpandedLeftParents() {
+		ArrayList<Road> parents = new ArrayList<Road>();
+		for(Road r : leftParents) {
+			if(r.getG_value() != -1) parents.add(r);
+		
+		}
+		return parents;
 	}
 	
 	public boolean hasExpandedStraightParent() {
@@ -135,6 +182,21 @@ public class Road {
 	public boolean hasStraightChild() {
 		return straightChild != null;
 	}
-
 	
+	public boolean canPark() {
+		return parkMap != null;
+	}
+	
+	public LinearColorMap getParkMap() {
+		return parkMap;
+	}
+	
+	public void setParkMap(LinearColorMap parkMap) {
+		this.parkMap = parkMap;
+	}
+	
+	public void setCircle(boolean circle) {
+		this.circle = circle;
+	}
+
 }

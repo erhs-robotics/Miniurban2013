@@ -3,9 +3,11 @@ package program.mapping;
 import java.util.ArrayList;
 
 public class Goal {
+	
 	private String goal;
 	private int park;
 	private Direction direction;
+	
 	public Goal(String goal, int park, Direction direction) {
 		this.goal = goal;
 		this.park = park;
@@ -18,7 +20,6 @@ public class Goal {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
@@ -28,12 +29,11 @@ public class Goal {
 				return goals.get(i);
 			}
 		}
-		
 		return null;
 	}
 	
 	public boolean isGoal(Road road) {
-		if(road.getName() == goal) return true;
+		if(road.getName().equals(goal)) return true;
 		return false;
 	}
 	
@@ -49,5 +49,4 @@ public class Goal {
 		return direction;
 	}
 	
-
 }

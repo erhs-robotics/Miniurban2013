@@ -1,5 +1,8 @@
 package program.mapping.tests;
 
+import java.util.Map;
+
+import program.mapping.Mapper;
 import program.mapping.Road;
 
 public class MapTest {
@@ -24,10 +27,15 @@ public class MapTest {
 		
 	}
 	
+	void test1() {
+		Road map = program.mapping.Map.getMap();
+		System.out.println(map.getChildLeft().getChildLeft().getChildLeft().getName());
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("Testing started");
 		MapTest mapTest = new MapTest();		
-		mapTest.test0();	
+		mapTest.test1();	
 		System.out.println("Testing stopped");
 		
 	}
