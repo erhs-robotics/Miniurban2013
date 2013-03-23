@@ -25,9 +25,8 @@ public class Mapper {
         
         path.addAll(pathToStart);       
         
-        // Change last park direction to exit city direction
-        path.remove(path.size() - 1);
-        path.add(new Step());        
+        // Remove last park direction
+        path.remove(path.size() - 1);           
         
         // Manually add in the first step
         Step step = new Turn(current, Direction.Straight);        
