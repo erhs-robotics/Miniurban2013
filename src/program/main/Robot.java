@@ -95,11 +95,6 @@ public class Robot {
 				&& MathUtils.isWithin(blue, RoboMap.RED_MIN[4], RoboMap.RED_MAX[4])
 				&& MathUtils.isWithin(yellow, RoboMap.RED_MIN[5], RoboMap.RED_MAX[5]))
 			return "RED";
-		
-		
-		
-		if (black < 40 && white < 50 && yellow < 60 && blue < 20 && green > 50 && green < 100 && red > 225)
-			return "RED";
 		return "ERROR";
 	}
 	public boolean checkForStop() {
@@ -109,7 +104,6 @@ public class Robot {
 
 	/* Autonomous Map Following with State Map and PID control ***************/
 	public double runPID (boolean leftPID, boolean isCircle) {
-		
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
 		
 		String colorID = checkColor(colorSensor);
@@ -161,7 +155,6 @@ public class Robot {
 		RConsole.println(String.valueOf(value));
 		
 		if(isCircle) {
-			//value  /= 1.1;
 			value /= 1.2;
 			tankDrive(.4 - value, .6 + value);
 			return;
@@ -179,7 +172,7 @@ public class Robot {
 			tankDrive(.6 + value, .4-value);
 			return;
 		}
-		//System.out.println(value);mine	
+		//System.out.println(value);
 		//System.out.println((speed + (speed * value)) + ", " + (speed - (speed * value)));
 		tankDrive(speed + value, speed - value);
 	}
@@ -366,10 +359,7 @@ public class Robot {
 		waitS(3);
 		pilot.travel(RoboMap.OUT_OF_PARK_DISTANCE);
 		
-		pilot.arc(0, -1 * sign * RoboMap.OUT_OF_PARK_TURN);
-		
-		
-	
-	
+		pilot.arc(0, -1 * sign * RoboMap.OUT_OF_PARK_TURN);	
+
 	}
 }

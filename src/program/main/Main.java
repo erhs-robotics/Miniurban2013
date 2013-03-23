@@ -29,15 +29,6 @@ public class Main {
 		//while(true) RConsole.println(robot.checkColor(robot.leftColorSensor));
 		robot.park(true, 2, false);
 
-		//robot.pilot.forward();
-		//Thread.sleep(980);
-		//robot.pilot.stop();
-		//RConsole.println(String.valueOf(robot.getAveTacoCount()));
-		
-		
-			
-		
-		
 
 /*
 		while(true) {
@@ -57,33 +48,6 @@ public class Main {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-
-	}
-	
-	
-
-	public static String getColorString(Color color) {
-		int colorID = color.getColor();
-		if (colorID == Color.BLACK)
-			return "Black";
-		else if (colorID == Color.BLUE)
-			return "Blue";
-		else if (colorID == Color.GREEN)
-			return "Green";
-		else if (colorID == Color.WHITE)
-			return "White";
-		else if (colorID == Color.RED)
-			return "Red";
-		else if (colorID == Color.YELLOW)
-			return "Yellow";
-		else
-			return "Error";
 	}
 
 }

@@ -41,7 +41,6 @@ public class Road {
 		this.circle = isCircle;
 	}
 	
-
 	public void setBuffer(boolean isBuffer) {
 		this.isBuffer = isBuffer;
 	}
@@ -49,6 +48,7 @@ public class Road {
 	public boolean isBuffer() {
 		return isBuffer;
 	}
+	
 	public void setSlow(boolean slow) {
 		this.slow = slow;
 	}
@@ -199,5 +199,4 @@ public class Road {
 		this.circle = circle;
 	}
 
-	
 }

@@ -30,6 +30,7 @@ public class RoboMap {
 	public static final float SLOWSPEED = 2f * 360f;
 	public static final double WHEELDIAMETER = 3;
 	public static final double TRACKWIDTH = 13;
+
 	public static final double PARK_LENGTH = 20;
 	public static final double TACO_TO_CM = 1/20.0;
 	
@@ -46,8 +47,4 @@ public class RoboMap {
 	public static final int[] YELLOW_MIN = {168,215,189,215,10,20};
 	public static final int[] YELLOW_MAX = {255,255,255,255,137,101};
 
-	
-	
-
-	
 }

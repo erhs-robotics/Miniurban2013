@@ -14,10 +14,6 @@ import program.mapping.Step;
 
 public class MapperTest {
 
-	/**
-	 * @param args
-	 * @throws Exception 
-	 */
 	public void test0() throws Exception {
 		Road R0 = new Road("R0", 1);
 		Road R1 = new Road("R1", 1);
@@ -31,7 +27,6 @@ public class MapperTest {
 		R0.setLeftChild(R2);
 		
 		R1.setRightChild(R2);
-		
 		
 		R2.setRightChild(R4);
 		R2.setSlow(true);
@@ -54,11 +49,6 @@ public class MapperTest {
 		R7.setSlow(true);
 		
 		
-		
-		
-		
-		
-		
 		Mapper mapper = new Mapper();
 		ArrayList<Goal> goals = new ArrayList<Goal>();
 		goals.add(new Goal("R6", 2, Direction.Left));
@@ -72,9 +62,7 @@ public class MapperTest {
 		robot.followSteps(path);
 		
 		//while(!robot.checkForStop()) robot.followRightLine(false);
-		
-		
-		
+
 	}
 	
 	public void test1() throws Exception {
@@ -128,8 +116,8 @@ public class MapperTest {
 		goals.add(new Goal("R3", 2, Direction.Left));
 		goals.add(new Goal("R10", 4, Direction.Right));		
 		
-		ArrayList<Step> path = mapper.getPath(R0, goals);
-		
+		ArrayList<Step> path = mapper.getPath(R0, goals);		
+
 		
 		for(int i=0;i<path.size();i++) {
 			path.get(i).print();
@@ -150,7 +138,6 @@ public class MapperTest {
 		
 		Mapper mapper = new Mapper();
 		ArrayList<Step> path = mapper.getPath(map, goals);
-		
 		
 		for(int i=0;i<path.size();i++) {
 			path.get(i).print();
