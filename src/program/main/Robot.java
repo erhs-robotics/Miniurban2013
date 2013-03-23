@@ -190,7 +190,7 @@ public class Robot {
 		stop();
 		i++;
 		Step currentStep, nextStep, lastStep;
-		while (steps.size() > i) {
+		while (steps.size() - 1 > i) {
 			RConsole.println("Color:" + checkColor(leftColorSensor));
 			lastStep = steps.get(i - 1);
 			currentStep = steps.get(i);
@@ -270,6 +270,14 @@ public class Robot {
 
 			i++;
 		}
+		
+		// Exit city
+		while(!checkColor(leftColorSensor).equals("RED")) followLeftLine(false);
+		pilot.travel(RoboMap.PARK_TRAVEL_DISTANCE);
+		pilot.arc(0, RoboMap.NORMAL_TURN_ANGLE);
+		pilot.forward();
+		while(!checkColor(midColorSensor).equals("WHITE"));
+		pilot.stop();
 	}
 	
 	/* Basic Driving Code ****************************************************/

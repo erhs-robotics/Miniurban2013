@@ -30,6 +30,7 @@ public class Mapper {
         //remove the last parking direction and just put in a blank Step
         //object so we know that we finish here
         path.remove(path.size() - 1);
+        path.remove(path.size() - 1);
         path.add(new Step());        
         
         // Manually add in the first step
