@@ -19,15 +19,20 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		Robot robot = new Robot();
 		
-		RConsole.openBluetooth(0);
+		//RConsole.openBluetooth(0);
 		RConsole.println("THIS IS R!!!!");
-		String[] names = {"BLACK", "WHITE", "GREEN", "BLUE", "YELLOW"};
-		//for(int i=0;i<5;i++) {			
+		String[] names = {"BLACK", "WHITE", "GREEN", "BLUE", "YELLOW", "RED"};
+		//for(int i=0;i<6;i++) {			
 			//Calibrator.calibrateColor(robot.leftColorSensor, names[i]);	
 		//}
-		while(true) robot.followLeftLine(false);
+		//while(true) robot.followLeftLine(false);
 		//while(true) RConsole.println(robot.checkColor(robot.leftColorSensor));
+		//robot.park(true, 2, false);
 
+		//robot.pilot.forward();
+		//Thread.sleep(980);
+		//robot.pilot.stop();
+		//RConsole.println(String.valueOf(robot.getAveTacoCount()));
 		
 		
 			
@@ -47,7 +52,10 @@ public class Main {
 		    out += ", Color: " + color;
 			RConsole.println(out);
 		}
-		*/
+*/
+		
+		
+		
 		
 		
 		

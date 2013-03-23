@@ -20,18 +20,18 @@ public class Robot {
 	private float speed;
 	private int component = ColorHTSensor.BLACK;
 	int sign = 1;
-	
+	private boolean foundLine = false;
 	public PIDControllerX pid;
 		
 	public Robot() {
 		leftMotor = new NXTRegulatedMotor(RoboMap.LEFT_MOTOR_PORT);
 		rightMotor = new NXTRegulatedMotor(RoboMap.RIGHT_MOTOR_PORT);
 		pilot = new DifferentialPilot(RoboMap.WHEELDIAMETER, RoboMap.TRACKWIDTH, leftMotor, rightMotor);
-		setSpeed(RoboMap.SLOWSPEED);
+		setSpeed(RoboMap.MAXSPEED);
 		leftColorSensor = new ColorHTSensor(RoboMap.LEFT_COLOR_SENSOR_PORT);
 		midColorSensor = new ColorHTSensor(RoboMap.MID_COLOR_SENSOR_PORT);
 		rightColorSensor = new ColorHTSensor(RoboMap.RIGHT_COLOR_SENSOR_PORT);
-		pid = new PIDControllerX((1.0/250.0), 0.0, 0.0, RoboMap.PID_WHITE_SETPOINT);
+		pid = new PIDControllerX(0, 0.0, 0.0, RoboMap.PID_WHITE_SETPOINT);
 		pid.setOutputCaps(-.5, .5);
 	}
 	
@@ -113,6 +113,8 @@ public class Robot {
 		ColorHTSensor colorSensor = leftPID ? this.leftColorSensor : this.rightColorSensor;
 		
 		String colorID = checkColor(colorSensor);
+		
+				
 		RConsole.println("Color: " + colorID);
 		
 		// Check the color of the other sensor and adjust if it finds a following color
@@ -121,33 +123,34 @@ public class Robot {
 			//return .3;
 		}
 		
-		if (colorID.equals("BLACK") && !isCircle && component == ColorHTSensor.BLACK) 
-			return 0.05;
+		if (colorID.equals("BLACK") && !isCircle && !foundLine) return 0.05;
+		
         else if (colorID.equals("BLACK") && isCircle) return 0.15;
-		if (colorID.equals("GREEN")) return -.6;
+		if (colorID.equals("GREEN")) return -.3;
 		if (colorID.equals("YELLOW")) {
-			this.pid.reset();
+			foundLine = true;			
 			sign = 1;
 			component = ColorHTSensor.BLACK;
 			this.pid.setSetpoint(RoboMap.PID_YELLOW_SETPOINT); 
-			this.pid.setPIDConstants(0.007, 0, 0.00003);
+			this.pid.setPIDConstants(0.0016, 0, 0.00000);
 		} else if (colorID.equals("WHITE")) {
-			this.pid.reset();
+			foundLine = true;			
 			sign = 1;
 			component = ColorHTSensor.BLACK;
 			this.pid.setSetpoint(RoboMap.PID_WHITE_SETPOINT);
-			this.pid.setPIDConstants(0.0025, 0, 0.00003);
+			this.pid.setPIDConstants(0.0007, 0, 0.000000005);
 		} else if(colorID.equals("BLUE")) {
-			sign = -1;
-			component = ColorHTSensor.RED;
+			foundLine = true;
+			sign = 1;
+			component = ColorHTSensor.BLUE;
 			this.pid.setSetpoint(RoboMap.PID_BLUE_SETPOINT);
-			this.pid.setPIDConstants(0.004, 0.000, 0.0000);			
+			this.pid.setPIDConstants(0.003, 0.000, 0.00001);			
 		}
-		else {
-			return 0;
+		else if(colorID.equals("ERROR")) {
+			//return 0;
 		}
 		
-		if(isCircle) this.pid.setPIDConstants(0.005, 0, 0.00003);
+		if(isCircle) this.pid.setPIDConstants(0.002, 0, 0.0000003);
 		
 		int colorValue = colorSensor.getRGBComponent(component);
 		return sign * this.pid.getOutput(colorValue);
@@ -155,6 +158,7 @@ public class Robot {
 	public void followLeftLine(boolean isCircle) {
 		double speed = .5;
 		double value = runPID(true, isCircle);
+		RConsole.println(String.valueOf(value));
 		
 		if(isCircle) {
 			//value  /= 1.1;
@@ -210,11 +214,15 @@ public class Robot {
 				RConsole.println("Turning Right...");
 				
 				double angle = RoboMap.NORMAL_TURN_ANGLE;
+				int dist = RoboMap.TURN_TRAVEL_DISTANCE;
 				
 				if(circle) angle = RoboMap.TURN_ON_CIRCLE_ANGLE;// we have to turn onto a circle
 				else if(lastWasCircle) angle = RoboMap.TURN_OFF_CIRCLE_ANGLE;// we just came from a circle
 				RConsole.println("Angle: " + String.valueOf(angle));
-				turnRight((int)angle);				
+				
+				if(lastWasCircle) dist = RoboMap.OFF_OF_CIRCLE_DISTANCE;
+				
+				turnRight((int)angle, dist);				
 			} else if(currentStep.getDirection() == Direction.Left) {
 				RConsole.println("Turning Left...");
 								
@@ -223,11 +231,11 @@ public class Robot {
 				if(circle) angle = RoboMap.TURN_ON_CIRCLE_ANGLE;// we have to turn onto a circle
 				else if(lastWasCircle) angle = RoboMap.TURN_OFF_CIRCLE_ANGLE;// we just came from a circle
 				RConsole.println("Angle: " + String.valueOf(angle));
-				turnLeft((int)angle);				
+				turnLeft((int)angle, RoboMap.TURN_TRAVEL_DISTANCE);				
 			} else if(currentStep.getDirection() == Direction.Straight) {
 				RConsole.println("Going Strait...");
 				
-				waitOneSecond();
+				waitS(1);
 				if(circle) {					
 					pilot.travel(RoboMap.KEEP_ON_CIRCLE_DISTANCE);
 				} else {
@@ -235,12 +243,18 @@ public class Robot {
 				}
 				
 			}
-			
+			foundLine = false;
 			if(nextStep instanceof Park){
 				RConsole.println("Parking...");
-				i++;
+				Park park = (Park) nextStep;
+				boolean left = park.getDirection() == Direction.Left;
+				park(left, park.getParkingSpace(), park.getRoad().isBuffer());
+				i+=2;
+				lastStep = steps.get(i - 1);
+				currentStep = steps.get(i);
+				nextStep = steps.get(i + 1);
 			}
-			else if (circle) {
+			if (circle) {
 				RConsole.println("Following Circle...");
 				while(!checkForStop()) followLeftLine(circle);
 			}
@@ -281,23 +295,23 @@ public class Robot {
 	public void stop() {
 		pilot.stop();
 	}
-	public void waitOneSecond() {
+	public void waitS(long t) {
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(t * 1000);
 		} catch (InterruptedException ex) { 
 			ex.printStackTrace(); 
 		}
 	}
-	public void turnLeft(int angle) {
+	public void turnLeft(int angle, int dist) {
 		stop();
-		waitOneSecond();
-		pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);		
+		waitS(1);
+		pilot.travel(dist);		
 		pilot.arc(0, angle);
 	}
-	public void turnRight(int angle) {
+	public void turnRight(int angle, int dist) {
 		stop();
-		waitOneSecond();
-		pilot.travel(RoboMap.TURN_TRAVEL_DISTANCE);		
+		waitS(1);
+		pilot.travel(dist);		
 		pilot.arc(0, -angle);
 	}
 	public void setSpeed(float speed) {
@@ -305,7 +319,7 @@ public class Robot {
 		this.pilot.setTravelSpeed(speed / 50f);
 	}
 	public void park(boolean left, int space, boolean isbuffer){
-		double len = RoboMap.PARK_LENGTH * space;
+		double len = (space - 1) * 900;
 		int sign = left ? 1 : -1;
 		ColorHTSensor colorSensor = left ? this.leftColorSensor : this.rightColorSensor;
 		if(isbuffer) {
@@ -314,21 +328,45 @@ public class Robot {
 				if(left) followLeftLine(false);
 				else followRightLine(false);
 			
-			}
-			double offset = getAveTacoCount();
-			double dist = 0;
-			while(len > dist) {
-				
-				if(left) followLeftLine(false);
-				else followRightLine(false);
-				
-				dist = (getAveTacoCount() - offset) * RoboMap.TACO_TO_CM;
-			}
-			pilot.travel(RoboMap.PARK_TRAVEL_DISTANCE);
-			pilot.arc(0, sign * RoboMap.NORMAL_TURN_ANGLE);
+			}		
+		}
+		
+		double offset = getAveTacoCount();
+		double dist = 0;
+		while(len > dist) {
+			RConsole.println("LEN: " + String.valueOf(len) + ", MOVED: " + String.valueOf(dist));
+			
+			if(left) followLeftLine(false);
+			else followRightLine(false);
+			
+			dist = (getAveTacoCount() - offset);
+		}
+		pilot.travel(RoboMap.PARK_TRAVEL_DISTANCE);
+		pilot.arc(0, sign * RoboMap.NORMAL_TURN_ANGLE);
+		pid = new PIDControllerX(0, 0.0, 0.0, RoboMap.PID_WHITE_SETPOINT);
+		tankDrive(0.5 - sign * 0.05, 0.5 + sign * 0.05);
+		while(true) {
+			if(checkColor(midColorSensor).equals("WHITE")) break;
+			if(left && checkColor(leftColorSensor).equals("WHITE")) {
+				break;				
+			} else if(checkColor(rightColorSensor).equals("WHITE")) {
+				break;
+			}			
 			
 		}
 		
+		while(!checkColor(midColorSensor).equals("WHITE")) {
+			if(left) followLeftLine(false);
+			else followRightLine(false);
+		}
+		stop();
+		waitS(3);
+		pilot.travel(RoboMap.OUT_OF_PARK_DISTANCE);
+		
+		pilot.arc(0, -1 * sign * RoboMap.OUT_OF_PARK_TURN);
+		
+		
+	
 	
 	}
 }
