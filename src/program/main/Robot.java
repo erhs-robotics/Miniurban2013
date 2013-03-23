@@ -237,14 +237,8 @@ public class Robot {
 				Park park = (Park) nextStep;
 				boolean left = park.getDirection() == Direction.Left;
 				park(left, park.getParkingSpace(), park.getRoad().isBuffer());
-				
-				i += 2;
-				lastStep = steps.get(i - 1);
-				currentStep = steps.get(i);
-				nextStep = steps.get(i + 1);
-			}
-			
-			if (circle) {
+				i++;
+			} else if (circle) {
 				RConsole.println("Following Circle...");
 				while(!checkForStop()) followLeftLine(circle);
 			} else if(currentStep.getDirection() == Direction.Left) {
@@ -255,7 +249,7 @@ public class Robot {
 				while(!checkForStop()) followRightLine(circle);
 			} else if(currentStep.getDirection() == Direction.Straight) {
 				RConsole.println("Going Left because of next Straight...");
-				while(!checkForStop()) followLeftLine(circle);
+				while(!checkForStop()) followRightLine(circle);
 			}
 			
 			stop();
@@ -320,15 +314,15 @@ public class Robot {
 		RConsole.println(String.valueOf(left));
 		RConsole.println(String.valueOf(space));
 		RConsole.println(String.valueOf(isbuffer));
-		double len = (space - 1) * 900;
-		int sign = left ? 1 : -1;
+		
+		double len = RoboMap.PARK_COUNTS[space - 1];		
+		int sign = left ? 1 : -1;		
 		ColorHTSensor colorSensor = left ? this.leftColorSensor : this.rightColorSensor;
+		
 		if(isbuffer) {
-			while(!checkColor(colorSensor).equals("BLUE")) {
-				followLeftLine(false);
+			while(!checkColor(colorSensor).equals("BLUE")) {				
 				if(left) followLeftLine(false);
-				else followRightLine(false);
-			
+				else followRightLine(false);			
 			}		
 		}
 		
@@ -340,11 +334,11 @@ public class Robot {
 			if(left) followLeftLine(false);
 			else followRightLine(false);
 			
-			dist = (getAveTacoCount() - offset);
+			dist = getAveTacoCount() - offset;
 		}
 		pilot.travel(RoboMap.PARK_TRAVEL_DISTANCE);
 		pilot.arc(0, sign * RoboMap.NORMAL_TURN_ANGLE);
-		pid = new PIDControllerX(0, 0.0, 0.0, RoboMap.PID_WHITE_SETPOINT);
+		
 		tankDrive(0.5 - sign * 0.05, 0.5 + sign * 0.05);
 		while(true) {
 			if(checkColor(midColorSensor).equals("WHITE")) break;
@@ -365,5 +359,10 @@ public class Robot {
 		pilot.travel(RoboMap.OUT_OF_PARK_DISTANCE);
 		
 		pilot.arc(0, -1 * sign * RoboMap.OUT_OF_PARK_TURN);
+		
+		while(!checkForStop()) {
+			if(left) followLeftLine(false);
+			else followRightLine(false);
+		}
 	}
 }

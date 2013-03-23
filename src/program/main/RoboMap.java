@@ -65,6 +65,6 @@ public class RoboMap {
 	public static final int[] YELLOW_MAX = {234,240,255,255,92,90};
 
 	
-	public static final int[] PARK_COUNTS = {};
+	public static final int[] PARK_COUNTS = {0, 0, 0, 0, 0};
 
 }
