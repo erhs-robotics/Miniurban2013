@@ -23,22 +23,20 @@ public class Mapper {
         //find the path to all the goals
         ArrayList<Step> path = findPath(current, goals);
         //find were we stopped
-        //Road last = path.get(path.size() - 1).getRoad();
+        Road last = path.get(path.size() - 1).getRoad();
         
-        //ArrayList<Goal> start = new ArrayList<Goal>();
-        //start.add(new Goal("R23", 0, Direction.Left));
+        ArrayList<Goal> start = new ArrayList<Goal>();
+        start.add(new Goal("R23", 0, Direction.Left));
         //find the path from where we stopped to where we started
-        //Map.resetMap();
-        //ArrayList<Step> pathToStart = findPath(last, start);
+        Map.resetMap();
+        ArrayList<Step> pathToStart = findPath(last, start);
         //combine the two paths
-        //for (int i = 0; i < pathToStart.size(); i++) {
-        //    path.add(pathToStart.get(i));
-        //}
+        path.addAll(pathToStart);       
         //since were we started is not actually a parking space
         //remove the last parking direction and just put in a blank Step
         //object so we know that we finish here
-        //path.remove(path.size() - 1);
-        //path.add(new Step());
+        path.remove(path.size() - 1);
+        path.add(new Step());
         //return the complete path from the start to all the goals and back again
         
      // Manually add in the first step
