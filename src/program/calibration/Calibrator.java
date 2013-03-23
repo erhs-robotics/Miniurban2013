@@ -1,7 +1,6 @@
 package program.calibration;
 
 import program.main.MathUtils;
-import program.main.Robot;
 import lejos.nxt.Button;
 import lejos.nxt.addon.ColorHTSensor;
 import lejos.nxt.comm.RConsole;

@@ -8,8 +8,7 @@ public class ColorPrinter {
 	
 	public static void main(String args[]) {
 		RConsole.openBluetooth(0);
-		Robot robot = new Robot();
-		
+		Robot robot = new Robot();		
 		
 		while(true) {
 			String yellow = String.valueOf(robot.leftColorSensor.getRGBComponent(ColorHTSensor.YELLOW));

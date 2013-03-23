@@ -165,9 +165,7 @@ public class Map {
         R4.setLeftChild(R5);
 
         R5.setStraightChild(R6);
-        R5.setLeftChild(R7);
-        
-        
+        R5.setLeftChild(R7);        
 
         R6.setStraightChild(R8);
         R6.setLeftChild(R9);

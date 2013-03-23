@@ -12,58 +12,48 @@ public class Mapper {
     public ArrayList<Step> getPath(Road current, ArrayList<Goal> goals) throws Exception {
         if (goals.size() < 1) {
             throw new Exception("No goals given! Must have at least one goal!");
-        }        
-       
-        //find the path to all the goals
+        }   
+        // Find goals
         ArrayList<Step> path = findPath(current, goals);
-        //find were we stopped
-        Road last = path.get(path.size() - 1).getRoad();
         
-        ArrayList<Goal> start = new ArrayList<Goal>();
-        start.add(new Goal("R23", 0, Direction.Left));
-        //find the path from where we stopped to where we started
+        // Find path to exit
+        Road last = path.get(path.size() - 1).getRoad();
         Map.resetMap();
+        ArrayList<Goal> start = new ArrayList<Goal>();
+        start.add(new Goal("R23", 0, Direction.Left));       
         ArrayList<Step> pathToStart = findPath(last, start);
-        //combine the two paths
+        
         path.addAll(pathToStart);       
-        //since were we started is not actually a parking space
-        //remove the last parking direction and just put in a blank Step
-        //object so we know that we finish here
-        path.remove(path.size() - 1);
+        
+        // Change last park direction to exit city direction
         path.remove(path.size() - 1);
         path.add(new Step());        
         
         // Manually add in the first step
         Step step = new Turn(current, Direction.Straight);        
         path.add(0, step);
+        
         return path;//return the complete path from the start to all the goals and back again
     }
 
     private ArrayList<Step> findPath(Road current, ArrayList<Goal> goals) throws Exception { // Runs the A* search, puts result in path
-    	RConsole.println("FIND PATH...");
-    	assert goals.size() > 0;
-        assert current != null;
-        assert current.hasLeftChild() || current.hasRightChild() || current.hasStraightChild();
+    	RConsole.println("FIND PATH...");    	
 
         ArrayList<Road> open = new ArrayList<Road>(); // The nodes that need to be expanded
         ArrayList<Road> closed = new ArrayList<Road>(); // The nodes that have already been expanded
+        
         Road goal = null;
-        current.setG_value(0);// make sure we start at 0
-        open.add(current);//to comply with expand assertions
-        while (goal == null) {// while we have not hit a goal        
-            goal = expand(current, open, closed, goals);// Expand from the current node to the surrounding nodes
-            
-            if (goal == null) {
-            	
-                current = getBestNode(open);// Picks the next current node that will most likely lead to the goal		
-            }
+        current.setG_value(0);
+        open.add(current);
+        
+        while (goal == null) {// While a goal has not been found        
+            goal = expand(current, open, closed, goals);            
+            if (goal == null) current = getBestNode(open);            
         }
-
-        //travels backward form goal to the start and records that path
-        //also removes the goals we just found from goals
+        
         ArrayList<Step> path = genPath(goal, goals);
 
-        //if goals is > 0 then we have more goals to find, so call findPath again with goal as starting point and with the new goals
+        
         if (goals.size() > 0) {
         	Map.resetMap();
             ArrayList<Step> nextPath = findPath(goal, goals);//Recursively call findPath to find the next goal
@@ -71,11 +61,8 @@ public class Mapper {
             for (int i = 0; i < nextPath.size(); i++) {
                 path.add(nextPath.get(i));
             }
-        }
-        assert path.size() > 0;
-        assert goals.size() == 0;
+        }       
         
-        //if goals.size() = 0, we are done so return the full path
         return path;
     }
     
