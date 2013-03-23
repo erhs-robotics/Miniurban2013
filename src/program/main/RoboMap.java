@@ -37,17 +37,27 @@ public class RoboMap {
 	public static final long STOP_WAIT_TIME = 1;
 	public static final long PARK_WAIT_TIME = 5;
 	
-	public static final int[] BLACK_MIN = {0,215,184,28,0,23};
-	public static final int[] BLACK_MAX = {77,255,255,127,75,103};
-	public static final int[] WHITE_MIN = {75,215,172,215,70,7};
-	public static final int[] WHITE_MAX = {255,255,255,255,255,103};
-	public static final int[] RED_MIN = {0,33,215,55,0,13};
-	public static final int[] RED_MAX = {109,138,255,255,92,97};
-	public static final int[] GREEN_MIN = {7,215,146,66,3,6};
-	public static final int[] GREEN_MAX = {117,255,255,216,110,103};
-	public static final int[] BLUE_MIN = {0,87,53,55,3,0};
-	public static final int[] BLUE_MAX = {138,255,239,255,214,87};
-	public static final int[] YELLOW_MIN = {168,215,189,215,10,20};
-	public static final int[] YELLOW_MAX = {255,255,255,255,137,101};
+	public static final double WHITE_P = 0.007;
+	public static final double WHITE_I = 0;
+	public static final double WHITE_D = 0;
+	public static final double YELLOW_P = 0.003;
+	public static final double YELLOW_I = 0;
+	public static final double YELLOW_D = 0;
+	public static final double BLUE_P = 0.005;
+	public static final double BLUE_I = 0;
+	public static final double BLUE_D = 0;
+	
+	public static final int[] BLACK_MIN = {2,226,197,43,0,34};
+	public static final int[] BLACK_MAX = {67,255,255,119,65,92};
+	public static final int[] WHITE_MIN = {142,226,197,226,134,34};
+	public static final int[] WHITE_MAX = {255,255,255,255,255,92};
+	public static final int[] RED_MIN = {19,34,226,164,0,23};
+	public static final int[] RED_MAX = {78,95,255,229,60,81};
+	public static final int[] GREEN_MIN = {19,226,121,72,13,1};
+	public static final int[] GREEN_MAX = {107,255,220,209,102,76};
+	public static final int[] BLUE_MIN = {43,94,62,206,97,0};
+	public static final int[] BLUE_MAX = {117,185,162,255,182,60};
+	public static final int[] YELLOW_MIN = {178,226,202,226,30,32};
+	public static final int[] YELLOW_MAX = {255,255,255,255,100,90};
 
 }

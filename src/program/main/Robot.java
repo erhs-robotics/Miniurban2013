@@ -126,19 +126,19 @@ public class Robot {
 			sign = 1;
 			component = ColorHTSensor.BLACK;
 			this.pid.setSetpoint(RoboMap.PID_YELLOW_SETPOINT); 
-			this.pid.setPIDConstants(0.0016, 0, 0.00000);
+			this.pid.setPIDConstants(RoboMap.YELLOW_P, RoboMap.YELLOW_I, RoboMap.YELLOW_D);
 		} else if (colorID.equals("WHITE")) {
 			foundLine = true;			
 			sign = 1;
 			component = ColorHTSensor.BLACK;
 			this.pid.setSetpoint(RoboMap.PID_WHITE_SETPOINT);
-			this.pid.setPIDConstants(0.0007, 0, 0.000000005);
+			this.pid.setPIDConstants(RoboMap.WHITE_P, RoboMap.WHITE_I, RoboMap.WHITE_D);
 		} else if(colorID.equals("BLUE")) {
 			foundLine = true;
 			sign = 1;
 			component = ColorHTSensor.BLUE;
 			this.pid.setSetpoint(RoboMap.PID_BLUE_SETPOINT);
-			this.pid.setPIDConstants(0.003, 0.000, 0.00001);			
+			this.pid.setPIDConstants(RoboMap.BLUE_P, RoboMap.BLUE_I, RoboMap.BLUE_D);			
 		}
 		else if(colorID.equals("ERROR")) {
 			//return 0;
