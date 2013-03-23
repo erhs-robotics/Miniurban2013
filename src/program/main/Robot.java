@@ -228,7 +228,7 @@ public class Robot {
 			} else if(currentStep.getDirection() == Direction.Straight) {
 				RConsole.println("Going Strait...");
 				
-				waitS(1);
+				waitS(RoboMap.STOP_WAIT_TIME);
 				if(circle) {					
 					pilot.travel(RoboMap.KEEP_ON_CIRCLE_DISTANCE);
 				} else {
@@ -305,13 +305,13 @@ public class Robot {
 	}
 	public void turnLeft(int angle, int dist) {
 		stop();
-		waitS(1);
+		waitS(RoboMap.STOP_WAIT_TIME);
 		pilot.travel(dist);		
 		pilot.arc(0, angle);
 	}
 	public void turnRight(int angle, int dist) {
 		stop();
-		waitS(1);
+		waitS(RoboMap.STOP_WAIT_TIME);
 		pilot.travel(dist);		
 		pilot.arc(0, -angle);
 	}
@@ -364,7 +364,7 @@ public class Robot {
 			else followRightLine(false);
 		}
 		stop();
-		waitS(3);
+		waitS(RoboMap.PARK_WAIT_TIME);
 		pilot.travel(RoboMap.OUT_OF_PARK_DISTANCE);
 		
 		pilot.arc(0, -1 * sign * RoboMap.OUT_OF_PARK_TURN);	

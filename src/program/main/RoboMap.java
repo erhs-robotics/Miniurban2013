@@ -34,6 +34,9 @@ public class RoboMap {
 	public static final double PARK_LENGTH = 20;
 	public static final double TACO_TO_CM = 1/20.0;
 	
+	public static final long STOP_WAIT_TIME = 1;
+	public static final long PARK_WAIT_TIME = 5;
+	
 	public static final int[] BLACK_MIN = {0,215,184,28,0,23};
 	public static final int[] BLACK_MAX = {77,255,255,127,75,103};
 	public static final int[] WHITE_MIN = {75,215,172,215,70,7};
